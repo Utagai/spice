@@ -13,6 +13,8 @@ MANGA_QUERY_BASE = 'http://myanimelist.net/api/manga/search.xml?q='
 ANIME_SCRAPE_BASE = 'http://myanimelist.net/anime/'
 MANGA_SCRAPE_BASE = 'http://myanimelist.net/manga/'
 
+ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/id.xml'
+
 ANIME = 'anime'
 MANGA = 'manga'
 
@@ -53,8 +55,13 @@ def search_id(id, medium):
 
     return None
 
-def add(series):
-    return
+def update(data, id):
+    print(data.to_xml())
+    series_data = {'data':data.to_xml()}
+    post = ANIME_UPDATE_BASE.replace('id', str(id))
+    headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
+    r = requests.post(post, data=series_data, headers=headers, auth=credentials)
+    print(r.text)
 
 if __name__ == '__main__':
     print("Spice is meant to be imported into a project.")

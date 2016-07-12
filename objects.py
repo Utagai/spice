@@ -98,21 +98,21 @@ class Anime:
 class AnimeData:
     def __init__(self):
         self.user_episodes = 0
-        self.user_status = ''
+        self.user_status = 0
         self.user_score = 0
-        self.storage_type = 0
-        self.storage_value = 0.0
-        self.times_rewatched = 0
-        self.rewatch_value = 0
+        self.storage_type = ''
+        self.storage_value = ''
+        self.times_rewatched = ''
+        self.rewatch_value = ''
         self.dates = ('', '')
-        self.priority = 0
-        self.set_discussion = 0
-        self.set_rewatch = 0
+        self.priority = ''
+        self.set_discuss = ''
+        self.set_rewatch = ''
         self.comments = ''
         self.fansub_group = ''
         self.tags = []
 
-    def to_xml():
+    def to_xml(self):
         return """<?xml version="1.0" encoding="UTF-8"?>
                 <entry>
                     <episode>{}</episode>
@@ -135,10 +135,9 @@ class AnimeData:
                                    self.storage_value, self.times_rewatched,
                                    self.rewatch_value, self.dates[0],
                                    self.dates[1], self.priority,
-                                   self.enable_discussion,
-                                   self.enable_rewatching,
+                                   self.set_discuss, self.set_rewatch,
                                    self.comments, self.fansub_group,
-                                   self.tags[1:-1].replace('\'', ''));
+                                   str(self.tags)[1:-1].replace('\'', ''));
 
 
 """
