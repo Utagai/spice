@@ -46,7 +46,12 @@ def search_id(id, medium):
     #inspect element on an anime page, you'll see where this scrape is
     #coming from.
     query = results.find('span', {'itemprop':'name'})
-    return search(query.text, medium)
+    matches = search(query.text, medium)
+    for match in matches:
+        if match.id == str(id):
+            return match
+
+    return None
 
 def add(series):
     return

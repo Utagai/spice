@@ -95,6 +95,52 @@ class Anime:
             self._image_url = self.raw_data.image.text
         return self._image_url
 
+class AnimeData:
+    def __init__(self):
+        self.user_episodes = 0
+        self.user_status = ''
+        self.user_score = 0
+        self.storage_type = 0
+        self.storage_value = 0.0
+        self.times_rewatched = 0
+        self.rewatch_value = 0
+        self.dates = ('', '')
+        self.priority = 0
+        self.set_discussion = 0
+        self.set_rewatch = 0
+        self.comments = ''
+        self.fansub_group = ''
+        self.tags = []
+
+    def to_xml():
+        return """<?xml version="1.0" encoding="UTF-8"?>
+                <entry>
+                    <episode>{}</episode>
+                    <status>{}</status>
+                    <score>{}</score>
+                    <storage_type>{}</storage_type>
+                    <storage_value>{}</storage_value>
+                    <times_rewatched>{}</times_rewatched>
+                    <rewatch_value>{}</rewatch_value>
+                    <date_start>{}</date_start>
+                    <date_finish>{}</date_finish>
+                    <priority>{}</priority>
+                    <enable_discussion>{}</enable_discussion>
+                    <enable_rewatching>{}</enable_rewatching>
+                    <comments>{}</comments>
+                    <fansub_group>{}</fansub_group>
+                    <tags>{}</tags>
+                </entry>""".format(self.user_episodes, self.user_status,
+                                   self.user_score, self.storage_type,
+                                   self.storage_value, self.times_rewatched,
+                                   self.rewatch_value, self.dates[0],
+                                   self.dates[1], self.priority,
+                                   self.enable_discussion,
+                                   self.enable_rewatching,
+                                   self.comments, self.fansub_group,
+                                   self.tags[1:-1].replace('\'', ''));
+
+
 """
 An object that encapsulates an Manga.
 
