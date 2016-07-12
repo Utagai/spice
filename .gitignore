@@ -1,0 +1,6 @@
+gitp.sh
+*.py~
+*.py.swp
+.*.py.swp
+test.py
+*.pyc
