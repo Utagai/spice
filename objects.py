@@ -1,6 +1,10 @@
 """
 An object that encapsulates an Anime.
 
+Uses properties so that it doesn't parse through XML
+unnecessarily, and instead,  does so only when immediately
+necessary.
+
 Has properties:
     id - The id of the anime.
     title - The title of the anime.
@@ -91,6 +95,26 @@ class Anime:
             self._image_url = self.raw_data.image.text
         return self._image_url
 
+"""
+An object that encapsulates an Manga.
+
+Uses properties so that it doesn't parse through XML
+unnecessarily, and instead,  does so only when immediately
+necessary.
+
+Has properties:
+    id - The id of the manga.
+    title - The title of the manga.
+    english - The english name of the manga, if applicable.
+    chapter - The number of chapters in this manga.
+    volume - The number of volumes in this manga.
+    score - The rating of the manga.
+    manga_type - The type of manga (e.g. movie, ONA, etc)
+    status - In what state the manga is in (e.g. airing, finished, etc)
+    dates - A tuple of start and end dates of airing of the manga.
+    synopsis - The synopsis text of the manga.
+    image_url - A url to the manga's cover image.
+"""
 class Manga:
     def __init__(self, manga_data):
         self.raw_data = manga_data
@@ -137,7 +161,7 @@ class Manga:
         return self._score
 
     @property
-    def anime_type(self):
+    def manga_type(self):
         if self._type is None:
             self._type = self.raw_data.type.text
         return self._type

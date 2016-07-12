@@ -48,6 +48,8 @@ def search_id(id, medium):
     query = results.find('span', {'itemprop':'name'})
     return search(query.text, medium)
 
+def add(series):
+    return
 
 if __name__ == '__main__':
     print("Spice is meant to be imported into a project.")
