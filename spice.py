@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 from objects import Anime
+from objects import Manga
 import sys
 
 this = sys.modules[__name__]
@@ -16,8 +17,6 @@ ANIME = 'anime'
 MANGA = 'manga'
 
 def init_auth(username, password):
-    #not the best practice, but acceptable for small sequences
-    #that will not change often (in this case, never.)
     this.credentials = (username, password)
     return (username, password)
 
@@ -30,7 +29,10 @@ def search(query, medium):
         api_query = MANGA_QUERY_BASE + terms
     search_resp = requests.get(api_query, auth=credentials)
     results = BeautifulSoup(search_resp.text, 'lxml')
-    return [Anime(entry) for entry in results.anime.findAll('entry')]
+    if medium == ANIME:
+        return [Anime(entry) for entry in results.anime.findAll('entry')]
+    else:
+        return [Manga(entry) for entry in results.manga.findAll('entry')]
 
 def search_id(id, medium):
     id_str = str(id).strip()
