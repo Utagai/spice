@@ -14,6 +14,13 @@ ANIME_SCRAPE_BASE = 'http://myanimelist.net/anime/'
 MANGA_SCRAPE_BASE = 'http://myanimelist.net/manga/'
 
 ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/id.xml'
+ANIME_ADD_BASE = 'http://myanimelist.net/api/animelist/add/id.xml'
+ANIME_DELETE_BASE = 'http://myanimelist.net/api/animelist/delete/id.xml'
+
+
+_UPDATE = 'update'
+_ADD = 'add'
+_DELETE = 'delete'
 
 ANIME = 'anime'
 MANGA = 'manga'
@@ -33,15 +40,19 @@ def search(query, medium):
     results = BeautifulSoup(search_resp.text, 'lxml')
     if medium == ANIME:
         return [Anime(entry) for entry in results.anime.findAll('entry')]
-    else:
+    elif medium == MANGA:
         return [Manga(entry) for entry in results.manga.findAll('entry')]
+    else:
+        return
 
 def search_id(id, medium):
     id_str = str(id).strip()
     if medium == ANIME:
         scrape_query = ANIME_SCRAPE_BASE + id_str
-    else:
+    elif medium == MANGA:
         scrape_query = MANGA_SCRAPE_BASE + id_str
+    else:
+        return
 
     search_resp = requests.get(scrape_query)
     results = BeautifulSoup(search_resp.text, 'html.parser')
@@ -55,9 +66,25 @@ def search_id(id, medium):
 
     return None
 
+def add(data, id):
+    _op(data, id, 'add')
+
 def update(data, id):
-    series_data = {'data':data.to_xml()}
-    post = ANIME_UPDATE_BASE.replace('id', str(id))
+    _op(data, id, 'update')
+
+def delete(data, id):
+    _op(data, id, 'delete')
+
+def _op(data, id, op):
+    if op == _UPDATE:
+        post = ANIME_UPDATE_BASE.replace('id', str(id))
+    elif op == _ADD:
+        post = ANIME_ADD_BASE.replace('id', str(id))
+    elif op == _DELETE:
+        post = ANIME_DELETE_BASE.replace('id', str(id))
+    else:
+        return
+
     post = post + ".xml?data=" + data.to_xml()
     headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
     #MAL API is broken to hell -- you have to actually use GET
