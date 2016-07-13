@@ -2,10 +2,16 @@
 
 ## An Introduction
 
-The [Official MyAnimeList API](http://myanimelist.net/modules.php?go=api) needs lots of work and is pretty annoying to use. Work and/or further development on it seems like a lost cause, since the developer(s) have far more pressing concerns with the site.
+The [Official MyAnimeList API](http://myanimelist.net/modules.php?go=api) needs lots of work and is pretty annoying to use. Here are some of the many issues:
+* Some of the documentation is just straight up incorrect (perhaps it was correct sometime ago).
+* There are MySQL bugs on MAL's end that must be circumvented.
+* There are severe limitations in what the API allows you to do, forcing the programmer's hand to write ugly scraping code.
+* Some of the ways to do simple things like updating an anime on a user's list requires an esoteric knowledge of MAL urls/queries that are no where on the documentation.
+
+Work and/or further development on it seems like a lost cause, since the developer(s) have far more pressing concerns with the site.
 
 This API aims to provide an easy to use Python API that wraps around MAL's
-REST-API.
+REST-API so that you don't have to experience any headaches.
 
 Name inspired by [Horo/Holo](http://myanimelist.net/character/7373/Holo) from [Spice and Wolf](http://myanimelist.net/anime/2966/Ookami_to_Koushinryou?q=Spice%20and%20Wolf).
 
