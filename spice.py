@@ -56,12 +56,13 @@ def search_id(id, medium):
     return None
 
 def update(data, id):
-    print(data.to_xml())
     series_data = {'data':data.to_xml()}
     post = ANIME_UPDATE_BASE.replace('id', str(id))
+    post = post + ".xml?data=" + data.to_xml()
     headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
-    r = requests.post(post, data=series_data, headers=headers, auth=credentials)
-    print(r.text)
+    #MAL API is broken to hell -- you have to actually use GET
+    #and chuck the data into the URL as seen above and below...
+    r = requests.get(post, headers=headers, auth=credentials)
 
 if __name__ == '__main__':
     print("Spice is meant to be imported into a project.")
