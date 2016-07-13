@@ -36,7 +36,7 @@ def main():
 															result.title,
 															result.english,
 															result.episodes,
-															result.score)
+															result.score))
     saw_season_one = spice.search_id(2966, spice.ANIME) #Spice and Wolf, Season 1
 
     saw_results_manga = spice.search('Ookami to Koushinryou', spice.MANGA)
@@ -46,7 +46,7 @@ def main():
 																		result.english,
 																		result.chapters,
 																		result.volumes,
-																		result.score)
+																		result.score))
     
     saw_data = spice.MangaData()
     saw_data.chapters = 4
