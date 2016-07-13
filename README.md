@@ -6,7 +6,7 @@ The [Official MyAnimeList API](http://myanimelist.net/modules.php?go=api) needs 
 * Some of the documentation is just straight up incorrect (perhaps it was correct sometime ago).
 * There are MySQL bugs on MAL's end that must be circumvented.
 * There are severe limitations in what the API allows you to do, forcing the programmer's hand to write ugly scraping code.
-* Some of the ways to do simple things like updating an anime on a user's list requires an esoteric knowledge of MAL urls/queries that are no where on the documentation.
+* Some of the ways to do simple things like updating an anime on a user's list requires an esoteric knowledge of MAL URLs/queries that are no where on the documentation.
 
 Work and/or further development on it seems like a lost cause, since the developer(s) have far more pressing concerns with the site.
 
