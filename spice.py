@@ -24,7 +24,7 @@ def search(query, medium):
     elif medium == MANGA:
         return [Manga(entry) for entry in results.manga.findAll('entry')]
     else:
-        return
+        return None
 
 def search_id(id, medium):
     scrape_query = helpers.get_scrape_url(id, medium)
