@@ -8,24 +8,6 @@ import sys
 this = sys.modules[__name__]
 this.credentials = None
 
-ANIME_QUERY_BASE  = 'http://myanimelist.net/api/anime/search.xml?q='
-MANGA_QUERY_BASE  = 'http://myanimelist.net/api/manga/search.xml?q='
-
-ANIME_SCRAPE_BASE = 'http://myanimelist.net/anime/'
-MANGA_SCRAPE_BASE = 'http://myanimelist.net/manga/'
-
-ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/id.xml'
-ANIME_ADD_BASE    = 'http://myanimelist.net/api/animelist/add/id.xml'
-ANIME_DELETE_BASE = 'http://myanimelist.net/api/animelist/delete/id.xml'
-
-MANGA_UPDATE_BASE = 'http://myanimelist.net/api/mangalist/update/id.xml'
-MANGA_ADD_BASE    = 'http://myanimelist.net/api/mangalist/add/id.xml'
-MANGA_DELETE_BASE = 'http://myanimelist.net/api/mangalist/delete/id.xml'
-
-_UPDATE = 'update'
-_ADD = 'add'
-_DELETE = 'delete'
-
 ANIME = 'anime'
 MANGA = 'manga'
 
