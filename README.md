@@ -1,4 +1,4 @@
-![spice](rsrc/horo_spice.png)
+<p align="center">![spice](rsrc/horo_spice.png)</p>
 
 The Official MAL API needs lots of work and is pretty annoying to use.
 Work and/or further development on it seems like a lost cause, since 
