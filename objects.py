@@ -97,9 +97,9 @@ class Anime:
 
 class AnimeData:
     def __init__(self):
-        self.user_episodes = 0
-        self.user_status = 0
-        self.user_score = 0
+        self.episodes = 0
+        self.status = 0
+        self.score = 0
         self.storage_type = ''
         self.storage_value = ''
         self.times_rewatched = ''
@@ -130,8 +130,8 @@ class AnimeData:
                     <comments>{}</comments>
                     <fansub_group>{}</fansub_group>
                     <tags>{}</tags>
-                </entry>""".format(self.user_episodes, self.user_status,
-                                   self.user_score, self.storage_type,
+                </entry>""".format(self.episodes, self.status,
+                                   self.score, self.storage_type,
                                    self.storage_value, self.times_rewatched,
                                    self.rewatch_value, self.dates[0],
                                    self.dates[1], self.priority,
@@ -236,3 +236,49 @@ class Manga:
         if self._image_url is None:
             self._image_url = self.raw_data.image.text
         return self._image_url
+
+class MangaData:
+    def __init__(self):
+        self.chapters = 0
+        self.volume = 0
+        self.status = 0
+        self.score = 0
+        self.times_reread = ''
+        self.reread_value = ''
+        self.dates = ('', '')
+        self.priority = ''
+        self.set_discuss = ''
+        self.set_reread = ''
+        self.comments = ''
+        self.scan_group = ''
+        self.tags = []
+        self.retail_volumes = ''
+
+    def to_xml(self):
+        return """<?xml version="1.0" encoding="UTF-8"?>
+                <entry>
+                    <chapter>{}</chapter>
+                    <volume>{}</volume>
+                    <status>{}</status>
+                    <score>{}</score>
+                    <times_reread>{}</times_reread>
+                    <reread_value>{}</reread_value>
+                    <date_start>{}</date_start>
+                    <date_finish>{}</date_finish>
+                    <priority>{}</priority>
+                    <enable_discussion>{}</enable_discussion>
+                    <enable_rereading>{}</enable_rereading>
+                    <comments>{}</comments>
+                    <scan_group>{}</scan_group>
+                    <tags>{}</tags>
+                    <retail_volumes>{}</retail_volumes>
+                </entry>""".format(self.chapters, self.volumes,
+                                   self.status, self.score, self.times_reread,
+                                   self.reread_value, self.dates[0],
+                                   self.dates[1], self.priority,
+                                   self.set_discuss, self.set_reread,
+                                   self.comments, self.scan_group,
+                                   str(self.tags)[1:-1].replace('\'', ''),
+                                   self.retail_volumes);
+
+
