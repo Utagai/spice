@@ -1,4 +1,4 @@
-<p align="center"><img src="rsrc/horo_spice.png"></img></p>
+<p align="center"><img src="rsrc/horo_banner.png"></img></p>
 
 ## An Introduction
 
