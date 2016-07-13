@@ -2,6 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from objects import Anime
 from objects import Manga
+import helpers
 import sys
 
 this = sys.modules[__name__]
@@ -17,6 +18,9 @@ ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/id.xml'
 ANIME_ADD_BASE = 'http://myanimelist.net/api/animelist/add/id.xml'
 ANIME_DELETE_BASE = 'http://myanimelist.net/api/animelist/delete/id.xml'
 
+MANGA_UPDATE_BASE = 'http://myanimelist.net/api/mangalist/update/id.xml'
+MANGA_ADD_BASE = 'http://myanimelist.net/api/mangalist/add/id.xml'
+MANGA_DELETE_BASE = 'http://myanimelist.net/api/mangalist/delete/id.xml'
 
 _UPDATE = 'update'
 _ADD = 'add'
@@ -30,12 +34,7 @@ def init_auth(username, password):
     return (username, password)
 
 def search(query, medium):
-    query = query.strip()
-    terms = query.replace(' ', '+')
-    if medium == ANIME:
-        api_query = ANIME_QUERY_BASE + terms
-    else:
-        api_query = MANGA_QUERY_BASE + terms
+    api_query = helpers.get_query_url(id, medium, query)
     search_resp = requests.get(api_query, auth=credentials)
     results = BeautifulSoup(search_resp.text, 'lxml')
     if medium == ANIME:
@@ -46,14 +45,7 @@ def search(query, medium):
         return
 
 def search_id(id, medium):
-    id_str = str(id).strip()
-    if medium == ANIME:
-        scrape_query = ANIME_SCRAPE_BASE + id_str
-    elif medium == MANGA:
-        scrape_query = MANGA_SCRAPE_BASE + id_str
-    else:
-        return
-
+    scrape_query = helpers.get_scrape_url(id, medium)
     search_resp = requests.get(scrape_query)
     results = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
@@ -66,25 +58,17 @@ def search_id(id, medium):
 
     return None
 
-def add(data, id):
-    _op(data, id, 'add')
+def add(data, id, medium):
+    _op(data, id, medium, 'add')
 
-def update(data, id):
-    _op(data, id, 'update')
+def update(data, id, medium):
+    _op(data, id, medium, 'update')
 
-def delete(data, id):
-    _op(data, id, 'delete')
+def delete(data, id, medium):
+    _op(data, id, medium, 'delete')
 
-def _op(data, id, op):
-    if op == _UPDATE:
-        post = ANIME_UPDATE_BASE.replace('id', str(id))
-    elif op == _ADD:
-        post = ANIME_ADD_BASE.replace('id', str(id))
-    elif op == _DELETE:
-        post = ANIME_DELETE_BASE.replace('id', str(id))
-    else:
-        return
-
+def _op(data, id, medium, op):
+    post = helpers.get_post_url(id, medium, op)
     post = post + ".xml?data=" + data.to_xml()
     headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
     #MAL API is broken to hell -- you have to actually use GET
