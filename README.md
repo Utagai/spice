@@ -60,3 +60,11 @@ def main():
     spice.delete(saw_data, 9115, spice.MANGA)
 
 ```
+
+## What's left
+This API is far from done. Here's what is left to be done:
+* Refactor code structure to provide cohesive interface for the API to be used from.
+	- e.g. AnimeData and MangaData objects require a separate import as of now.
+* Set up pip package for easy install.
+* Add functionality for animelist statistics and data.
+	- There is no such functionality in the Official MAL API, but this is important to have.
