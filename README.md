@@ -21,10 +21,10 @@ def main():
     saw_results_anime = spice.search('spice and wolf', spice.ANIME)
     for result in saw_results_anime:
     	print("{} : {} ({}) | {} episodes. Score: {}.".format(result.id,
-																result.title,
-																result.english,
-																result.episodes,
-																result.score)
+															result.title,
+															result.english,
+															result.episodes,
+															result.score)
     saw_season_one = spice.search_id(2966, spice.ANIME) #Spice and Wolf, Season 1
 
     saw_results_manga = spice.search('Ookami to Koushinryou', spice.MANGA)
