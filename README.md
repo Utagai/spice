@@ -11,6 +11,12 @@ Name inspired by [Horo/Holo](http://myanimelist.net/character/7373/Holo) from [S
 
 API inspired by other attempts (which made their own REST API wrapper, while this one uses a pure Python implementation), such as [crobert22](https://github.com/croberts22)'s [Railgun](https://github.com/croberts22/railgun) and [chuyeow](https://github.com/chuyeow)'s [myanimelist-api](https://github.com/chuyeow/myanimelist-api).
 
+## Install (WIP)
+
+```bash
+$ pip install spice
+```
+
 ## Here's how to use it
 
 ```python
