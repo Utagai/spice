@@ -19,7 +19,7 @@ ADD = "add"
 UPDATE = "update"
 DELETE = "delete"
 
-def get_query_url(id, medium, query):
+def get_query_url(medium, query):
     query = query.strip()
     terms = query.replace(' ', '+')
     if medium == spice.ANIME:

@@ -4,6 +4,7 @@ from objects import Anime
 from objects import Manga
 import helpers
 import sys
+from time import sleep
 
 this = sys.modules[__name__]
 this.credentials = None
@@ -16,15 +17,28 @@ def init_auth(username, password):
     return (username, password)
 
 def search(query, medium):
-    api_query = helpers.get_query_url(id, medium, query)
+    if len(query) == 0:
+        return []
+    api_query = helpers.get_query_url(medium, query)
     search_resp = requests.get(api_query, auth=credentials)
     results = BeautifulSoup(search_resp.text, 'lxml')
     if medium == ANIME:
-        return [Anime(entry) for entry in results.anime.findAll('entry')]
+        entries = results.anime
+        if entries is None:
+            print("Too many requests... Waiting 5 seconds.")
+            sleep(5)
+            return search(query, medium)
+
+        return [Anime(entry) for entry in entries.findAll('entry')]
     elif medium == MANGA:
-        return [Manga(entry) for entry in results.manga.findAll('entry')]
+        entries = results.manga
+        if entries is None:
+            print("Too many requests.. Waiting 5 seconds.")
+            sleep(5)
+            return search(query, medium)
+        return [Manga(entry) for entry in entries.findAll('entry')]
     else:
-        return None
+        return []
 
 def search_id(id, medium):
     scrape_query = helpers.get_scrape_url(id, medium)
@@ -33,12 +47,16 @@ def search_id(id, medium):
     #inspect element on an anime page, you'll see where this scrape is
     #coming from.
     query = results.find('span', {'itemprop':'name'})
+    if query is None:
+        print("Too many requests... Waiting 5 seconds.")
+        sleep(5)
+        return search_id(id, medium)
     matches = search(query.text, medium)
-    for match in matches:
-        if match.id == str(id):
-            return match
-
-    return None
+    index = [match.id for match in matches].index(str(id))
+    if index != -1:
+        return matches[index]
+    else:
+        return None
 
 def add(data, id, medium):
     _op(data, id, medium, 'add')
