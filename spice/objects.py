@@ -469,8 +469,9 @@ class MediumList:
         return [entry.title for entry in all_entries]
 
     def get_status(self, status):
+        status_key = helpers.find_key_num(helpers.det_key(status, self.medium))
         all_entries = self.get_mediums()
-        return [int(entry.id) for entry in all_entries if entry.status == str(status)]
+        return [int(entry.id) for entry in all_entries if entry.status == str(status_key)]
 
     def get_score(self, score):
         all_entries = self.get_mediums()
@@ -495,19 +496,7 @@ class MediumList:
         return stats.p_var(self.get_scores())
 
     def get_num_status(self, status):
-        if status.isdigit(): #account for status num given
-            status_key = find_key(status, self.medium)
-        else:
-            if status == spice.Key.READING and self.medium == spice.Medium.ANIME:
-                status_key = spice.Key.WATCHING
-            elif status == spice.Key.WATCHING and self.medium == spice.Medium.MANGA:
-                status_key = spice.Key.READING
-            elif status == spice.Key.PLANTOREAD and self.medium == spice.Medium.ANIME:
-                status_key = spice.Key.PLANTOWATCH
-            elif status == spice.Key.PLANTOWATCH and self.medium == spice.Medium.MANGA:
-                status_key = spice.Key.PLANTOREAD
-            else:
-                status_key = status
+        status_key = helpers.det_key(status, self.medium)
         return len(self.medium_list[status_key])
 
     def get_total(self):

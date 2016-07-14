@@ -122,5 +122,37 @@ def find_key(status_num, medium):
     else:
         raise ValueError(constants.INVALID_STATUS_NUM)
 
+def find_key_num(status):
+    if status == spice.Key.WATCHING or status == spice.Key.READING:
+        return 1
+    elif status == spice.Key.COMPLETED:
+        return 2
+    elif status == spice.Key.DROPPED:
+        return 3
+    elif status == spice.Key.ONHOLD:
+        return 4
+    elif status == spice.Key.PLANTOWATCH or status == spice.Key.PLANTOREAD:
+        return 6
+    else:
+        return None
+
+def det_key(status, medium):
+    status = str(status)
+    if status.isdigit(): #account for status num given
+        status_key = find_key(status, medium)
+    else:
+	    if status == spice.Key.READING and medium == spice.Medium.ANIME:
+		    status_key = spice.Key.WATCHING
+	    elif status == spice.Key.WATCHING and medium == spice.Medium.MANGA:
+		    status_key = spice.Key.READING
+	    elif status == spice.Key.PLANTOREAD and medium == spice.Medium.ANIME:
+		    status_key = spice.Key.PLANTOWATCH
+	    elif status == spice.Key.PLANTOWATCH and medium == spice.Medium.MANGA:
+		    status_key = spice.Key.PLANTOREAD
+	    else:
+		    status_key = status
+
+    return status_key
+
 if __name__ == '__main__':
     exit(0)
