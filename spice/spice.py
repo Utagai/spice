@@ -1,3 +1,89 @@
+## A py module for the spice API.
+##
+## Oh, and a license thingy because otherwise it won't look cool and
+## professional.
+##
+## MIT License
+##
+## Copyright (c) [2016] [Mehrab Hoque]
+##
+## Permission is hereby granted, free of charge, to any person obtaining a copy
+## of this software and associated documentation files (the "Software"), to deal
+## in the Software without restriction, including without limitation the rights
+## to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+## copies of the Software, and to permit persons to whom the Software is
+## furnished to do so, subject to the following conditions:
+##
+## The above copyright notice and this permission notice shall be included in all
+## copies or substantial portions of the Software.
+##
+## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+## IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+## FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+## AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+## LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+## SOFTWARE.
+
+""" A py module for the spice API.
+
+This module is meant to be imported into the project.
+
+The spice API creates the idea of a 'Medium' which will be seen often in the
+docs as [medium]. A [medium] is a concise way of describing either an anime or
+a manga, as both are mediums through which the content is delivered.
+
+The spice API exposes several functions for access to MAL:
+0) init_auth()/load_auth_from_file() - Set and verify MAL credentials. Required.
+1) search()                          - Search anime/manga by keyword.
+2) search_id()                       - Grab anime/manga with a given id.
+3) add()                             - Add an anime/manga to a list.
+4) update()                          - Update an anime/manga on a list.
+5) delete()                          - Delete an anime/manga from a list.
+6) get_list()                        - Gets a user's Anime/MangaList.
+7) get_blank()			     - Returns a blank Anime or MangaData object.
+8) get_user_id()                     - Returns the authenticated user's id.
+
+The MediumList object returned by get_list() also exposes some useful functionality:
+1) get_avg_score()     - Returns the user's average score across anime/manga watched.
+2) get_median_score()  - Returns the user's median score across anime/manga watched.
+3) get_mode_score()    - Returns the user's mode score across anime/manga watched.
+4) get_p_stdev()       - Returns the pop. std. dev. of the user's score across anime/manga watched.
+5) get_p_var()         - Returns the pop. variance of the user's score score across anime/manga watched.
+6) get_score_diff()    - Returns the average score diff. of the user score across anime/manga watched.
+		         WARN: This is very slow and probably won't be implemented, 
+			       because of limitations of the MAL API.
+7) get_num_status()    - Returns the number of anime/manga in [status] condition.
+8) get_total()         - Returns the total number of anime/manga in the list across all statuses.
+9) get_days()          - Returns the number of days spent watching/reading.
+10) exists()           - Returns true or false if the given anime/manga exists in the list.
+11) exists_as_status() - Returns true or false if the given anime/manga exists as the given status.
+12) compatibility()    - Takes another MediumList and computes the compatibility according to the 
+			 algorithm specified by MAL.
+13) num_viewed()       - Returns the number of episodes, chapters or volumes viewed by the user.
+
+The spice API also exposes useful enums and values:
+1) Medium enums    - ANIME|MANGA
+2) Operation enums - ADD|UPDATE|DELETE
+3) Status enums    - A translation for medium status numbers.
+		     READING|1 & WATCHING|1
+		     COMPLETED|2
+                     ONHOLD|3
+		     DROPPED|4
+		     PLANTOREAD|6 & PLANTOWATCH|6
+4) Key values      - Exposes an Anime/MangaList's sublist names, which are used
+		     in he MediumList's implementation of its dictionary as keys.
+		     READING     = 'reading'
+		     WATCHING    = 'watching'
+		     COMPLETED   = 'completed'
+		     ONHOLD      = 'onhold'
+		     DROPPED     = 'dropped'
+		     PLANTOWATCH = 'plantowatch'
+		     PLANTOREAD  = 'plantoread'
+
+
+"""
+
 from bs4 import BeautifulSoup
 import requests
 from objects import Anime
@@ -35,22 +121,22 @@ class Operations:
 like enums.
 """
 class Status:
-    READING = 1
+    READING     = 1
     WATCHING, COMPLETED, ONHOLD, DROPPED = range(1,5)
     PLANTOWATCH = 6
-    PLANTOREAD = 6
+    PLANTOREAD  = 6
 
 """A namespace for exposing key names in AnimeList and MangaList object
 dictionaries.
 """
 class Keys:
-    READING = 'reading'
-    WATCHING = 'watching'
-    COMPLETED = 'completed'
-    ONHOLD = 'onhold'
-    DROPPED = 'dropped'
+    READING     = 'reading'
+    WATCHING    = 'watching'
+    COMPLETED   = 'completed'
+    ONHOLD      = 'onhold'
+    DROPPED     = 'dropped'
     PLANTOWATCH = 'plantowatch'
-    PLANTOREAD = 'plantoread'
+    PLANTOREAD  = 'plantoread'
 
 def init_auth(username, password):
     """Initializes the auth settings for accessing MyAnimeList
