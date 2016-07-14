@@ -41,45 +41,50 @@ The spice API exposes several functions for access to MAL:
 4) update()                          - Update an anime/manga on a list.
 5) delete()                          - Delete an anime/manga from a list.
 6) get_list()                        - Gets a user's Anime/MangaList.
-7) get_blank()			     - Returns a blank Anime or MangaData object.
+7) get_blank()			             - Returns a blank Anime or MangaData object.
 8) get_user_id()                     - Returns the authenticated user's id.
 
 The MediumList object returned by get_list() also exposes some useful functionality:
-1) get_avg_score()     - Returns the user's average score across anime/manga watched.
-2) get_median_score()  - Returns the user's median score across anime/manga watched.
-3) get_mode_score()    - Returns the user's mode score across anime/manga watched.
-4) get_p_stdev()       - Returns the pop. std. dev. of the user's score across anime/manga watched.
-5) get_p_var()         - Returns the pop. variance of the user's score score across anime/manga watched.
-6) get_score_diff()    - Returns the average score diff. of the user score across anime/manga watched.
-		         WARN: This is very slow and probably won't be implemented, 
-			       because of limitations of the MAL API.
+1) avg_score()         - Returns the user's average score across anime/manga watched.
+2) median_score()      - Returns the user's median score across anime/manga watched.
+3) mode_score()        - Returns the user's mode score across anime/manga watched.
+4) p_stddev()          - Returns the pop. std. dev. of the user's score across anime/manga watched.
+5) p_var()             - Returns the pop. variance of the user's score score across anime/manga watched.
+6) score_diff()        - Returns the average score diff. of the user score across anime/manga watched.
+		                 WARN: This is very slow and probably won't be implemented,
+			             because of limitations of the MAL API.
 7) get_num_status()    - Returns the number of anime/manga in [status] condition.
 8) get_total()         - Returns the total number of anime/manga in the list across all statuses.
 9) get_days()          - Returns the number of days spent watching/reading.
 10) exists()           - Returns true or false if the given anime/manga exists in the list.
 11) exists_as_status() - Returns true or false if the given anime/manga exists as the given status.
-12) compatibility()    - Takes another MediumList and computes the compatibility according to the 
-			 algorithm specified by MAL.
-13) num_viewed()       - Returns the number of episodes, chapters or volumes viewed by the user.
+12) compatibility()    - Takes another MediumList and computes the compatibility according to the
+			             algorithm specified by MAL.
+13) get_scores()       - Returns a list of all scores in the list.
+14) get_ids()          - Returns a list of all ids in the list.
+15) get_titles()       - Returns a list of all titles in the list.
+16) get_status()       - Returns a list of all items with the given status.
+17) get_score()        - Returns a list of all items in the list with given score.
+18) extremes()         - Returns a tuple containing the max and min score.
 
 The spice API also exposes useful enums and values:
 1) Medium enums    - ANIME|MANGA
 2) Operation enums - ADD|UPDATE|DELETE
 3) Status enums    - A translation for medium status numbers.
-		     READING|1 & WATCHING|1
-		     COMPLETED|2
+		             READING|1 & WATCHING|1
+		             COMPLETED|2
                      ONHOLD|3
-		     DROPPED|4
-		     PLANTOREAD|6 & PLANTOWATCH|6
+		             DROPPED|4
+		             PLANTOREAD|6 & PLANTOWATCH|6
 4) Key values      - Exposes an Anime/MangaList's sublist names, which are used
-		     in he MediumList's implementation of its dictionary as keys.
-		     READING     = 'reading'
-		     WATCHING    = 'watching'
-		     COMPLETED   = 'completed'
-		     ONHOLD      = 'onhold'
-		     DROPPED     = 'dropped'
-		     PLANTOWATCH = 'plantowatch'
-		     PLANTOREAD  = 'plantoread'
+		             in he MediumList's implementation of its dictionary as keys.
+		             READING     = 'reading'
+		             WATCHING    = 'watching'
+		             COMPLETED   = 'completed'
+		             ONHOLD      = 'onhold'
+		             DROPPED     = 'dropped'
+		             PLANTOWATCH = 'plantowatch'
+		             PLANTOREAD  = 'plantoread'
 
 
 """
@@ -120,7 +125,7 @@ class Operations:
 """The numerical translations for anime/manga statuses. These are to be treated
 like enums.
 """
-class Status:
+class StatusNumber:
     READING     = 1
     WATCHING, COMPLETED, ONHOLD, DROPPED = range(1,5)
     PLANTOWATCH = 6
@@ -129,7 +134,7 @@ class Status:
 """A namespace for exposing key names in AnimeList and MangaList object
 dictionaries.
 """
-class Keys:
+class Key:
     READING     = 'reading'
     WATCHING    = 'watching'
     COMPLETED   = 'completed'
@@ -302,13 +307,13 @@ def get_list(medium, user=None):
     """
     if user is None:
         user = credentials[0]
-    print(user)
     list_url = helpers.get_list_url(medium, user)
     list_resp = requests.get(list_url) #for some reason, we don't need auth.
     if constants.TOO_MANY_REQUESTS in list_resp.text:
-        helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium)
+        return helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium, user)
 
-    return MediumList(medium, list_resp.text)
+    list_soup = BeautifulSoup(list_resp.text, 'lxml')
+    return MediumList(medium, list_soup)
 
 if __name__ == '__main__':
     print("Spice is meant to be imported into a project.")

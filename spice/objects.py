@@ -27,7 +27,7 @@
 
 """ A py module for objects.
 
-WARN: This module is not meant to be used in any way besides in the internals of 
+WARN: This module is not meant to be used in any way besides in the internals of
 the spice API source code.
 
 This module defines the objects: Anime, Manga, AnimeData, MangaData and MediumList.
@@ -36,7 +36,7 @@ Anime and Manga are Mediums, so MediumList captures both Anime and MangaLists.
 Anime and Manga objects are packages of parsed XML data for an anime or manga
 respectively.
 
-AnimeData and MangaData objects are packages of anime or manga respectively that 
+AnimeData and MangaData objects are packages of anime or manga respectively that
 is intended to be pushed to MAL in an operation request such as adding, updating or
 deleting.
 
@@ -45,6 +45,7 @@ MediumLists are returned from requests about a user's Anime/MangaList(s).
 
 import spice
 import helpers
+import stats
 from bs4 import BeautifulSoup
 
 class Anime:
@@ -418,12 +419,15 @@ class MediumList:
     def __init__(self, medium, list_data):
         self.medium = medium
         self.raw_data = list_data
+        self.days = 0.0
         if self.medium == spice.Medium.ANIME:
-            self.anime_list = {'watching':[], 'completed':[], 'onhold':[],
-                           'dropped':[], 'plantowatch':[]}
+            self.medium_list = {spice.Key.WATCHING:[], spice.Key.COMPLETED:[],
+                                spice.Key.ONHOLD:[], spice.Key.DROPPED:[],
+                                spice.Key.PLANTOWATCH:[]}
         elif self.medium == spice.Medium.MANGA:
-            self.manga_list = {'reading':[], 'completed':[], 'onhold':[],
-                           'dropped':[], 'plantoread':[]}
+            self.medium_list = {spice.Key.READING:[], spice.Key.COMPLETED:[],
+                                spice.Key.ONHOLD:[], spice.Key.DROPPED:[],
+                                spice.Key.PLANTOREAD:[]}
         else:
             #not sure what the best thing to do is... default to anime?
             raise ValueError(constants.INVALID_MEDIUM)
@@ -431,17 +435,106 @@ class MediumList:
         self.load()
 
     def load(self):
-        list_soup = BeautifulSoup(self.raw_data, 'lxml')
+        list_soup = self.raw_data
         if self.medium == spice.Medium.ANIME:
             list_items = list_soup.findAll('anime')
             for item in list_items:
                 status = helpers.find_key(item.my_status.text, self.medium)
-                status_list = self.anime_list[status]
+                status_list = self.medium_list[status]
                 status_list.append(Anime(item))
-                print(item.series_title)
         else: #we are guaranteed to, at this point, have a valid medium
             list_items = list_soup.findAll('manga')
             for item in list_items:
                 status = helpers.find_key(item.my-status.text, self.medium)
-                status_list = self.manga_list[status]
+                status_list = self.medium_list[status]
                 status_list.append(Manga(item))
+
+    def get_mediums(self):
+        all_entries_in_list = []
+        for status, entries in self.medium_list.iteritems():
+            all_entries_in_list += entries
+
+        return all_entries_in_list
+
+    def get_scores(self):
+        all_entries = self.get_mediums()
+        return [int(entry.score) for entry in all_entries if entry.score != '0']
+
+    def get_ids(self):
+        all_entries = self.get_mediums()
+        return [int(entry.id) for entry in all_entries]
+
+    def get_titles(self):
+        all_entries = self.get_mediums()
+        return [entry.title for entry in all_entries]
+
+    def get_status(self, status):
+        all_entries = self.get_mediums()
+        return [int(entry.id) for entry in all_entries if entry.status == str(status)]
+
+    def get_score(self, score):
+        all_entries = self.get_mediums()
+        return [int(entry.id) for entry in all_entries if entry.score == str(score)]
+
+    def avg_score(self):
+        return stats.mean(self.get_scores())
+
+    def median_score(self):
+        return stats.median(self.get_scores())
+
+    def mode_score(self):
+        return stats.mode(self.get_scores())
+
+    def extremes(self):
+        return stats.extremes(self.get_scores())
+
+    def p_stddev(self):
+        return stats.p_stddev(self.get_scores())
+
+    def p_var(self):
+        return stats.p_var(self.get_scores())
+
+    def get_num_status(self, status):
+        if status.isdigit(): #account for status num given
+            status_key = find_key(status, self.medium)
+        else:
+            if status == spice.Key.READING and self.medium == spice.Medium.ANIME:
+                status_key = spice.Key.WATCHING
+            elif status == spice.Key.WATCHING and self.medium == spice.Medium.MANGA:
+                status_key = spice.Key.READING
+            elif status == spice.Key.PLANTOREAD and self.medium == spice.Medium.ANIME:
+                status_key = spice.Key.PLANTOWATCH
+            elif status == spice.Key.PLANTOWATCH and self.medium == spice.Medium.MANGA:
+                status_key = spice.Key.PLANTOREAD
+            else:
+                status_key = status
+        return len(self.medium_list[status_key])
+
+    def get_total(self):
+        total_count = len(self.get_scores())
+        if self.medium == spice.Medium.ANIME:
+            total_count += len(self.medium_list[spice.Key.PLANTOWATCH])
+        else:
+            total_count += len(self.medium_list[spice.Key.PLANTOREAD])
+
+        return total_count
+
+    def get_days(self):
+        user_info = self.raw_data.myinfo
+        self.days = float(user_info.user_days_spent_watching.text)
+        return self.days
+
+    def exists(self, id):
+        all_entries = self.get_ids()
+        if id in all_entries:
+            return True
+        else:
+            return False
+
+    def exists_as_status(self, id, status):
+        all_entries_id = self.get_ids()
+        all_entries_status = self.get_status(status)
+        if id in all_entries_id and id in all_entries_status:
+            return True
+        else:
+            return False

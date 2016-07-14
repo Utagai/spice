@@ -27,7 +27,7 @@
 
 """ A py module for helper functions.
 
-WARN: This module is not meant to be used in any way besides in the internals of 
+WARN: This module is not meant to be used in any way besides in the internals of
 the spice API source code.
 """
 
@@ -99,28 +99,28 @@ def reschedule(func, wait, *args):
     return func(*args)
 
 def find_key(status_num, medium):
-    if status_num == str(spice.Status.READING):
+    if status_num == str(spice.StatusNumber.READING):
         if medium == spice.Medium.MANGA:
-            return spice.Keys.READING
+            return spice.Key.READING
         elif medium == spice.Medium.ANIME:
-            return spice.Keys.WATCHING
+            return spice.Key.WATCHING
         else:
-            return None
-    elif status_num == str(spice.Status.COMPLETED):
-        return spice.Keys.COMPLETED
-    elif status_num == str(spice.Status.ONHOLD):
-        return spice.Keys.ONHOLD
-    elif status_num == str(spice.Status.DROPPED):
-        return spice.Keys.DROPPED
-    elif status_num == str(spice.Status.PLANTOREAD):
+            raise ValueError(constants.INVALID_MEDIUM)
+    elif status_num == str(spice.StatusNumber.COMPLETED):
+        return spice.Key.COMPLETED
+    elif status_num == str(spice.StatusNumber.ONHOLD):
+        return spice.Key.ONHOLD
+    elif status_num == str(spice.StatusNumber.DROPPED):
+        return spice.Key.DROPPED
+    elif status_num == str(spice.StatusNumber.PLANTOREAD):
         if medium == spice.Medium.MANGA:
-            return spice.Keys.PLANTOREAD
+            return spice.Key.PLANTOREAD
         elif medium == spice.Medium.ANIME:
-            return spice.Keys.PLANTOWATCH
+            return spice.Key.PLANTOWATCH
         else:
-            return None
+            raise ValueError(constants.INVALID_MEDIUM)
     else:
-        return None
+        raise ValueError(constants.INVALID_STATUS_NUM)
 
 if __name__ == '__main__':
     exit(0)

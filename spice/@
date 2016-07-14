@@ -42,7 +42,7 @@ def sum(data):
     _data_check(data)
     total = 0
     for elem in data:
-        total += elem
+        total += elem)
 
     return total
 

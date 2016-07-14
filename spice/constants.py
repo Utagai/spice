@@ -27,7 +27,7 @@
 
 """ A py module for constants.
 
-WARN: This module is not meant to be used in any way besides in the internals of 
+WARN: This module is not meant to be used in any way besides in the internals of
 the spice API source code.
 """
 
@@ -88,3 +88,4 @@ INVALID_AUTH_FILE   = "Invalid auth file."
 INVALID_EMPTY_QUERY = "Must provide a non-empty query."
 INVALID_MEDIUM      = "Invalid medium. Use spice.Medium.Anime or spice.Medium.MANGA."
 INVALID_ID          = "Id must be a non-zero, positive integer."
+INVALID_STATUS_NUM  = "Status num must be an integer (1, 2, 3, 4 or 6)."
