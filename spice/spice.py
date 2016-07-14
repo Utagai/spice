@@ -154,6 +154,10 @@ def _op(data, id, medium, op):
     r = requests.get(post, headers=headers, auth=credentials)
     if r.status_code == 400 and 'has not been approved' in r.text:
         sys.stderr.write("This medium has not been approved by MAL yet.\n")
+    elif 'Too Many Requests' in r.text: #Oh Holo save me from this API.
+        sys.stderr.write("Too many requests... Waiting 5 seconds.\n")
+        sleep(5)
+        _op(data, id, medium, op)
 
 def get_blank(medium):
     """Returns a [medium]Data object for filling before calling spice.add(),
