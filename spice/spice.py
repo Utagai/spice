@@ -24,6 +24,10 @@ is very distinctly cut up into two pieces, one for anime and one for manga.
 class Medium:
     ANIME, MANGA = range(2)
 
+"""The operations available on user Lists."""
+class Operations:
+    ADD, UPDATE, DELETE = range(3)
+
 def init_auth(username, password):
     """Initializes the auth settings for accessing MyAnimeList
     through its official API from a given username and password.
@@ -87,7 +91,7 @@ def search(query, medium):
     if medium == Medium.ANIME:
         entries = results.anime
         if entries is None:
-            return helpers.reschedule(search, query, medium)
+            return helpers.reschedule(search, 5, query, medium)
 
         return [Anime(entry) for entry in entries.findAll('entry')]
     elif medium == Medium.MANGA:
@@ -118,7 +122,7 @@ def search_id(id, medium):
     #coming from.
     query = results.find('span', {'itemprop':'name'})
     if query is None:
-        return helpers.reschedule(search_id, id, medium)
+        return helpers.reschedule(search_id, 5, id, medium)
     matches = search(query.text, medium)
     index = [match.id for match in matches].index(str(id))
     if index != -1:
@@ -133,7 +137,7 @@ def add(data, id, medium):
     :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
     :raise ValueError For bad arguments.
     """
-    _op(data, id, medium, helpers.Operations.ADD)
+    _op(data, id, medium, Operations.ADD)
 
 def update(data, id, medium):
     """Updates the [medium] with the given id and data on the user's [medium]List.
@@ -142,7 +146,7 @@ def update(data, id, medium):
     :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
     :raise ValueError For bad arguments.
     """
-    _op(data, id, medium, helpers.Operations.UPDATE)
+    _op(data, id, medium, Operations.UPDATE)
 
 def delete(data, id, medium):
     """Deletes the [medium] with the given id and data from the user's [medium]List.
@@ -151,7 +155,7 @@ def delete(data, id, medium):
     :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
     :raise ValueError For bad arguments.
     """
-    _op(data, id, medium, helpers.Operations.DElETE)
+    _op(data, id, medium, Operations.DElETE)
 
 def _op(data, id, medium, op):
     post = helpers.get_post_url(id, medium, op)
@@ -162,11 +166,11 @@ def _op(data, id, medium, op):
     headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
     #MAL API is broken to hell -- you have to actually use GET
     #and chuck the data into the URL as seen above and below...
-    r = requests.get(post, headers=headers, auth=credentials)
-    if r.status_code == 400 and 'has not been approved' in r.text:
+    op_resp = requests.get(post, headers=headers, auth=credentials)
+    if op_resp.status_code == 400 and 'has not been approved' in op_resp.text:
         sys.stderr.write("This medium has not been approved by MAL yet.\n")
-    elif 'Too Many Requests' in r.text: #Oh Holo save me from this API.
-        helpers.reschedule(_op, id, medium, op)
+    elif 'Too Many Requests' in op_resp.text: #Oh Holo save me from this API.
+        helpers.reschedule(_op, 5, data, id, medium, op)
 
 def get_blank(medium):
     """Returns a [medium]Data object for filling before calling spice.add(),
@@ -183,7 +187,9 @@ def get_blank(medium):
 
 def get_list(medium):
     list_url = helpers.get_list_url(medium)
-    print(list_url)
+    list_resp = requests.get(list_url) #for some reason, we don't need auth.
+    if 'Too Many Requests' in list_resp.text:
+        helpers.reschedule(get_list, 5, medium)
 
 
 if __name__ == '__main__':
