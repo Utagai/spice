@@ -304,5 +304,5 @@ class MangaData:
 
 class AnimeList:
     def __init__(self):
-        self.anime_list = {'watching':[], 'completed':[], 'on-hold':[],
-                           'dropped':[], 'plan-to-watch':[]}
+        self.anime_list = {'watching':[], 'completed':[], 'onhold':[],
+                           'dropped':[], 'plantowatch':[]}

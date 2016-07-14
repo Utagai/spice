@@ -25,15 +25,29 @@ is very distinctly cut up into two pieces, one for anime and one for manga.
 class Medium:
     ANIME, MANGA = range(2)
 
-"""The operations available on user Lists."""
+"""The operations available on user Lists. These are to be treated like enums
+."""
 class Operations:
     ADD, UPDATE, DELETE = range(3)
 
-"""The numerical translations for anime/manga statuses."""
+"""The numerical translations for anime/manga statuses. These are to be treated
+like enums.
+"""
 class Status:
     READING = 1
     WATCHING, COMPLETED, ONHOLD, DROPPED = range(4)
     PLANTOWATCH = 6
+
+"""A namespace for exposing key names in AnimeList and MangaList object
+dictionaries.
+"""
+class Keys:
+    reading = 'reading'
+    watching = 'watching'
+    completed = 'completing'
+    onhold = 'onhold'
+    dropped = 'dropped'
+    plantowatch = 'plantowatch'
 
 def init_auth(username, password):
     """Initializes the auth settings for accessing MyAnimeList
