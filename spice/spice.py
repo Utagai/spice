@@ -14,12 +14,8 @@ this = sys.modules[__name__]
 """
 this.credentials = None
 
-"""The token for designating operations with anime.
-"""
-ANIME = 'anime'
-"""The token for designation operations with manga.
-"""
-MANGA = 'manga'
+class Medium:
+    ANIME, MANGA = range(2)
 
 def init_auth(username, password):
     """Initializes the auth settings for accessing MyAnimeList
@@ -68,12 +64,12 @@ def search(query, medium):
         raise ValueError("Empty query.")
     api_query = helpers.get_query_url(medium, query)
     if api_query == None:
-        raise ValueError("Invalid medium. Use spice.ANIME or spice.MANGA.")
+        raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
     search_resp = requests.get(api_query, auth=credentials)
     if search_resp == None: #is there a better way to do this...
         return []
     results = BeautifulSoup(search_resp.text, 'lxml')
-    if medium == ANIME:
+    if medium == Medium.ANIME:
         entries = results.anime
         if entries is None:
             sys.stderr.write("Too many requests... Waiting 5 seconds.\n")
@@ -81,7 +77,7 @@ def search(query, medium):
             return search(query, medium)
 
         return [Anime(entry) for entry in entries.findAll('entry')]
-    elif medium == MANGA:
+    elif medium == Medium.MANGA:
         entries = results.manga
         if entries is None:
             sys.stderr.write("Too many requests.. Waiting 5 seconds.\n")
@@ -102,7 +98,7 @@ def search_id(id, medium):
         raise ValueError("Id must be a non-zero, positive integer.")
     scrape_query = helpers.get_scrape_url(id, medium)
     if scrape_query == None:
-        raise ValueError("Invalid medium. Use spice.ANIME or spice.MANGA.")
+        raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
     search_resp = requests.get(scrape_query)
     results = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
@@ -157,9 +153,9 @@ def get_blank(medium):
     :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
     :returns A [medium]Data object.
     """
-    if medium == ANIME:
+    if medium == Medium.ANIME:
         return AnimeData()
-    elif medium == MANGA:
+    elif medium == Medium.MANGA:
         return MangaData()
     else:
         return None
