@@ -29,6 +29,12 @@ class Medium:
 class Operations:
     ADD, UPDATE, DELETE = range(3)
 
+"""The numerical translations for anime/manga statuses."""
+class Status:
+    READING = 1
+    WATCHING, COMPLETED, ONHOLD, DROPPED = range(4)
+    PLANTOWATCH = 6
+
 def init_auth(username, password):
     """Initializes the auth settings for accessing MyAnimeList
     through its official API from a given username and password.
@@ -116,10 +122,10 @@ def search_id(id, medium):
     if scrape_query is None:
         raise ValueError(constants.INVALID_MEDIUM)
     search_resp = requests.get(scrape_query)
-    results = BeautifulSoup(search_resp.text, 'html.parser')
+    result = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
     #coming from.
-    query = results.find(constants.ANIME_TITLE_ELEM,
+    query = result.find(constants.ANIME_TITLE_ELEM,
                     {constants.ANIME_TITLE_ATTR:constants.ANIME_TITLE_ATTR_VAL})
     if query is None:
         return helpers.reschedule(search_id, constants.DEFAULT_WAIT, id, medium)
@@ -189,6 +195,8 @@ def get_list(medium):
     list_resp = requests.get(list_url) #for some reason, we don't need auth.
     if constants.TOO_MANY_REQUESTS in list_resp.text:
         helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium)
+
+    medium_list = BeautifulSoup(list_resp.text, 'html.parser')
 
 
 if __name__ == '__main__':

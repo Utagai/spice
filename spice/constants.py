@@ -55,4 +55,3 @@ INVALID_AUTH_FILE   = "Invalid auth file."
 INVALID_EMPTY_QUERY = "Must provide a non-empty query."
 INVALID_MEDIUM      = "Invalid medium. Use spice.Medium.Anime or spice.Medium.MANGA."
 INVALID_ID          = "Id must be a non-zero, positive integer."
-

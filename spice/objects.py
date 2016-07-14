@@ -302,4 +302,7 @@ class MangaData:
                                    str(self.tags)[1:-1].replace('\'', ''),
                                    self.retail_volumes);
 
-
+class AnimeList:
+    def __init__(self):
+        self.anime_list = {'watching':[], 'completed':[], 'on-hold':[],
+                           'dropped':[], 'plan-to-watch':[]}
