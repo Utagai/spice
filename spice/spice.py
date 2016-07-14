@@ -147,10 +147,13 @@ def _op(data, id, medium, op):
     if post is None:
         raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
     post = post + ".xml?data=" + data.to_xml()
+    print(post)
     headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
     #MAL API is broken to hell -- you have to actually use GET
     #and chuck the data into the URL as seen above and below...
     r = requests.get(post, headers=headers, auth=credentials)
+    if r.status_code == 400 and 'has not been approved' in r.text:
+        sys.stderr.write("This medium has not been approved by MAL yet.\n")
 
 def get_blank(medium):
     """Returns a [medium]Data object for filling before calling spice.add(),
