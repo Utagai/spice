@@ -120,27 +120,32 @@ def add(data, id, medium):
     :param data   The data for the [medium] to add.
     :param id     The id of the data to add.
     :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :raise ValueError For bad arguments.
     """
-    _op(data, id, medium, 'add')
+    _op(data, id, medium, helpers.Operations.ADD)
 
 def update(data, id, medium):
     """Updates the [medium] with the given id and data on the user's [medium]List.
     :param data   The data for the [medium] to update.
     :param id     The id of the data to update.
     :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :raise ValueError For bad arguments.
     """
-    _op(data, id, medium, 'update')
+    _op(data, id, medium, helpers.Operations.UPDATE)
 
 def delete(data, id, medium):
     """Deletes the [medium] with the given id and data from the user's [medium]List.
     :param data   The data for the [medium] to delete.
     :param id     The id of the data to delete.
     :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :raise ValueError For bad arguments.
     """
-    _op(data, id, medium, 'delete')
+    _op(data, id, medium, helpers.Operations.DElETE)
 
 def _op(data, id, medium, op):
     post = helpers.get_post_url(id, medium, op)
+    if post is None:
+        raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
     post = post + ".xml?data=" + data.to_xml()
     headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
     #MAL API is broken to hell -- you have to actually use GET

@@ -1,23 +1,30 @@
 from sys import exit
 import spice
 
+"""The base URLs for querying anime/manga searches based on keywords.
+"""
 ANIME_QUERY_BASE  = 'http://myanimelist.net/api/anime/search.xml?q='
 MANGA_QUERY_BASE  = 'http://myanimelist.net/api/manga/search.xml?q='
 
+"""The base URLs for scraping anime/manga based on id numbers.
+"""
 ANIME_SCRAPE_BASE = 'http://myanimelist.net/anime/'
 MANGA_SCRAPE_BASE = 'http://myanimelist.net/manga/'
 
-ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/id.xml'
+"""The base URLs for operations on a user's AnimeList.
+"""
 ANIME_ADD_BASE    = 'http://myanimelist.net/api/animelist/add/id.xml'
+ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/id.xml'
 ANIME_DELETE_BASE = 'http://myanimelist.net/api/animelist/delete/id.xml'
 
+"""The base URLs for operations on a user's MangaList.
+"""
 MANGA_UPDATE_BASE = 'http://myanimelist.net/api/mangalist/update/id.xml'
 MANGA_ADD_BASE    = 'http://myanimelist.net/api/mangalist/add/id.xml'
 MANGA_DELETE_BASE = 'http://myanimelist.net/api/mangalist/delete/id.xml'
 
-ADD = "add"
-UPDATE = "update"
-DELETE = "delete"
+class Operations:
+    ADD, UPDATE, DELETE = range(3)
 
 def get_query_url(medium, query):
     query = query.strip()
@@ -39,29 +46,27 @@ def get_scrape_url(id, medium):
         return None
 
 def get_post_url(id, medium, op):
-    if op == UPDATE:
-        if medium == spice.Medium.ANIME:
-            return ANIME_UPDATE_BASE.replace('id', str(id))
-        elif medium == spice.Medium.MANGA:
-            return MANGA_UPDATE_BASE.replace('id', str(id))
-        else:
-            return None
-    elif op == ADD:
+    if op == Operations.ADD:
         if medium == spice.Medium.ANIME:
             return ANIME_ADD_BASE.replace('id', str(id))
         elif medium == spice.Medium.MANGA:
             return MANGA_ADD_BASE.replace('id', str(id))
         else:
             return None
-    elif op == DELETE:
+    elif op == Operations.UPDATE:
+        if medium == spice.Medium.ANIME:
+            return ANIME_UPDATE_BASE.replace('id', str(id))
+        elif medium == spice.Medium.MANGA:
+            return MANGA_UPDATE_BASE.replace('id', str(id))
+        else:
+            return None
+    else:
         if medium == spice.Medium.ANIME:
             return ANIME_DELETE_BASE.replace('id', str(id))
         elif medium == spice.Medium.MANGA:
             return MANGA_DELETE_BASE.replace('id', str(id))
         else:
             return None
-    else:
-        return None
 
 if __name__ == '__main__':
     exit(0)
