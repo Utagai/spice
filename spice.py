@@ -22,7 +22,11 @@ def search(query, medium):
     if len(query) == 0:
         return []
     api_query = helpers.get_query_url(medium, query)
+    if api_query == None: #is there a better way to do this...
+        return []
     search_resp = requests.get(api_query, auth=credentials)
+    if search_resp == None: #is there a better way to do this...
+        return []
     results = BeautifulSoup(search_resp.text, 'lxml')
     if medium == ANIME:
         entries = results.anime
@@ -43,7 +47,11 @@ def search(query, medium):
         return []
 
 def search_id(id, medium):
+    if id <= 0:
+        return None
     scrape_query = helpers.get_scrape_url(id, medium)
+    if scrape_query == None:
+        return None
     search_resp = requests.get(scrape_query)
     results = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
