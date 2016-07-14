@@ -1,3 +1,7 @@
+import spice
+import helpers
+from bs4 import BeautifulSoup
+
 class Anime:
     """An object that encapsulates an Anime.
 
@@ -31,68 +35,117 @@ class Anime:
         self._dates      = None
         self._synopsis   = None
         self._image_url  = None
+        self._rewatches  = None
 
     @property
     def id(self):
         if self._id is None:
-            self._id = self.raw_data.id.text
+            id_val = self.raw_data.id
+            if id_val is None: #AnimeList Anime data.
+                id_val = self.raw_data.series_animedb_id
+            self._id = id_val.text
         return self._id
 
     @property
     def title(self):
         if self._title is None:
-            self._title = self.raw_data.title.text
+            title_val = self.raw_data.title
+            if title_val is None:
+                title_val = self.raw_data.series_title
+            self._title = title_val.text
         return self._title
 
     @property
     def english(self):
         if self._english is None:
-            self._english = self.raw_data.english.text
+            english_val = self.raw_data.english
+            if english_val is None:
+                return None
+            self._english = english_val.text
         return self._english
 
     @property
     def episodes(self):
         if self._episodes is None:
-            self._episodes = self.raw_data.episodes.text
+            episodes_val = self.raw_data.episodes
+            if episodes_val is None:
+                episodes_val = self.raw_data.my_watched_episodes
+            self._episodes = episodes_val.text
         return self._episodes
 
     @property
     def score(self):
         if self._score is None:
-            self._score = self.raw_data.score.text
+            score_val = self.raw_data.score
+            if score_val is None:
+                score_val = self.raw_data.my_score
+            self._score = score_val.text
         return self._score
 
     @property
     def anime_type(self):
         if self._type is None:
-            self._type = self.raw_data.type.text
+            type_val = self.raw_data.type
+            if type_val is None:
+                return None
+            self._type = type_val.text
         return self._type
 
     @property
     def status(self):
         if self._status is None:
-            self._status = self.raw_data.status.text
+            status_val = self.raw_data.status
+            if status_val is None:
+                status_val = self.raw_data.my_status
+            self._status = status_val.text
         return self._status
 
     @property
     def dates(self):
         if self._dates is None:
-            start_date = self.raw_data.start_date.text
-            end_date = self.raw_data.end_date.text
-            self._dates = (start_date, end_date)
+            start_val = self.raw_data.start_date
+            end_val = self.raw_data.end_date
+            if start_val is None:
+                start_val = self.raw_data.my_start_date
+                end_val = self.raw_data.my_end_date
+            self._dates = (start_val.text, end_val.text)
         return self._dates
 
     @property
     def synopsis(self):
         if self._synopsis is None:
-            self._synopsis = self.raw_data.synopsis.text
+            synopsis_val = self.raw_data.synopsis
+            if synopsis_val is None:
+                return None
+            self._synopsis = synopsis_val.text
         return self._synopsis
 
     @property
     def image_url(self):
         if self._image_url is None:
-            self._image_url = self.raw_data.image.text
+            image_val = self.raw_data.image
+            if image_val is None:
+                return Non
+            self._image_url = image_val.text
         return self._image_url
+
+    @property
+    def rewatches(self):
+        if self._rewatches is None:
+            rewatch_val = self.raw_data.my_rewatching
+            if rewatch_val is None:
+                return None
+            self._rewatches = rewatch_val.text
+            return self._rewatches
+
+    @property
+    def rewatch_ep(self):
+        if self._rewatch_ep is None:
+            rewatch_ep_val = self.raw_data.my_rewatching_ep
+            if rewatch_ep_val is None:
+                return None
+            self._rewatch_ep = rewatch_ep_val.text
+            return self._rewatch_ep
 
 class AnimeData:
     """An object for packaging data required for operations on AnimeLists
@@ -302,7 +355,33 @@ class MangaData:
                                    str(self.tags)[1:-1].replace('\'', ''),
                                    self.retail_volumes);
 
-class AnimeList:
-    def __init__(self):
-        self.anime_list = {'watching':[], 'completed':[], 'onhold':[],
+class MediumList:
+    def __init__(self, medium, list_data):
+        self.medium = medium
+        self.raw_data = list_data
+        if self.medium == spice.Medium.ANIME:
+            self.anime_list = {'watching':[], 'completed':[], 'onhold':[],
                            'dropped':[], 'plantowatch':[]}
+        elif self.medium == spice.Medium.MANGA:
+            self.manga_list = {'reading':[], 'completed':[], 'onhold':[],
+                           'dropped':[], 'plantoread':[]}
+        else:
+            #not sure what the best thing to do is... default to anime?
+            raise ValueError(constants.INVALID_MEDIUM)
+
+        self.load()
+
+    def load(self):
+        list_soup = BeautifulSoup(self.raw_data, 'lxml')
+        if self.medium == spice.Medium.ANIME:
+            list_items = list_soup.findAll('anime')
+            for item in list_items:
+                status = helpers.find_key(item.my_status.text, self.medium)
+                status_list = self.anime_list[status]
+                status_list.append(Anime(item))
+        else: #we are guaranteed to, at this point, have a valid medium
+            list_items = list_soup.findAll('manga')
+            for item in list_items:
+                status = helpers.find_key(item.my-status.text, self.medium)
+                status_list = self.manga_list[status]
+                status_list.append(Manga(item))

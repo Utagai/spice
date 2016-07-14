@@ -4,6 +4,7 @@ from objects import Anime
 from objects import Manga
 from objects import AnimeData
 from objects import MangaData
+from objects import MediumList
 import constants
 import helpers
 import sys
@@ -35,19 +36,21 @@ like enums.
 """
 class Status:
     READING = 1
-    WATCHING, COMPLETED, ONHOLD, DROPPED = range(4)
+    WATCHING, COMPLETED, ONHOLD, DROPPED = range(1,5)
     PLANTOWATCH = 6
+    PLANTOREAD = 6
 
 """A namespace for exposing key names in AnimeList and MangaList object
 dictionaries.
 """
 class Keys:
-    reading = 'reading'
-    watching = 'watching'
-    completed = 'completing'
-    onhold = 'onhold'
-    dropped = 'dropped'
-    plantowatch = 'plantowatch'
+    READING = 'reading'
+    WATCHING = 'watching'
+    COMPLETED = 'completed'
+    ONHOLD = 'onhold'
+    DROPPED = 'dropped'
+    PLANTOWATCH = 'plantowatch'
+    PLANTOREAD = 'plantoread'
 
 def init_auth(username, password):
     """Initializes the auth settings for accessing MyAnimeList
@@ -108,15 +111,15 @@ def search(query, medium):
     search_resp = requests.get(api_query, auth=credentials)
     if search_resp is None: #is there a better way to do this...
         return []
-    results = BeautifulSoup(search_resp.text, 'lxml')
+    query_soup = BeautifulSoup(search_resp.text, 'lxml')
     if medium == Medium.ANIME:
-        entries = results.anime
+        entries = query_soup.anime
         if entries is None:
             return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
 
         return [Anime(entry) for entry in entries.findAll('entry')]
     elif medium == Medium.MANGA:
-        entries = results.manga
+        entries = query_soup.manga
         if entries is None:
             return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
         return [Manga(entry) for entry in entries.findAll('entry')]
@@ -136,10 +139,10 @@ def search_id(id, medium):
     if scrape_query is None:
         raise ValueError(constants.INVALID_MEDIUM)
     search_resp = requests.get(scrape_query)
-    result = BeautifulSoup(search_resp.text, 'html.parser')
+    scrape_soup = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
     #coming from.
-    query = result.find(constants.ANIME_TITLE_ELEM,
+    query = scrape_soup.find(constants.ANIME_TITLE_ELEM,
                     {constants.ANIME_TITLE_ATTR:constants.ANIME_TITLE_ATTR_VAL})
     if query is None:
         return helpers.reschedule(search_id, constants.DEFAULT_WAIT, id, medium)
@@ -210,8 +213,7 @@ def get_list(medium):
     if constants.TOO_MANY_REQUESTS in list_resp.text:
         helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium)
 
-    medium_list = BeautifulSoup(list_resp.text, 'html.parser')
-
+    return MediumList(medium, list_resp.text)
 
 if __name__ == '__main__':
     print("Spice is meant to be imported into a project.")

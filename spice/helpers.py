@@ -65,5 +65,29 @@ def reschedule(func, wait, *args):
     sleep(wait)
     return func(*args)
 
+def find_key(status_num, medium):
+    if status_num == str(spice.Status.READING):
+        if medium == spice.Medium.MANGA:
+            return spice.Keys.READING
+        elif medium == spice.Medium.ANIME:
+            return spice.Keys.WATCHING
+        else:
+            return None
+    elif status_num == str(spice.Status.COMPLETED):
+        return spice.Keys.COMPLETED
+    elif status_num == str(spice.Status.ONHOLD):
+        return spice.Keys.ONHOLD
+    elif status_num == str(spice.Status.DROPPED):
+        return spice.Keys.DROPPED
+    elif status_num == str(spice.Status.PLANTOREAD):
+        if medium == spice.Medium.MANGA:
+            return spice.Keys.PLANTOREAD
+        elif medium == spice.Medium.ANIME:
+            return spice.Keys.PLANTOWATCH
+        else:
+            return None
+    else:
+        return None
+
 if __name__ == '__main__':
     exit(0)
