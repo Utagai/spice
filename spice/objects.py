@@ -82,6 +82,7 @@ class Anime:
         self._synopsis   = None
         self._image_url  = None
         self._rewatches  = None
+        self._rewatch_ep = None
 
     @property
     def id(self):
@@ -171,7 +172,7 @@ class Anime:
         if self._image_url is None:
             image_val = self.raw_data.image
             if image_val is None:
-                return Non
+                image_val = self.raw_data.series_image
             self._image_url = image_val.text
         return self._image_url
 
@@ -270,79 +271,120 @@ class Manga:
         image_url  - A url to the manga's cover image.
     """
     def __init__(self, manga_data):
-        self.raw_data = manga_data
-        self._id = None
-        self._title = None
-        self._english = None
-        self._chapter = None
-        self._volume = None
-        self._score = None
-        self._type = None
-        self._status = None
-        self._dates = None
-        self._synopsis = None
-        self._image_url = None
+        self.raw_data     = manga_data
+        self._id          = None
+        self._title       = None
+        self._english     = None
+        self._chapters    = None
+        self._volumes     = None
+        self._score       = None
+        self._type        = None
+        self._status      = None
+        self._dates       = None
+        self._synopsis    = None
+        self._image_url   = None
+        self._rereads     = None
+        self._reread_chap = None
 
     @property
     def id(self):
         if self._id is None:
-            self._id = self.raw_data.id.text
+            id_val = self.raw_data.id
+            if id_val is None:
+                id_val = self.raw_data.series_mangadb_id
+            self._id = id_val.text
         return self._id
 
     @property
     def title(self):
         if self._title is None:
-            self._title = self.raw_data.title.text
+            title_val = self.raw_data.title
+            if title_val is None:
+                title_val = self.raw_data.series_title
+            self._title = title_val.text
         return self._title
 
     @property
     def english(self):
         if self._english is None:
-            self._english = self.raw_data.english.text
+            english_val = self.raw_data.english
+            if english_val is None:
+                return None
+            self._english = english_val.text
         return self._english
 
     @property
-    def episodes(self):
-        if self._episodes is None:
-            self._episodes = self.raw_data.episodes.text
-        return self._episodes
+    def chapters(self):
+        if self._chapters is None:
+            chapter_val = self.raw_data.chapters
+            if chapter_val is None:
+                chapter_val = self.raw_data.my_read_chapters
+            self._chapters = chapter_val.text
+        return self._chapters
+
+    @property
+    def volumes(self):
+        if self._volumes is None:
+            volumes_val = self.raw_data.volumes
+            if volumes_val is None:
+                volumes_val = self.raw_data.my_read_volumes
+            self._volumes = volumes_val.text
+        return self._volumes
 
     @property
     def score(self):
         if self._score is None:
-            self._score = self.raw_data.score.text
+            score_val = self.raw_data.score
+            if score_val is None:
+                score_val = self.raw_data.my_score
+            self._score = score_val.text
         return self._score
 
     @property
     def manga_type(self):
         if self._type is None:
-            self._type = self.raw_data.type.text
+            manga_type_val = self.raw_data.type
+            if manga_type_val is None:
+                return None
+            self._type = manga_type_val.text
         return self._type
 
     @property
     def status(self):
         if self._status is None:
-            self._status = self.raw_data.status.text
+            status_val = self.raw_data.status
+            if status_val is None:
+                status_val = self.raw_data.my_status
+            self._status = status_val.text
         return self._status
 
     @property
     def dates(self):
         if self._dates is None:
-            start_date = self.raw_data.start_date.text
-            end_date = self.raw_data.end_date.text
-            self._dates = (start_date, end_date)
+            start_val = self.raw_data.start_date
+            end_val = self.raw_data.end_date
+            if start_date is None:
+                start_val = self.raw_data.my_start_date
+                end_val = self.raw_data.my_end_date
+            self._dates = (start_val.text, end_val.text)
         return self._dates
 
     @property
     def synopsis(self):
         if self._synopsis is None:
-            self._synopsis = self.raw_data.synopsis.text
+            synopsis_val = self.raw_data.synopsis
+            if synopsis_val is None:
+                return None
+            self._synopsis = synopsis_val.text
         return self._synopsis
 
     @property
     def image_url(self):
         if self._image_url is None:
-            self._image_url = self.raw_data.image.text
+            image_val = self.raw_data.image
+            if image_val is None:
+                image_val = self.raw_data.series_image
+            self._image_url = image_val.text
         return self._image_url
 
 class MangaData:
@@ -445,7 +487,7 @@ class MediumList:
         else: #we are guaranteed to, at this point, have a valid medium
             list_items = list_soup.findAll('manga')
             for item in list_items:
-                status = helpers.find_key(item.my-status.text, self.medium)
+                status = helpers.find_key(item.my_status.text, self.medium)
                 status_list = self.medium_list[status]
                 status_list.append(Manga(item))
 
