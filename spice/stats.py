@@ -32,3 +32,56 @@ WARN: This module is not meant to be used in any way besides in the internals of
 the spice API source code, but because it is for general statistics, one can
 extract this from the API and use it in their own projects.
 """
+
+from __future__ import division
+from decimal import Decimal
+from collections import Counter
+from math import sqrt
+
+def sum(data):
+    _data_check(data)
+    total = 0
+    for elem in data:
+        total += Decimal(elem)
+
+    return total
+
+def mean(data):
+    _data_check(data)
+    return sum(data)/len(data)
+
+def median(data):
+    _data_check(data)
+    data_len = len(data)
+    if data_len % 2 == 0:
+        sorted_data = sorted(data)
+        return (sorted_data[data_len//2] + sorted_data[data_len//2 - 1])/2
+    else:
+        return sorted(data)[data_len//2]
+
+def mode(data):
+    _data_check(data)
+    mode_list = Counter(data)
+    return mode_list.most_common(1)[0][0]
+
+def extremes(data):
+    _data_check(data)
+    return (max(data), min(data))
+
+def p_var(data):
+    _data_check(data)
+    second_sum = 0
+    data_len = len(data)
+    mean_val = mean(data)
+    for elem in data:
+        second_sum += (elem - mean_val) * (elem - mean_val)
+
+    return second_sum/(data_len - 1)
+
+def p_stddev(data):
+    _data_check(data)
+    return sqrt(p_var(data))
+
+def _data_check(data):
+    if len(data) == 0:
+        raise ValueError("Data must be non-empty.")
