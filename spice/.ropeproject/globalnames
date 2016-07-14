@@ -1,5 +1,7 @@
 €}q(Utest]qUmainqaUobjects]q(U	AnimeDataqU	MangaDataqUAnimeqUMangaqeUhelpers]q	(Uget_post_urlq
 Uget_query_urlqU
 verif_authqU
-rescheduleqUget_list_urlqUget_scrape_urlqeU	constants]q(UCREDENTIALS_VERIFYqUMANGA_SCRAPE_BASEqUANIME_ADD_BASEqUANIMELIST_BASEqUMANGA_ADD_BASEqUANIME_UPDATE_BASEqUANIME_QUERY_BASEqUMANGA_UPDATE_BASEqUMANGA_DELETE_BASEqUANIME_SCRAPE_BASEqUMANGA_QUERY_BASEqUMANGALIST_BASEqUANIME_DELETE_BASEqeUspice]q(U
-OperationsqUsearchq UMediumq!Uload_auth_from_fileq"Uthisq#Uupdateq$U	search_idq%U	init_authq&Uaddq'U	get_blankq(Uget_listq)Udeleteq*eu.
+rescheduleqUget_list_urlqUget_scrape_urlqeU	constants]q(U
+INVALID_IDqUINVALID_AUTH_FILEqUANIME_UPDATE_BASEqU
+UNAPPROVEDqUTOO_MANY_REQUESTSqUINVALID_CREDENTIALSqUMANGALIST_BASEqUINVALID_MEDIUMqUCREDENTIALS_VERIFYqUANIME_TITLE_ATTR_VALqUANIME_QUERY_BASEqUDEFAULT_WAITqUMANGA_DELETE_BASEqUMANGA_ADD_BASEqUMANGA_UPDATE_BASEqU	OP_SUFFIXq UINVALID_EMPTY_QUERYq!UANIME_TITLE_ATTRq"UANIME_SCRAPE_BASEq#UANIME_DELETE_BASEq$UMANGA_SCRAPE_BASEq%UANIME_ADD_BASEq&UANIMELIST_BASEq'UMANGA_QUERY_BASEq(UANIME_TITLE_ELEMq)eUspice]q*(UMediumq+Uload_auth_from_fileq,Uget_listq-Uaddq.U	search_idq/Uupdateq0U	init_authq1U	get_blankq2U
+Operationsq3Usearchq4Uthisq5Udeleteq6eu.

@@ -27,25 +27,21 @@ def get_scrape_url(id, medium):
 def get_post_url(id, medium, op):
     if op == spice.Operations.ADD:
         if medium == spice.Medium.ANIME:
-            return constants.ANIME_ADD_BASE.format(id)
+            return constants.ANIME_ADD_BASE.format(id) +  constants.OP_SUFFIX
         elif medium == spice.Medium.MANGA:
-            return constants.MANGA_ADD_BASE.format(id)
-        else:
-            return None
+            return constants.MANGA_ADD_BASE.format(id) +  constants.OP_SUFFIX
     elif op == spice.Operations.UPDATE:
         if medium == spice.Medium.ANIME:
-            return constants.ANIME_UPDATE_BASE.format(id)
+            return constants.ANIME_UPDATE_BASE.format(id) +  constants.OP_SUFFIX
         elif medium == spice.Medium.MANGA:
-            return constants.MANGA_UPDATE_BASE.format(id)
-        else:
-            return None
+            return constants.MANGA_UPDATE_BASE.format(id) +  constants.OP_SUFFIX
     else:
         if medium == spice.Medium.ANIME:
-            return constants.ANIME_DELETE_BASE.format(id)
+            return constants.ANIME_DELETE_BASE.format(id) +  constants.OP_SUFFIX
         elif medium == spice.Medium.MANGA:
-            return constants.MANGA_DELETE_BASE.format(id)
-        else:
-            return None
+            return constants.MANGA_DELETE_BASE.format(id) +  constants.OP_SUFFIX
+
+    return None
 
 def verif_auth():
     verif_resp = requests.get(constants.CREDENTIALS_VERIFY,

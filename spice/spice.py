@@ -4,6 +4,7 @@ from objects import Anime
 from objects import Manga
 from objects import AnimeData
 from objects import MangaData
+import constants
 import helpers
 import sys
 
@@ -41,7 +42,7 @@ def init_auth(username, password):
     if helpers.verif_auth():
         return (username, password)
     else:
-        raise ValueError("Invalid credentials; rejected by MAL.")
+        raise ValueError(constants.INVALID_CREDENTIALS)
 
 def load_auth_from_file(filename):
     """Initializes the auth settings for accessing MyAnimelist through its
@@ -64,12 +65,12 @@ def load_auth_from_file(filename):
             user_pass = lines[0].split()
             this.credentials = (user_pass[0], user_pass[1])
         elif len(lines) == 0 or len(lines) > 2:
-            raise ValueError("Invalid auth file.")
+            raise ValueError(constants.INVALID_AUTH_FILE)
 
         if helpers.verif_auth():
             return (lines[0], lines[1])
         else:
-            raise ValueError("Invalid credentials; rejected by MAL.")
+            raise ValueError(constants.INVALID_CREDENTIALS)
 
 def search(query, medium):
     """Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
@@ -80,10 +81,10 @@ def search(query, medium):
     :raise ValueError For bad arguments.
     """
     if len(query) == 0:
-        raise ValueError("Empty query.")
+        raise ValueError(constants.INVALID_EMPTY_QUERY)
     api_query = helpers.get_query_url(medium, query)
     if api_query is None:
-        raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
+        raise ValueError(constants.INVALID_MEDIUM)
     search_resp = requests.get(api_query, auth=credentials)
     if search_resp is None: #is there a better way to do this...
         return []
@@ -91,15 +92,13 @@ def search(query, medium):
     if medium == Medium.ANIME:
         entries = results.anime
         if entries is None:
-            return helpers.reschedule(search, 5, query, medium)
+            return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
 
         return [Anime(entry) for entry in entries.findAll('entry')]
     elif medium == Medium.MANGA:
         entries = results.manga
         if entries is None:
-            sys.stderr.write("Too many requests.. Waiting 5 seconds.\n")
-            sleep(5)
-            return search(query, medium)
+            return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
         return [Manga(entry) for entry in entries.findAll('entry')]
 
 def search_id(id, medium):
@@ -112,17 +111,18 @@ def search_id(id, medium):
     :raise ValueError For bad arguments.
     """
     if id <= 0 or not float(id).is_integer():
-        raise ValueError("Id must be a non-zero, positive integer.")
+        raise ValueError(constants.INVALID_ID)
     scrape_query = helpers.get_scrape_url(id, medium)
     if scrape_query is None:
-        raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
+        raise ValueError(constants.INVALID_MEDIUM)
     search_resp = requests.get(scrape_query)
     results = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
     #coming from.
-    query = results.find('span', {'itemprop':'name'})
+    query = results.find(constants.ANIME_TITLE_ELEM,
+                    {constants.ANIME_TITLE_ATTR:constants.ANIME_TITLE_ATTR_VAL})
     if query is None:
-        return helpers.reschedule(search_id, 5, id, medium)
+        return helpers.reschedule(search_id, constants.DEFAULT_WAIT, id, medium)
     matches = search(query.text, medium)
     index = [match.id for match in matches].index(str(id))
     if index != -1:
@@ -160,17 +160,16 @@ def delete(data, id, medium):
 def _op(data, id, medium, op):
     post = helpers.get_post_url(id, medium, op)
     if post is None:
-        raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
-    post = post + ".xml?data=" + data.to_xml()
-    print(post)
+        raise ValueError(constants.INVALID_MEDIUM)
+    post = post  + data.to_xml()
     headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
     #MAL API is broken to hell -- you have to actually use GET
     #and chuck the data into the URL as seen above and below...
     op_resp = requests.get(post, headers=headers, auth=credentials)
-    if op_resp.status_code == 400 and 'has not been approved' in op_resp.text:
+    if op_resp.status_code == 400 and constants.UNAPPROVED in op_resp.text:
         sys.stderr.write("This medium has not been approved by MAL yet.\n")
-    elif 'Too Many Requests' in op_resp.text: #Oh Holo save me from this API.
-        helpers.reschedule(_op, 5, data, id, medium, op)
+    elif constants.TOO_MANY_REQUESTS in op_resp.text: #Oh Holo save me from this API.
+        helpers.reschedule(_op, constants.DEFAULT_WAIT, data, id, medium, op)
 
 def get_blank(medium):
     """Returns a [medium]Data object for filling before calling spice.add(),
@@ -188,8 +187,8 @@ def get_blank(medium):
 def get_list(medium):
     list_url = helpers.get_list_url(medium)
     list_resp = requests.get(list_url) #for some reason, we don't need auth.
-    if 'Too Many Requests' in list_resp.text:
-        helpers.reschedule(get_list, 5, medium)
+    if constants.TOO_MANY_REQUESTS in list_resp.text:
+        helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium)
 
 
 if __name__ == '__main__':
