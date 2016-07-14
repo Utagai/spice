@@ -14,6 +14,21 @@ this.credentials = None
 ANIME = 'anime'
 MANGA = 'manga'
 
+def load_auth_from_file(filename):
+    with open(filename) as auth_file:
+        lines = auth_file.read().splitlines()
+        lines = [line for line in lines if len(line) != 0]
+        if len(lines) == 2:
+            this.credentials = (lines[0], lines[1])
+            return (lines[0], lines[1])
+        elif len(lines) == 1:
+            user_pass = lines[0].split()
+            this.credentials = (user_pass[0], user_pass[1])
+            return (user_pass[0], user_pass[1])
+        elif len(lines) == 0 or len(lines) > 2:
+            return None
+
+
 def init_auth(username, password):
     this.credentials = (username, password)
     return (username, password)

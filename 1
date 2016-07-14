@@ -1,0 +1,27 @@
+from bs4 import BeautifulSoup
+import requests
+import spice
+
+def main():
+    spice.load_auth_from_file('auth.txt')
+    #results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', spice.ANIME)
+    re_zero = spice.search_id(31240, spice.ANIME)
+    print(re_zero.title)
+    re_zero_data = spice.get_blank(spice.ANIME)
+    re_zero_data.episodes = 15
+    re_zero_data.status = 1
+    re_zero_data.score = 8
+    re_zero_data.tags = ['this the first time a show that made me cringe']
+
+    shokugeki_data = spice.get_blank(spice.MANGA)
+    shokugeki_data.chapters = 20
+    shokugeki_data.volumes = 1
+    shokugeki_data.status = 1
+    shokugeki_data.score = 8
+
+
+
+
+
+if __name__ == '__main__':
+    main()

@@ -4,3 +4,4 @@ gitp.sh
 .*.py.swp
 test.py
 *.pyc
+auth
