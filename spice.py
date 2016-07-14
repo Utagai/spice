@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import requests
 from objects import Anime
 from objects import Manga
+from objects import AnimeData
+from objects import MangaData
 import helpers
 import sys
 from time import sleep
@@ -74,6 +76,14 @@ def _op(data, id, medium, op):
     #MAL API is broken to hell -- you have to actually use GET
     #and chuck the data into the URL as seen above and below...
     r = requests.get(post, headers=headers, auth=credentials)
+
+def get_blank(medium):
+    if medium == ANIME:
+        return AnimeData()
+    elif medium == MANGA:
+        return MangaData()
+    else:
+        return None
 
 if __name__ == '__main__':
     print("Spice is meant to be imported into a project.")
