@@ -9,12 +9,40 @@ import sys
 from time import sleep
 
 this = sys.modules[__name__]
+
+"""The credentials set for the user.
+"""
 this.credentials = None
 
+"""The token for designating operations with anime.
+"""
 ANIME = 'anime'
+"""The token for designation operations with manga.
+"""
 MANGA = 'manga'
 
+def init_auth(username, password):
+    """Initializes the auth settings for accessing MyAnimeList
+    through its official API from a given username and password.
+    :param username Your MyAnimeList account username.
+    :param password Your MyAnimeList account password.
+    :return A tuple containing your credentials.
+    """
+    this.credentials = (username, password)
+    return (username, password)
+
 def load_auth_from_file(filename):
+    """Initializes the auth settings for accessing MyAnimelist through its
+    official API from a given filename.
+    :param filename The name of the file containing your MyAnimeList
+                    credentials
+                    REQUIREMENTS: The file must...
+                        ...username for your MAL account.
+                        ...password for your MAL account.
+                        ...Have both your username  and password
+                        ...separated by newline(s) or space(s).
+    :return A tuple containing your credentials.
+    """
     with open(filename) as auth_file:
         lines = auth_file.read().splitlines()
         lines = [line for line in lines if len(line) != 0]
@@ -28,17 +56,19 @@ def load_auth_from_file(filename):
         elif len(lines) == 0 or len(lines) > 2:
             return None
 
-
-def init_auth(username, password):
-    this.credentials = (username, password)
-    return (username, password)
-
 def search(query, medium):
+    """Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
+    :param query  The keyword(s) to search with.
+    :param medium Whether to search for an anime or manga with the given query.
+    :return A list of all items that are of type [medium] and match the
+             given keywords, or, an empty list if none matched.
+    :raise ValueError For bad arguments.
+    """
     if len(query) == 0:
-        return []
+        raise ValueError("Empty query.")
     api_query = helpers.get_query_url(medium, query)
-    if api_query == None: #is there a better way to do this...
-        return []
+    if api_query == None:
+        raise ValueError("Invalid medium. Use spice.ANIME or spice.MANGA.")
     search_resp = requests.get(api_query, auth=credentials)
     if search_resp == None: #is there a better way to do this...
         return []
@@ -58,15 +88,21 @@ def search(query, medium):
             sleep(5)
             return search(query, medium)
         return [Manga(entry) for entry in entries.findAll('entry')]
-    else:
-        return []
 
 def search_id(id, medium):
-    if id <= 0:
-        return None
+    """Grabs the [medium] with the given id from MyAnimeList as a [medium]
+    object.
+    :param id     The id of the [medium].
+    :param medium Whether to search for an anime or manga with the given query.
+    :return The [medium] object with id requested, or None if no such [medium]
+            exists.
+    :raise ValueError For bad arguments.
+    """
+    if id <= 0 or not float(id).is_integer():
+        raise ValueError("Id must be a non-zero, positive integer.")
     scrape_query = helpers.get_scrape_url(id, medium)
     if scrape_query == None:
-        return None
+        raise ValueError("Invalid medium. Use spice.ANIME or spice.MANGA.")
     search_resp = requests.get(scrape_query)
     results = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
