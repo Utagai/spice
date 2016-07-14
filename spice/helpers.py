@@ -2,6 +2,11 @@ from sys import exit
 from sys import stderr
 from time import sleep
 import spice
+import requests
+
+"""The URL for verifying credentials.
+"""
+CREDENTIALS_VERIFY = 'http://myanimelist.net/api/account/verify_credentials.xml'
 
 """The base URLs for querying anime/manga searches based on keywords.
 """
@@ -15,15 +20,20 @@ MANGA_SCRAPE_BASE = 'http://myanimelist.net/manga/'
 
 """The base URLs for operations on a user's AnimeList.
 """
-ANIME_ADD_BASE    = 'http://myanimelist.net/api/animelist/add/id.xml'
-ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/id.xml'
-ANIME_DELETE_BASE = 'http://myanimelist.net/api/animelist/delete/id.xml'
+ANIME_ADD_BASE    = 'http://myanimelist.net/api/animelist/add/{}.xml'
+ANIME_UPDATE_BASE = 'http://myanimelist.net/api/animelist/update/{}.xml'
+ANIME_DELETE_BASE = 'http://myanimelist.net/api/animelist/delete/{}.xml'
 
 """The base URLs for operations on a user's MangaList.
 """
-MANGA_UPDATE_BASE = 'http://myanimelist.net/api/mangalist/update/id.xml'
-MANGA_ADD_BASE    = 'http://myanimelist.net/api/mangalist/add/id.xml'
-MANGA_DELETE_BASE = 'http://myanimelist.net/api/mangalist/delete/id.xml'
+MANGA_UPDATE_BASE = 'http://myanimelist.net/api/mangalist/update/{}.xml'
+MANGA_ADD_BASE    = 'http://myanimelist.net/api/mangalist/add/{}.xml'
+MANGA_DELETE_BASE = 'http://myanimelist.net/api/mangalist/delete/{}.xml'
+
+"""The base URLs for accessing a user's Anime or MangaList.
+"""
+ANIMELIST_BASE = 'http://myanimelist.net/malappinfo.php?u={}&status=all&type=anime'
+MANGALIST_BASE = 'http://myanimelist.net/malappinfo.php?u={}&status=all&type=manga'
 
 """The operations available on user Lists."""
 class Operations:
@@ -51,25 +61,41 @@ def get_scrape_url(id, medium):
 def get_post_url(id, medium, op):
     if op == Operations.ADD:
         if medium == spice.Medium.ANIME:
-            return ANIME_ADD_BASE.replace('id', str(id))
+            return ANIME_ADD_BASE.format(id)
         elif medium == spice.Medium.MANGA:
-            return MANGA_ADD_BASE.replace('id', str(id))
+            return MANGA_ADD_BASE.format(id)
         else:
             return None
     elif op == Operations.UPDATE:
         if medium == spice.Medium.ANIME:
-            return ANIME_UPDATE_BASE.replace('id', str(id))
+            return ANIME_UPDATE_BASE.format(id)
         elif medium == spice.Medium.MANGA:
-            return MANGA_UPDATE_BASE.replace('id', str(id))
+            return MANGA_UPDATE_BASE.format(id)
         else:
             return None
     else:
         if medium == spice.Medium.ANIME:
-            return ANIME_DELETE_BASE.replace('id', str(id))
+            return ANIME_DELETE_BASE.format(id)
         elif medium == spice.Medium.MANGA:
-            return MANGA_DELETE_BASE.replace('id', str(id))
+            return MANGA_DELETE_BASE.format(id)
         else:
             return None
+
+def verif_auth():
+    verif_response = requests.get(CREDENTIALS_VERIFY, auth=spice.credentials)
+    if verif_response.status_code == 200:
+        return True
+    else:
+        return False
+
+
+def get_list_url(medium):
+    if medium == spice.Medium.ANIME:
+        return ANIMELIST_BASE.format(spice.credentials[0])
+    elif medium == spice.Medium.MANGA:
+        return MANGALIST_BASE.format(spice.credentials[1])
+    else:
+        return None
 
 def reschedule(func, *args):
     stderr.write("Too many requests. Waiting 5 seconds.\n")

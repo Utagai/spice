@@ -13,6 +13,14 @@ this = sys.modules[__name__]
 """
 this.credentials = None
 
+"""The class that defines 'mediums'. Commonly seen as [medium] through the
+docs. A medium is the form in which the content comes in, and can either be
+ANIME or MANGA.
+
+These are to be treated like enum tokens and are used frequently in this API's
+function calls to specify the medium for which to do work, since MyAnimeList
+is very distinctly cut up into two pieces, one for anime and one for manga.
+"""
 class Medium:
     ANIME, MANGA = range(2)
 
@@ -23,8 +31,13 @@ def init_auth(username, password):
     :param password Your MyAnimeList account password.
     :return A tuple containing your credentials.
     """
+    username = username.strip()
+    password = password.strip()
     this.credentials = (username, password)
-    return (username, password)
+    if helpers.verif_auth():
+        return (username, password)
+    else:
+        raise ValueError("Invalid credentials; rejected by MAL.")
 
 def load_auth_from_file(filename):
     """Initializes the auth settings for accessing MyAnimelist through its
@@ -40,16 +53,19 @@ def load_auth_from_file(filename):
     """
     with open(filename) as auth_file:
         lines = auth_file.read().splitlines()
-        lines = [line for line in lines if len(line) != 0]
+        lines = [line.strip() for line in lines if len(line) != 0]
         if len(lines) == 2:
             this.credentials = (lines[0], lines[1])
-            return (lines[0], lines[1])
         elif len(lines) == 1:
             user_pass = lines[0].split()
             this.credentials = (user_pass[0], user_pass[1])
-            return (user_pass[0], user_pass[1])
         elif len(lines) == 0 or len(lines) > 2:
-            return None
+            raise ValueError("Invalid auth file.")
+
+        if helpers.verif_auth():
+            return (lines[0], lines[1])
+        else:
+            raise ValueError("Invalid credentials; rejected by MAL.")
 
 def search(query, medium):
     """Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
@@ -62,10 +78,10 @@ def search(query, medium):
     if len(query) == 0:
         raise ValueError("Empty query.")
     api_query = helpers.get_query_url(medium, query)
-    if api_query == None:
+    if api_query is None:
         raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
     search_resp = requests.get(api_query, auth=credentials)
-    if search_resp == None: #is there a better way to do this...
+    if search_resp is None: #is there a better way to do this...
         return []
     results = BeautifulSoup(search_resp.text, 'lxml')
     if medium == Medium.ANIME:
@@ -94,7 +110,7 @@ def search_id(id, medium):
     if id <= 0 or not float(id).is_integer():
         raise ValueError("Id must be a non-zero, positive integer.")
     scrape_query = helpers.get_scrape_url(id, medium)
-    if scrape_query == None:
+    if scrape_query is None:
         raise ValueError("Invalid medium. Use spice.Medium.ANIME or spice.Medium.MANGA.")
     search_resp = requests.get(scrape_query)
     results = BeautifulSoup(search_resp.text, 'html.parser')
@@ -164,6 +180,11 @@ def get_blank(medium):
         return MangaData()
     else:
         return None
+
+def get_list(medium):
+    list_url = helpers.get_list_url(medium)
+    print(list_url)
+
 
 if __name__ == '__main__':
     print("Spice is meant to be imported into a project.")
