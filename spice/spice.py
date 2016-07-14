@@ -59,7 +59,7 @@ def load_auth_from_file(filename):
 def search(query, medium):
     """Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
     :param query  The keyword(s) to search with.
-    :param medium Whether to search for an anime or manga with the given query.
+    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
     :return A list of all items that are of type [medium] and match the
              given keywords, or, an empty list if none matched.
     :raise ValueError For bad arguments.
@@ -93,7 +93,7 @@ def search_id(id, medium):
     """Grabs the [medium] with the given id from MyAnimeList as a [medium]
     object.
     :param id     The id of the [medium].
-    :param medium Whether to search for an anime or manga with the given query.
+    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
     :return The [medium] object with id requested, or None if no such [medium]
             exists.
     :raise ValueError For bad arguments.
@@ -120,12 +120,27 @@ def search_id(id, medium):
         return None
 
 def add(data, id, medium):
+    """Adds the [medium] with the given id and data to the user's [medium]List.
+    :param data   The data for the [medium] to add.
+    :param id     The id of the data to add.
+    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    """
     _op(data, id, medium, 'add')
 
 def update(data, id, medium):
+    """Updates the [medium] with the given id and data on the user's [medium]List.
+    :param data   The data for the [medium] to update.
+    :param id     The id of the data to update.
+    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    """
     _op(data, id, medium, 'update')
 
 def delete(data, id, medium):
+    """Deletes the [medium] with the given id and data from the user's [medium]List.
+    :param data   The data for the [medium] to delete.
+    :param id     The id of the data to delete.
+    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    """
     _op(data, id, medium, 'delete')
 
 def _op(data, id, medium, op):
@@ -137,6 +152,11 @@ def _op(data, id, medium, op):
     r = requests.get(post, headers=headers, auth=credentials)
 
 def get_blank(medium):
+    """Returns a [medium]Data object for filling before calling spice.add(),
+    spice.update() or spice.delete().
+    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :returns A [medium]Data object.
+    """
     if medium == ANIME:
         return AnimeData()
     elif medium == MANGA:
