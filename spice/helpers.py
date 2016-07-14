@@ -1,4 +1,6 @@
 from sys import exit
+from sys import stderr
+from time import sleep
 import spice
 
 """The base URLs for querying anime/manga searches based on keywords.
@@ -68,6 +70,11 @@ def get_post_url(id, medium, op):
             return MANGA_DELETE_BASE.replace('id', str(id))
         else:
             return None
+
+def reschedule(func, *args):
+    stderr.write("Too many requests. Waiting 5 seconds.\n")
+    sleep(5)
+    return func(*args)
 
 if __name__ == '__main__':
     exit(0)

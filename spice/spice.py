@@ -6,7 +6,6 @@ from objects import AnimeData
 from objects import MangaData
 import helpers
 import sys
-from time import sleep
 
 this = sys.modules[__name__]
 
@@ -72,9 +71,7 @@ def search(query, medium):
     if medium == Medium.ANIME:
         entries = results.anime
         if entries is None:
-            sys.stderr.write("Too many requests... Waiting 5 seconds.\n")
-            sleep(5)
-            return search(query, medium)
+            return helpers.reschedule(search, query, medium)
 
         return [Anime(entry) for entry in entries.findAll('entry')]
     elif medium == Medium.MANGA:
@@ -105,9 +102,7 @@ def search_id(id, medium):
     #coming from.
     query = results.find('span', {'itemprop':'name'})
     if query is None:
-        print("Too many requests... Waiting 5 seconds.")
-        sleep(5)
-        return search_id(id, medium)
+        return helpers.reschedule(search_id, id, medium)
     matches = search(query.text, medium)
     index = [match.id for match in matches].index(str(id))
     if index != -1:
@@ -155,9 +150,7 @@ def _op(data, id, medium, op):
     if r.status_code == 400 and 'has not been approved' in r.text:
         sys.stderr.write("This medium has not been approved by MAL yet.\n")
     elif 'Too Many Requests' in r.text: #Oh Holo save me from this API.
-        sys.stderr.write("Too many requests... Waiting 5 seconds.\n")
-        sleep(5)
-        _op(data, id, medium, op)
+        helpers.reschedule(_op, id, medium, op)
 
 def get_blank(medium):
     """Returns a [medium]Data object for filling before calling spice.add(),
