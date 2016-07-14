@@ -379,6 +379,7 @@ class MediumList:
                 status = helpers.find_key(item.my_status.text, self.medium)
                 status_list = self.anime_list[status]
                 status_list.append(Anime(item))
+                print(item.series_title)
         else: #we are guaranteed to, at this point, have a valid medium
             list_items = list_soup.findAll('manga')
             for item in list_items:

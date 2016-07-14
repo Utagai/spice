@@ -52,11 +52,11 @@ def verif_auth():
         return False
 
 
-def get_list_url(medium):
+def get_list_url(medium, user):
     if medium == spice.Medium.ANIME:
-        return constants.ANIMELIST_BASE.format(spice.credentials[0])
+        return constants.ANIMELIST_BASE.format(user)
     elif medium == spice.Medium.MANGA:
-        return constants.MANGALIST_BASE.format(spice.credentials[1])
+        return constants.MANGALIST_BASE.format(user)
     else:
         return None
 

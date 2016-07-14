@@ -207,8 +207,11 @@ def get_blank(medium):
     else:
         return None
 
-def get_list(medium):
-    list_url = helpers.get_list_url(medium)
+def get_list(medium, user=None):
+    if user is None:
+        user = credentials[0]
+    print(user)
+    list_url = helpers.get_list_url(medium, user)
     list_resp = requests.get(list_url) #for some reason, we don't need auth.
     if constants.TOO_MANY_REQUESTS in list_resp.text:
         helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium)
