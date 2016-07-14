@@ -208,6 +208,12 @@ def get_blank(medium):
         return None
 
 def get_list(medium, user=None):
+    """Returns a MediumList (Anime or Manga depends on [medium]) of user.
+    If user is not given, the username is taken from the initialized auth
+    credentials.
+    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga)
+    :param user   The user whose list should be grabbed. Defaults to credentials.
+    """
     if user is None:
         user = credentials[0]
     print(user)

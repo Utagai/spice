@@ -150,7 +150,7 @@ class Anime:
 class AnimeData:
     """An object for packaging data required for operations on AnimeLists
 
-    Has properties:
+    Has attributes:
         episodes - The number of episodes in this anime that you've watched.
         status   - Are you: watching(1), completed(2), on-hold(3), dropped(4),
                           plan-to-watch(6) <- Don't ask me, ask MAL devs >_>.
@@ -302,7 +302,7 @@ class Manga:
 class MangaData:
     """An object for packaging data required for operations on MangaLists
 
-    Has properties:
+    Has attributes:
         chapters - The number of chapters in this manga that you've read.
         volume   - The volume in this manga that you've read.
         status   - Are you: reading(1), completed(2), on-hold(3), dropped(4),
@@ -356,6 +356,20 @@ class MangaData:
                                    self.retail_volumes);
 
 class MediumList:
+    """An object that encapsulates an Anime or MangaList.
+
+
+    Has attributes:
+        medium             - [Anime or Manga]List.
+        raw_data           - The raw XML data that this MediumList is made from.
+        anime/manga_list   - The dictionary containing the 5 lists for anime...
+                                ...WATCHING/READING (keys: 'watching'/'reading')
+                                ...COMPLETED (key: 'completed')
+                                ...ONHOLD (key: 'onhold')
+                                ...DROPPED (key: 'dropped')
+                                ...PLANTOWATCH (key: 'plantowatch')
+
+    """
     def __init__(self, medium, list_data):
         self.medium = medium
         self.raw_data = list_data
