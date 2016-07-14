@@ -25,7 +25,7 @@ def search(query, medium):
     if medium == ANIME:
         entries = results.anime
         if entries is None:
-            print("Too many requests... Waiting 5 seconds.")
+            sys.stderr.write("Too many requests... Waiting 5 seconds.\n")
             sleep(5)
             return search(query, medium)
 
@@ -33,7 +33,7 @@ def search(query, medium):
     elif medium == MANGA:
         entries = results.manga
         if entries is None:
-            print("Too many requests.. Waiting 5 seconds.")
+            sys.stderr.write("Too many requests.. Waiting 5 seconds.\n")
             sleep(5)
             return search(query, medium)
         return [Manga(entry) for entry in entries.findAll('entry')]
