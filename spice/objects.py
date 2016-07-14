@@ -1,23 +1,22 @@
-"""
-An object that encapsulates an Anime.
-
-Uses properties so that it doesn't parse through XML
-unnecessarily, and instead,  does so only when immediately
-necessary.
-
-Has properties:
-    id - The id of the anime.
-    title - The title of the anime.
-    english - The english name of the anime, if applicable.
-    episodes - The number of episodes in this anime.
-    score - The rating of the anime.
-    anime_type - The type of anime (e.g. movie, ONA, etc)
-    status - In what state the anime is in (e.g. airing, finished, etc)
-    dates - A tuple of start and end dates of airing of the anime.
-    synopsis - The synopsis text of the anime.
-    image_url - A url to the anime's cover image.
-"""
 class Anime:
+    """An object that encapsulates an Anime.
+
+    Uses properties so that it doesn't parse through XML
+    unnecessarily, and instead,  does so only when immediately
+    necessary.
+
+    Has properties:
+        id         - The id of the anime.
+        title      - The title of the anime.
+        english    - The english name of the anime, if applicable.
+        episodes   - The number of episodes in this anime.
+        score      - The rating of the anime.
+        anime_type - The type of anime (e.g. movie, ONA, etc)
+        status     - In what state the anime is in (e.g. airing, finished, etc)
+        dates      - A tuple of start and end dates of airing of the anime.
+        synopsis   - The synopsis text of the anime.
+        image_url  - A url to the anime's cover image.
+    """
     def __init__(self, anime_data):
         self.raw_data = anime_data
         #these are generated when they are called, so we save
@@ -96,6 +95,17 @@ class Anime:
         return self._image_url
 
 class AnimeData:
+    """An object for packaging data required for operations on AnimeLists
+
+    Has properties:
+        episodes - The number of episodes in this anime that you've watched.
+        status   - Are you: watching(1), completed(2), on-hold(3), dropped(4),
+                          plan-to-watch(6) <- Don't ask me, ask MAL devs >_>.
+        score    - The rating of the anime.
+        dates    - A tuple of start and end dates of airing of the anime.
+        tags     - The tags to put on your list for this Anime.
+        The rest are not necessary for operations and can be left blank.
+    """
     def __init__(self):
         self.episodes = 0
         self.status = 0
@@ -140,27 +150,26 @@ class AnimeData:
                                    str(self.tags)[1:-1].replace('\'', ''));
 
 
-"""
-An object that encapsulates an Manga.
-
-Uses properties so that it doesn't parse through XML
-unnecessarily, and instead,  does so only when immediately
-necessary.
-
-Has properties:
-    id - The id of the manga.
-    title - The title of the manga.
-    english - The english name of the manga, if applicable.
-    chapter - The number of chapters in this manga.
-    volume - The number of volumes in this manga.
-    score - The rating of the manga.
-    manga_type - The type of manga (e.g. movie, ONA, etc)
-    status - In what state the manga is in (e.g. airing, finished, etc)
-    dates - A tuple of start and end dates of airing of the manga.
-    synopsis - The synopsis text of the manga.
-    image_url - A url to the manga's cover image.
-"""
 class Manga:
+    """An object that encapsulates an Manga.
+
+    Uses properties so that it doesn't parse through XML
+    unnecessarily, and instead,  does so only when immediately
+    necessary.
+
+    Has properties:
+        id         - The id of the manga.
+        title      - The title of the manga.
+        english    - The english name of the manga, if applicable.
+        chapter    - The number of chapters in this manga.
+        volume     - The number of volumes in this manga.
+        score      - The rating of the manga.
+        manga_type - The type of manga (e.g. movie, ONA, etc)
+        status     - In what state the manga is in (e.g. airing, finished, etc)
+        dates      - A tuple of start and end dates of airing of the manga.
+        synopsis   - The synopsis text of the manga.
+        image_url  - A url to the manga's cover image.
+    """
     def __init__(self, manga_data):
         self.raw_data = manga_data
         self._id = None
@@ -238,6 +247,18 @@ class Manga:
         return self._image_url
 
 class MangaData:
+    """An object for packaging data required for operations on MangaLists
+
+    Has properties:
+        chapters - The number of chapters in this manga that you've read.
+        volume   - The volume in this manga that you've read.
+        status   - Are you: reading(1), completed(2), on-hold(3), dropped(4),
+                          plan-to-read(6) <- Don't ask me, ask MAL devs >_>.
+        score    - The rating of the manga.
+        dates    - A tuple of start and end dates of airing of the manga.
+        tags     - The tags to put on your list for this manga.
+        The rest are not necessary for operations and can be left blank.
+    """
     def __init__(self):
         self.chapters = 0
         self.volume = 0

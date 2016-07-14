@@ -23,6 +23,7 @@ MANGA_UPDATE_BASE = 'http://myanimelist.net/api/mangalist/update/id.xml'
 MANGA_ADD_BASE    = 'http://myanimelist.net/api/mangalist/add/id.xml'
 MANGA_DELETE_BASE = 'http://myanimelist.net/api/mangalist/delete/id.xml'
 
+"""The operations available on user Lists."""
 class Operations:
     ADD, UPDATE, DELETE = range(3)
 
