@@ -51,7 +51,7 @@ def main():
 																		result.volumes,
 																		result.score))
     
-    saw_data = spice.MangaData()
+    saw_data = spice.get_blank(spice.MANGA)
     saw_data.chapters = 4
     saw_data.volume = 2
     saw_data.status = 1 #reading
