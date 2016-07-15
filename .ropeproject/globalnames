@@ -1,9 +1,9 @@
 €}q(Ustats]q(Ukarl_pearson2qUsum_xyqUextremesqUmedianqUp_varqU
 square_sumqUmodeq	Up_stddevq
-UsumqUkarl_pearsonqUmeanqeUpython]Usetup]q(UfUhereqUlong_descriptionqeUobjects]q(U	AnimeDataqU
-MediumListqUAnimeqU	MangaDataqUMangaqeUhelpers]q(Uget_post_urlqUget_query_urlqUfind_key_numqU
-verif_authqUfind_keyqU
-rescheduleqUget_list_urlqUget_scrape_urlqUdet_keyq eUtest]q!Umainq"aU	constants]q#(U
-INVALID_IDq$UMANGA_ADD_BASEq%UANIME_UPDATE_BASEq&UINVALID_STATUS_NUMq'U
-UNAPPROVEDq(UTOO_MANY_REQUESTSq)UINVALID_CREDENTIALSq*UMANGALIST_BASEq+UINVALID_MEDIUMq,UCREDENTIALS_VERIFYq-UANIME_TITLE_ATTR_VALq.UANIME_QUERY_BASEq/UDEFAULT_WAITq0UMANGA_DELETE_BASEq1UINVALID_LIST_MATCHq2UINVALID_AUTH_FILEq3UMANGA_UPDATE_BASEq4U	OP_SUFFIXq5UINVALID_EMPTY_QUERYq6UANIME_TITLE_ATTRq7UANIME_SCRAPE_BASEq8UANIME_DELETE_BASEq9UMANGA_SCRAPE_BASEq:UANIME_ADD_BASEq;UMANGA_QUERY_BASEq<UANIMELIST_BASEq=UMALGRAPH_GLOBALq>UANIME_TITLE_ELEMq?eUspice]q@(UMediumqAUload_auth_from_fileqBUget_listqCUaddqDUKeyqEU	search_idqFUupdateqGU	init_authqHU	get_blankqIU
-OperationsqJUsearchqKUthisqLUStatusNumberqMUdeleteqNeu.
+UsumqUkarl_pearsonqUmeanqeUpython]Usetup]Uobjects]q(U	AnimeDataqU
+MediumListqUAnimeqU	MangaDataqUMangaqeUhelpers]q(Uget_post_urlqUget_query_urlqUfind_key_numqU
+verif_authqUfind_keyqU
+rescheduleqUget_list_urlqUget_scrape_urlqUdet_keyqeUtest]qUmainqaUsetup2]q Uhereq!aU	constants]q"(U
+INVALID_IDq#UMANGA_ADD_BASEq$UANIME_UPDATE_BASEq%UINVALID_STATUS_NUMq&U
+UNAPPROVEDq'UTOO_MANY_REQUESTSq(UINVALID_CREDENTIALSq)UMANGALIST_BASEq*UINVALID_MEDIUMq+UCREDENTIALS_VERIFYq,UANIME_TITLE_ATTR_VALq-UANIME_QUERY_BASEq.UDEFAULT_WAITq/UMANGA_DELETE_BASEq0UINVALID_LIST_MATCHq1UINVALID_AUTH_FILEq2UMANGA_UPDATE_BASEq3U	OP_SUFFIXq4UINVALID_EMPTY_QUERYq5UANIME_TITLE_ATTRq6UANIME_SCRAPE_BASEq7UANIME_DELETE_BASEq8UMANGA_SCRAPE_BASEq9UANIME_ADD_BASEq:UMANGA_QUERY_BASEq;UANIMELIST_BASEq<UMALGRAPH_GLOBALq=UANIME_TITLE_ELEMq>eUspice]q?(UMediumq@Uload_auth_from_fileqAUget_listqBUaddqCUKeyqDU	search_idqEUupdateqFU	init_authqGU	get_blankqHU
+OperationsqIUsearchqJUthisqKUStatusNumberqLUdeleteqMeu.
