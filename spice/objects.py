@@ -46,6 +46,8 @@ MediumLists are returned from requests about a user's Anime/MangaList(s).
 import spice
 import helpers
 import stats
+import constants
+import requests
 from bs4 import BeautifulSoup
 
 class Anime:
@@ -569,3 +571,22 @@ class MediumList:
             return True
         else:
             return False
+
+    def score_diff(self):
+        user_avg = self.avg_score()
+        global_resp = requests.get(constants.MALGRAPH_GLOBAL)
+        global_soup = BeautifulSoup(global_resp.text, 'html.parser')
+        subjects = global_soup.findAll('span', {'class':'subject'})
+        global_avg_subjects = []
+        for subject in subjects:
+            if '%' in subject.text:
+                continue
+            elif '.' not in subject.text:
+                continue
+            else:
+                global_avg_subjects.append(subject.text)
+
+        if self.medium == spice.Medium.ANIME:
+            return user_avg - float(global_avg_subjects[0])
+        else:
+            return user_avg - float(global_avg_subjects[1])
