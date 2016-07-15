@@ -8,7 +8,7 @@
 ## Copyright (c) [2016] [Mehrab Hoque]
 ##
 ## Permission is hereby granted, free of charge, to any person obtaining a copy
-## of this software and associated documentation files (the "Software"), to deal
+## of this software and associated documentation files (the 'Software'), to deal
 ## in the Software without restriction, including without limitation the rights
 ## to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 ## copies of the Software, and to permit persons to whom the Software is
@@ -17,7 +17,7 @@
 ## The above copyright notice and this permission notice shall be included in all
 ## copies or substantial portions of the Software.
 ##
-## THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+## THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 ## IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 ## FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 ## AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
@@ -25,7 +25,7 @@
 ## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 
-""" A py module for objects.
+''' A py module for objects.
 
 WARN: This module is not meant to be used in any way besides in the internals of
 the spice API source code.
@@ -41,7 +41,7 @@ is intended to be pushed to MAL in an operation request such as adding, updating
 deleting.
 
 MediumLists are returned from requests about a user's Anime/MangaList(s).
-"""
+'''
 
 import spice
 import helpers
@@ -49,7 +49,7 @@ import stats
 from bs4 import BeautifulSoup
 
 class Anime:
-    """An object that encapsulates an Anime.
+    '''An object that encapsulates an Anime.
 
     Uses properties so that it doesn't parse through XML
     unnecessarily, and instead,  does so only when immediately
@@ -66,7 +66,7 @@ class Anime:
         dates      - A tuple of start and end dates of airing of the anime.
         synopsis   - The synopsis text of the anime.
         image_url  - A url to the anime's cover image.
-    """
+    '''
     def __init__(self, anime_data):
         self.raw_data = anime_data
         #these are generated when they are called, so we save
@@ -195,7 +195,7 @@ class Anime:
             return self._rewatch_ep
 
 class AnimeData:
-    """An object for packaging data required for operations on AnimeLists
+    '''An object for packaging data required for operations on AnimeLists
 
     Has attributes:
         episodes - The number of episodes in this anime that you've watched.
@@ -205,7 +205,7 @@ class AnimeData:
         dates    - A tuple of start and end dates of airing of the anime.
         tags     - The tags to put on your list for this Anime.
         The rest are not necessary for operations and can be left blank.
-    """
+    '''
     def __init__(self):
         self.episodes = 0
         self.status = 0
@@ -223,7 +223,7 @@ class AnimeData:
         self.tags = []
 
     def to_xml(self):
-        return """<?xml version="1.0" encoding="UTF-8"?>
+        return '''<?xml version='1.0' encoding='UTF-8'?>
                 <entry>
                     <episode>{}</episode>
                     <status>{}</status>
@@ -240,7 +240,7 @@ class AnimeData:
                     <comments>{}</comments>
                     <fansub_group>{}</fansub_group>
                     <tags>{}</tags>
-                </entry>""".format(self.episodes, self.status,
+                </entry>'''.format(self.episodes, self.status,
                                    self.score, self.storage_type,
                                    self.storage_value, self.times_rewatched,
                                    self.rewatch_value, self.dates[0],
@@ -251,7 +251,7 @@ class AnimeData:
 
 
 class Manga:
-    """An object that encapsulates an Manga.
+    '''An object that encapsulates an Manga.
 
     Uses properties so that it doesn't parse through XML
     unnecessarily, and instead,  does so only when immediately
@@ -269,7 +269,7 @@ class Manga:
         dates      - A tuple of start and end dates of airing of the manga.
         synopsis   - The synopsis text of the manga.
         image_url  - A url to the manga's cover image.
-    """
+    '''
     def __init__(self, manga_data):
         self.raw_data     = manga_data
         self._id          = None
@@ -388,7 +388,7 @@ class Manga:
         return self._image_url
 
 class MangaData:
-    """An object for packaging data required for operations on MangaLists
+    '''An object for packaging data required for operations on MangaLists
 
     Has attributes:
         chapters - The number of chapters in this manga that you've read.
@@ -399,7 +399,7 @@ class MangaData:
         dates    - A tuple of start and end dates of airing of the manga.
         tags     - The tags to put on your list for this manga.
         The rest are not necessary for operations and can be left blank.
-    """
+    '''
     def __init__(self):
         self.chapters = 0
         self.volume = 0
@@ -417,7 +417,7 @@ class MangaData:
         self.retail_volumes = ''
 
     def to_xml(self):
-        return """<?xml version="1.0" encoding="UTF-8"?>
+        return '''<?xml version='1.0' encoding='UTF-8'?>
                 <entry>
                     <chapter>{}</chapter>
                     <volume>{}</volume>
@@ -434,7 +434,7 @@ class MangaData:
                     <scan_group>{}</scan_group>
                     <tags>{}</tags>
                     <retail_volumes>{}</retail_volumes>
-                </entry>""".format(self.chapters, self.volumes,
+                </entry>'''.format(self.chapters, self.volumes,
                                    self.status, self.score, self.times_reread,
                                    self.reread_value, self.dates[0],
                                    self.dates[1], self.priority,
@@ -444,7 +444,7 @@ class MangaData:
                                    self.retail_volumes);
 
 class MediumList:
-    """An object that encapsulates an Anime or MangaList.
+    '''An object that encapsulates an Anime or MangaList.
 
 
     Has attributes:
@@ -457,7 +457,7 @@ class MediumList:
                                 ...DROPPED (key: 'dropped')
                                 ...PLANTOWATCH (key: 'plantowatch')
 
-    """
+    '''
     def __init__(self, medium, list_data):
         self.medium = medium
         self.raw_data = list_data
