@@ -91,11 +91,7 @@ The spice API also exposes useful enums and values:
 
 from bs4 import BeautifulSoup
 import requests
-from objects import Anime
-from objects import Manga
-from objects import AnimeData
-from objects import MangaData
-from objects import MediumList
+import objects
 import constants
 import helpers
 import sys
@@ -208,12 +204,12 @@ def search(query, medium):
         if entries is None:
             return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
 
-        return [Anime(entry) for entry in entries.findAll('entry')]
+        return [objects.Anime(entry) for entry in entries.findAll('entry')]
     elif medium == Medium.MANGA:
         entries = query_soup.manga
         if entries is None:
             return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
-        return [Manga(entry) for entry in entries.findAll('entry')]
+        return [objects.Manga(entry) for entry in entries.findAll('entry')]
 
 def search_id(id, medium):
     '''Grabs the [medium] with the given id from MyAnimeList as a [medium]
@@ -292,9 +288,9 @@ def get_blank(medium):
     :returns A [medium]Data object.
     '''
     if medium == Medium.ANIME:
-        return AnimeData()
+        return objects.AnimeData()
     elif medium == Medium.MANGA:
-        return MangaData()
+        return objects.MangaData()
     else:
         return None
 
@@ -313,7 +309,7 @@ def get_list(medium, user=None):
         return helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium, user)
 
     list_soup = BeautifulSoup(list_resp.text, 'lxml')
-    return MediumList(medium, list_soup)
+    return objects.MediumList(medium, list_soup)
 
 if __name__ == '__main__':
     print('Spice is meant to be imported into a project.')
