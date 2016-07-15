@@ -46,6 +46,23 @@ def sum(data):
 
     return total
 
+def square_sum(data):
+    _data_check(data)
+    total = 0
+    for elem in data:
+        total += elem ** 2
+
+    return total
+
+def sum_xy(datax, datay):
+    _data_check(datax)
+    _data_check(datay)
+    total = 0
+    for elemx, elemy in zip(datax, datay):
+        total += elemx * elemy
+
+    return total
+
 def mean(data):
     _data_check(data)
     return sum(data)/len(data)
@@ -83,6 +100,26 @@ def p_var(data):
 def p_stddev(data):
     _data_check(data)
     return sqrt(p_var(data))
+
+def karl_pearson(datax, datay):
+    if len(datax) != len(datay):
+        raise ValueError('Invalid sizes for data sets.')
+    xy_sum = sum_xy(datax, datay)
+    x_sum = sum(datax)
+    y_sum = sum(datay)
+    x_sum_square = x_sum ** 2
+    y_sum_square = y_sum ** 2
+    x_square_sum = square_sum(datax)
+    y_square_sum = square_sum(datay)
+    n = len(datax)
+
+    numerator = (n * xy_sum) - (x_sum * y_sum)
+    denominator_x_term = (n * x_square_sum) - x_sum_square
+    denominator_y_term = (n * y_square_sum) - y_sum_square
+    denominator_squared = denominator_x_term * denominator_y_term
+    denominator = sqrt(denominator_squared)
+
+    return numerator/denominator
 
 def _data_check(data):
     if len(data) == 0:

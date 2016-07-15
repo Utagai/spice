@@ -1,8 +1,9 @@
-€}q(Ustats]q(Up_varqUmedianqUextremesqUmodeqUp_stddevqUsumqUmeanq	eUobjects]q
-(U	AnimeDataqU
-MediumListqUAnimeqU	MangaDataqUMangaqeUhelpers]q(Uget_post_urlqUget_query_urlqUfind_key_numqU
-verif_authqUfind_keyqU
-rescheduleqUget_list_urlqUget_scrape_urlqUdet_keyqeUtest]qUmainqaU	constants]q(U
-INVALID_IDqUMANGA_ADD_BASEqUANIME_UPDATE_BASEqUINVALID_STATUS_NUMq U
-UNAPPROVEDq!UTOO_MANY_REQUESTSq"UINVALID_CREDENTIALSq#UMANGALIST_BASEq$UINVALID_MEDIUMq%UCREDENTIALS_VERIFYq&UANIME_TITLE_ATTR_VALq'UANIME_QUERY_BASEq(UDEFAULT_WAITq)UMANGA_DELETE_BASEq*UINVALID_AUTH_FILEq+UMANGA_UPDATE_BASEq,U	OP_SUFFIXq-UINVALID_EMPTY_QUERYq.UANIME_TITLE_ATTRq/UANIME_SCRAPE_BASEq0UANIME_DELETE_BASEq1UMANGA_SCRAPE_BASEq2UANIME_ADD_BASEq3UMANGA_QUERY_BASEq4UANIMELIST_BASEq5UMALGRAPH_GLOBALq6UANIME_TITLE_ELEMq7eUspice]q8(UMediumq9Uload_auth_from_fileq:Uget_listq;Uaddq<UKeyq=U	search_idq>Uupdateq?U	init_authq@U	get_blankqAU
-OperationsqBUsearchqCUthisqDUStatusNumberqEUdeleteqFeu.
+€}q(Ustats]q(Usum_xyqUextremesqUmedianqUp_varqU
+square_sumqUmodeqUp_stddevq	Usumq
+Ukarl_pearsonqUmeanqeUobjects]q(U	AnimeDataqU
+MediumListqUAnimeqU	MangaDataqUMangaqeUhelpers]q(Uget_post_urlqUget_query_urlqUfind_key_numqU
+verif_authqUfind_keyqU
+rescheduleqUget_list_urlqUget_scrape_urlqUdet_keyqeUtest]qUmainqaU	constants]q(U
+INVALID_IDq UMANGA_ADD_BASEq!UANIME_UPDATE_BASEq"UINVALID_STATUS_NUMq#U
+UNAPPROVEDq$UTOO_MANY_REQUESTSq%UINVALID_CREDENTIALSq&UMANGALIST_BASEq'UINVALID_MEDIUMq(UCREDENTIALS_VERIFYq)UANIME_TITLE_ATTR_VALq*UANIME_QUERY_BASEq+UDEFAULT_WAITq,UMANGA_DELETE_BASEq-UINVALID_LIST_MATCHq.UINVALID_AUTH_FILEq/UMANGA_UPDATE_BASEq0U	OP_SUFFIXq1UINVALID_EMPTY_QUERYq2UANIME_TITLE_ATTRq3UANIME_SCRAPE_BASEq4UANIME_DELETE_BASEq5UMANGA_SCRAPE_BASEq6UANIME_ADD_BASEq7UMANGA_QUERY_BASEq8UANIMELIST_BASEq9UMALGRAPH_GLOBALq:UANIME_TITLE_ELEMq;eUspice]q<(UMediumq=Uload_auth_from_fileq>Uget_listq?Uaddq@UKeyqAU	search_idqBUupdateqCU	init_authqDU	get_blankqEU
+OperationsqFUsearchqGUthisqHUStatusNumberqIUdeleteqJeu.

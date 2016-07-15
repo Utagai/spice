@@ -501,7 +501,7 @@ class MediumList:
         return all_entries_in_list
 
     def get_scores(self):
-        all_entries = self.get_mediums()
+        all_entries = self.get_mediums() #change to status check, not score
         return [int(entry.score) for entry in all_entries if entry.score != '0']
 
     def get_ids(self):
@@ -590,3 +590,35 @@ class MediumList:
             return user_avg - float(global_avg_subjects[0])
         else:
             return user_avg - float(global_avg_subjects[1])
+
+    def compatibility(self, other_list):
+        if self.medium != other_list.medium:
+            raise ValueError(INVALID_LIST_MATCH)
+        #linear time set intersection karl pearson coefficient correlation
+        plan_to_watch = str(spice.StatusNumber.PLANTOWATCH)
+        all_x = self.get_mediums()
+        x_ids = [entry.id for entry in all_x if entry.status != plan_to_watch]
+        x_scores = self.get_scores()
+        x_map = dict(zip(x_ids, x_scores))
+
+        all_y = other_list.get_mediums()
+        y_ids = [entry.id for entry in all_y if entry.status != plan_to_watch]
+        y_scores = other_list.get_scores()
+        y_map = dict(zip(y_ids, y_scores))
+
+        print(len(x_ids))
+        print(len(y_ids))
+
+        common_mediums = set.intersection(set(x_ids), set(y_ids))
+
+        print(len(common_mediums))
+
+        x_data = []
+        y_data = []
+
+        for medium in common_mediums:
+            x_data.append(x_map[medium])
+            y_data.append(y_map[medium])
+
+        pearson_coeff = stats.karl_pearson(x_data, y_data)
+        return 100 * (pearson_coeff/2 + .5)
