@@ -94,6 +94,7 @@ import requests
 import objects
 import constants
 import helpers
+import tokens
 import sys
 
 this = sys.modules[__name__]
@@ -101,43 +102,6 @@ this = sys.modules[__name__]
 '''The credentials set for the user.
 '''
 this.credentials = None
-
-'''The class that defines 'mediums'. Commonly seen as [medium] through the
-docs. A medium is the form in which the content comes in, and can either be
-ANIME or MANGA.
-
-These are to be treated like enum tokens and are used frequently in this API's
-function calls to specify the medium for which to do work, since MyAnimeList
-is very distinctly cut up into two pieces, one for anime and one for manga.
-'''
-class Medium:
-    ANIME, MANGA = range(2)
-
-'''The operations available on user Lists. These are to be treated like enums
-.'''
-class Operations:
-    ADD, UPDATE, DELETE = range(3)
-
-'''The numerical translations for anime/manga statuses. These are to be treated
-like enums.
-'''
-class StatusNumber:
-    READING     = 1
-    WATCHING, COMPLETED, ONHOLD, DROPPED = range(1,5)
-    PLANTOWATCH = 6
-    PLANTOREAD  = 6
-
-'''A namespace for exposing key names in AnimeList and MangaList object
-dictionaries.
-'''
-class Key:
-    READING     = 'reading'
-    WATCHING    = 'watching'
-    COMPLETED   = 'completed'
-    ONHOLD      = 'onhold'
-    DROPPED     = 'dropped'
-    PLANTOWATCH = 'plantowatch'
-    PLANTOREAD  = 'plantoread'
 
 def init_auth(username, password):
     '''Initializes the auth settings for accessing MyAnimeList
@@ -149,7 +113,7 @@ def init_auth(username, password):
     username = username.strip()
     password = password.strip()
     this.credentials = (username, password)
-    if helpers.verif_auth():
+    if helpers.verif_auth(credentials):
         return (username, password)
     else:
         raise ValueError(constants.INVALID_CREDENTIALS)
@@ -177,7 +141,7 @@ def load_auth_from_file(filename):
         elif len(lines) == 0 or len(lines) > 2:
             raise ValueError(constants.INVALID_AUTH_FILE)
 
-        if helpers.verif_auth():
+        if helpers.verif_auth(credentials):
             return (lines[0], lines[1])
         else:
             raise ValueError(constants.INVALID_CREDENTIALS)
@@ -310,6 +274,14 @@ def get_list(medium, user=None):
 
     list_soup = BeautifulSoup(list_resp.text, 'lxml')
     return objects.MediumList(medium, list_soup)
+
+def get_medium(medium):
+    if medium == 'anime' or medium == 'ANIME' or medium == 'a' or medium == 'A':
+        return tokens.Medium.ANIME
+    elif medium == 'manga' or medium == 'MANGA' or medium == 'm' or medium == 'M':
+        return tokens.Medium.MANGA
+    else:
+        raise ValueError(constants.INVALID_MEDIUM)
 
 if __name__ == '__main__':
     print('Spice is meant to be imported into a project.')

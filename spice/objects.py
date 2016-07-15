@@ -28,7 +28,7 @@
 ''' A py module for objects.
 
 WARN: This module is not meant to be used in any way besides in the internals of
-the spice API source code.
+the tokens.API source code.
 
 This module defines the objects: Anime, Manga, AnimeData, MangaData and MediumList.
 Anime and Manga are Mediums, so MediumList captures both Anime and MangaLists.
@@ -47,6 +47,7 @@ import spice
 import helpers
 import stats
 import constants
+import tokens
 import requests
 from bs4 import BeautifulSoup
 
@@ -464,14 +465,14 @@ class MediumList:
         self.medium = medium
         self.raw_data = list_data
         self.days = 0.0
-        if self.medium == spice.Medium.ANIME:
-            self.medium_list = {spice.Key.WATCHING:[], spice.Key.COMPLETED:[],
-                                spice.Key.ONHOLD:[], spice.Key.DROPPED:[],
-                                spice.Key.PLANTOWATCH:[]}
-        elif self.medium == spice.Medium.MANGA:
-            self.medium_list = {spice.Key.READING:[], spice.Key.COMPLETED:[],
-                                spice.Key.ONHOLD:[], spice.Key.DROPPED:[],
-                                spice.Key.PLANTOREAD:[]}
+        if self.medium == tokens.Medium.ANIME:
+            self.medium_list = {tokens.Status.WATCHING:[], tokens.Status.COMPLETED:[],
+                                tokens.Status.ONHOLD:[], tokens.Status.DROPPED:[],
+                                tokens.Status.PLANTOWATCH:[]}
+        elif self.medium == tokens.Medium.MANGA:
+            self.medium_list = {tokens.Status.READING:[], tokens.Status.COMPLETED:[],
+                                tokens.Status.ONHOLD:[], tokens.Status.DROPPED:[],
+                                tokens.Status.PLANTOREAD:[]}
         else:
             #not sure what the best thing to do is... default to anime?
             raise ValueError(constants.INVALID_MEDIUM)
@@ -480,7 +481,7 @@ class MediumList:
 
     def load(self):
         list_soup = self.raw_data
-        if self.medium == spice.Medium.ANIME:
+        if self.medium == tokens.Medium.ANIME:
             list_items = list_soup.findAll('anime')
             for item in list_items:
                 status = helpers.find_key(item.my_status.text, self.medium)
@@ -502,7 +503,7 @@ class MediumList:
 
     def get_scores(self):
         all_entries = self.get_mediums()
-        ptw = str(spice.StatusNumber.PLANTOWATCH)
+        ptw = str(tokens.StatusNumber.PLANTOWATCH)
         return [int(entry.score) for entry in all_entries if entry.status != ptw]
 
     def get_ids(self):
@@ -546,10 +547,10 @@ class MediumList:
 
     def get_total(self):
         total_count = len(self.get_scores())
-        if self.medium == spice.Medium.ANIME:
-            total_count += len(self.medium_list[spice.Key.PLANTOWATCH])
+        if self.medium == tokens.Medium.ANIME:
+            total_count += len(self.medium_list[tokens.Status.PLANTOWATCH])
         else:
-            total_count += len(self.medium_list[spice.Key.PLANTOREAD])
+            total_count += len(self.medium_list[tokens.Status.PLANTOREAD])
 
         return total_count
 
@@ -587,7 +588,7 @@ class MediumList:
             else:
                 global_avg_subjects.append(subject.text)
 
-        if self.medium == spice.Medium.ANIME:
+        if self.medium == tokens.Medium.ANIME:
             return user_avg - float(global_avg_subjects[0])
         else:
             return user_avg - float(global_avg_subjects[1])
@@ -596,7 +597,7 @@ class MediumList:
         if self.medium != other_list.medium:
             raise ValueError(INVALID_LIST_MATCH)
         #linear time set intersection karl pearson coefficient correlation
-        plan_to_watch = str(spice.StatusNumber.PLANTOWATCH)
+        plan_to_watch = str(tokens.StatusNumber.PLANTOWATCH)
         all_x = self.get_mediums()
         x_ids = [entry.id for entry in all_x if entry.status != plan_to_watch]
         x_scores = self.get_scores()
