@@ -501,8 +501,9 @@ class MediumList:
         return all_entries_in_list
 
     def get_scores(self):
-        all_entries = self.get_mediums() #change to status check, not score
-        return [int(entry.score) for entry in all_entries if entry.score != '0']
+        all_entries = self.get_mediums()
+        ptw = str(spice.StatusNumber.PLANTOWATCH)
+        return [int(entry.score) for entry in all_entries if entry.status != ptw]
 
     def get_ids(self):
         all_entries = self.get_mediums()
@@ -606,12 +607,7 @@ class MediumList:
         y_scores = other_list.get_scores()
         y_map = dict(zip(y_ids, y_scores))
 
-        print(len(x_ids))
-        print(len(y_ids))
-
         common_mediums = set.intersection(set(x_ids), set(y_ids))
-
-        print(len(common_mediums))
 
         x_data = []
         y_data = []
@@ -620,5 +616,5 @@ class MediumList:
             x_data.append(x_map[medium])
             y_data.append(y_map[medium])
 
-        pearson_coeff = stats.karl_pearson(x_data, y_data)
-        return 100 * (pearson_coeff/2 + .5)
+        pearson_coeff = stats.karl_pearson2(x_data, y_data)
+        return pearson_coeff

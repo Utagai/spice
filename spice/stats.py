@@ -121,6 +121,26 @@ def karl_pearson(datax, datay):
 
     return numerator/denominator
 
+def karl_pearson2(datax, datay):
+    meanx = mean(datax)
+    meany = mean(datay)
+
+    product = 0
+    sqmagx = 0
+    sqmagy = 0
+    mincount = 5
+
+    for elemx, elemy in zip(datax, datay):
+        product += (elemx - meanx)*(elemy - meany)
+        sqmagx += (elemx - meanx)*(elemx - meanx)
+        sqmagy += (elemy - meany)*(elemy - meany)
+
+    similarity = product/sqrt(sqmagx*sqmagy)
+    similarity = similarity*100
+    if mincount >= len(datax):
+	    return -999
+    return similarity
+
 def _data_check(data):
     if len(data) == 0:
         raise ValueError('Data must be non-empty.')
