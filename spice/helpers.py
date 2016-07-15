@@ -79,6 +79,8 @@ def get_post_url(id, medium, op):
 def verif_auth():
     verif_resp = requests.get(constants.CREDENTIALS_VERIFY,
                               auth=spice.credentials)
+    if constants.TOO_MANY_REQUESTS in verif_resp.text:
+        return reschedule(verif_auth, DEFAULT_WAIT)
     if verif_resp.status_code == 200:
         return True
     else:
