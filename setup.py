@@ -1,8 +1,10 @@
 from distutils.core import setup
+from setuptools import setup
+
 setup(
     name = 'spice',
     packages = ['spice'], # this must be the same as the name above
-    version = '0.0.1dev',
+    version = '0.0.2dev',
     description = 'spice - testing',
     long_description = open('README.md').read(),
     license = 'MIT',
@@ -27,7 +29,12 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
     ],
     keywords = ['spice', 'MyAnimeList', 'API'], # arbitrary keywords
-    install_requires = ['requests', 'lxml', 'beautifulsoup4'],
+    install_requires = [
+        'requests',
+        'lxml',
+        'beautifulsoup4'
+    ],
 )

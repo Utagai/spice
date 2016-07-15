@@ -34,8 +34,8 @@ the tokens.API source code.
 from sys import exit
 from sys import stderr
 from time import sleep
-from . import tokens
-from . import constants
+import tokens
+import constants
 import requests
 
 def get_query_url(medium, query):
