@@ -46,19 +46,19 @@ function calls to specify the medium for which to do work, since MyAnimeList
 is very distinctly cut up into two pieces, one for anime and one for manga.
 '''
 class Medium:
-    ANIME, MANGA = range(2)
+    ANIME, MANGA = list(range(2))
 
 '''The operations available on user Lists. These are to be treated like enums
 .'''
 class Operations:
-    ADD, UPDATE, DELETE = range(3)
+    ADD, UPDATE, DELETE = list(range(3))
 
 '''The numerical translations for anime/manga statuses. These are to be treated
 like enums.
 '''
 class StatusNumber:
     READING     = 1
-    WATCHING, COMPLETED, ONHOLD, DROPPED = range(1,5)
+    WATCHING, COMPLETED, ONHOLD, DROPPED = list(range(1,5))
     PLANTOWATCH = 6
     PLANTOREAD  = 6
 

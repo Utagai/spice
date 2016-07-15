@@ -43,7 +43,6 @@ deleting.
 MediumLists are returned from requests about a user's Anime/MangaList(s).
 '''
 
-import spice
 import helpers
 import stats
 import constants
@@ -496,7 +495,7 @@ class MediumList:
 
     def get_mediums(self):
         all_entries_in_list = []
-        for status, entries in self.medium_list.iteritems():
+        for status, entries in list(self.medium_list.items()):
             all_entries_in_list += entries
 
         return all_entries_in_list
@@ -601,12 +600,12 @@ class MediumList:
         all_x = self.get_mediums()
         x_ids = [entry.id for entry in all_x if entry.status != plan_to_watch]
         x_scores = self.get_scores()
-        x_map = dict(zip(x_ids, x_scores))
+        x_map = dict(list(zip(x_ids, x_scores)))
 
         all_y = other_list.get_mediums()
         y_ids = [entry.id for entry in all_y if entry.status != plan_to_watch]
         y_scores = other_list.get_scores()
-        y_map = dict(zip(y_ids, y_scores))
+        y_map = dict(list(zip(y_ids, y_scores)))
 
         common_mediums = set.intersection(set(x_ids), set(y_ids))
 
