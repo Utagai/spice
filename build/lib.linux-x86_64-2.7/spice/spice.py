@@ -91,10 +91,10 @@ The spice API also exposes useful enums and values:
 
 from bs4 import BeautifulSoup
 import requests
-import objects
-import constants
-import helpers
-import tokens
+from . import objects
+from . import constants
+from . import helpers
+from . import tokens
 import sys
 
 this = sys.modules[__name__]

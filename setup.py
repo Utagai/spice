@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name = 'spice',
     packages = ['spice'], # this must be the same as the name above
-    version = '0.0.2dev',
+    version = '1.0.0',
     description = 'spice - testing',
     long_description = open('README.md').read(),
     license = 'MIT',

@@ -43,10 +43,10 @@ deleting.
 MediumLists are returned from requests about a user's Anime/MangaList(s).
 '''
 
-import helpers
-import stats
-import constants
-import tokens
+from . import helpers
+from . import stats
+from . import constants
+from . import tokens
 import requests
 from bs4 import BeautifulSoup
 

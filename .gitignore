@@ -5,3 +5,6 @@ gitp.sh
 *.pyc
 auth
 1
+spice.egg-info
+dist/
+build/
