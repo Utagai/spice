@@ -1,17 +1,17 @@
 Ä}q(Ustats]q(Ukarl_pearson2qUsum_xyqUextremesqUmedianqUp_varqU
 square_sumqUmodeq	Up_stddevq
-UsumqUkarl_pearsonqUmeanqeUpython]Utest]qUmainqaUsetup]Uspice.spice]q(UsearchqUload_auth_from_fileqUthisqU
-get_mediumqUupdateqU	init_authqUaddqU	get_blankqUget_listqU	search_idqUdeleteqeUobjects]q(U	AnimeDataqU
-MediumListqUAnimeqU	MangaDataq UMangaq!eUhelpers]q"(Uget_post_urlq#Uget_query_urlq$Ufind_key_numq%U
-verif_authq&Ufind_keyq'U
-rescheduleq(Uget_list_urlq)Uget_scrape_urlq*Udet_keyq+eU	constants]q,(U
-INVALID_IDq-UMANGA_ADD_BASEq.UANIME_UPDATE_BASEq/UINVALID_STATUS_NUMq0U
-UNAPPROVEDq1UTOO_MANY_REQUESTSq2UINVALID_CREDENTIALSq3UMANGALIST_BASEq4UINVALID_MEDIUMq5UCREDENTIALS_VERIFYq6UANIME_TITLE_ATTR_VALq7UANIME_QUERY_BASEq8UDEFAULT_WAITq9UMANGA_DELETE_BASEq:UINVALID_LIST_MATCHq;UINVALID_AUTH_FILEq<UMANGA_UPDATE_BASEq=U	OP_SUFFIXq>UINVALID_EMPTY_QUERYq?UANIME_TITLE_ATTRq@UANIME_SCRAPE_BASEqAUANIME_DELETE_BASEqBUMANGA_SCRAPE_BASEqCUANIME_ADD_BASEqDUMANGA_QUERY_BASEqEUANIMELIST_BASEqFUMALGRAPH_GLOBALqGUANIME_TITLE_ELEMqHeU
-spice.test]qIhaUsetup2]qJUhereqKaUspice.constants]qL(U
-INVALID_IDqMUMANGA_ADD_BASEqNUANIME_UPDATE_BASEqOUINVALID_STATUS_NUMqPU
-UNAPPROVEDqQUTOO_MANY_REQUESTSqRUINVALID_CREDENTIALSqSUMANGALIST_BASEqTUINVALID_MEDIUMqUUCREDENTIALS_VERIFYqVUANIME_TITLE_ATTR_VALqWUANIME_QUERY_BASEqXUDEFAULT_WAITqYUMANGA_DELETE_BASEqZUINVALID_LIST_MATCHq[UINVALID_AUTH_FILEq\UMANGA_UPDATE_BASEq]U	OP_SUFFIXq^UINVALID_EMPTY_QUERYq_UANIME_TITLE_ATTRq`UANIME_SCRAPE_BASEqaUANIME_DELETE_BASEqbUMANGA_SCRAPE_BASEqcUANIME_ADD_BASEqdUMANGA_QUERY_BASEqeUANIMELIST_BASEqfUMALGRAPH_GLOBALqgUANIME_TITLE_ELEMqheUspice.objects]qi(U	AnimeDataqjU
-MediumListqkUAnimeqlU	MangaDataqmUMangaqneUspice.tokens]qo(U
-OperationsqpUStatusNumberqqUMediumqrUStatusqseUspice.stats]qt(Ukarl_pearson2quUsum_xyqvUextremesqwUmedianqxUp_varqyU
-square_sumqzUmodeq{Up_stddevq|Usumq}Ukarl_pearsonq~UmeanqeUspice.helpers]qÄ(Uget_query_urlqÅUfind_key_numqÇU
-verif_authqÉUfind_keyqÑU
-rescheduleqÖUget_list_urlqÜUget_post_urlqáUdet_keyqàUget_scrape_urlqâeUspice]u.
+UsumqUkarl_pearsonqUmeanqeUpython]Utest]qUmainqaUsetup]Utest_install]qhaUspice.spice]q(UsearchqUload_auth_from_fileqUthisqU
+get_mediumqUupdateqU	init_authqUaddqU	get_blankqUget_listqU	search_idqUdeleteqeUobjects]q(U	AnimeDataqU
+MediumListqUAnimeq U	MangaDataq!UMangaq"eUhelpers]q#(Uget_post_urlq$Uget_query_urlq%Ufind_key_numq&U
+verif_authq'Ufind_keyq(U
+rescheduleq)Uget_list_urlq*Uget_scrape_urlq+Udet_keyq,eU	constants]q-(U
+INVALID_IDq.UMANGA_ADD_BASEq/UANIME_UPDATE_BASEq0UINVALID_STATUS_NUMq1U
+UNAPPROVEDq2UTOO_MANY_REQUESTSq3UINVALID_CREDENTIALSq4UMANGALIST_BASEq5UINVALID_MEDIUMq6UCREDENTIALS_VERIFYq7UANIME_TITLE_ATTR_VALq8UANIME_QUERY_BASEq9UDEFAULT_WAITq:UMANGA_DELETE_BASEq;UINVALID_LIST_MATCHq<UINVALID_AUTH_FILEq=UMANGA_UPDATE_BASEq>U	OP_SUFFIXq?UINVALID_EMPTY_QUERYq@UANIME_TITLE_ATTRqAUANIME_SCRAPE_BASEqBUANIME_DELETE_BASEqCUMANGA_SCRAPE_BASEqDUANIME_ADD_BASEqEUMANGA_QUERY_BASEqFUANIMELIST_BASEqGUMALGRAPH_GLOBALqHUANIME_TITLE_ELEMqIeU
+spice.test]qJhaUsetup2]qKUhereqLaUspice.constants]qM(U
+INVALID_IDqNUMANGA_ADD_BASEqOUINVALID_STATUSqPUANIME_UPDATE_BASEqQUINVALID_STATUS_NUMqRU
+UNAPPROVEDqSUTOO_MANY_REQUESTSqTUINVALID_CREDENTIALSqUUMANGALIST_BASEqVUINVALID_MEDIUMqWUCREDENTIALS_VERIFYqXUANIME_TITLE_ATTR_VALqYUANIME_QUERY_BASEqZUDEFAULT_WAITq[UMANGA_DELETE_BASEq\UINVALID_LIST_MATCHq]UINVALID_AUTH_FILEq^UMANGA_UPDATE_BASEq_U	OP_SUFFIXq`UINVALID_EMPTY_QUERYqaUANIME_TITLE_ATTRqbUANIME_SCRAPE_BASEqcUANIME_DELETE_BASEqdUMANGA_SCRAPE_BASEqeUANIME_ADD_BASEqfUMANGA_QUERY_BASEqgUANIMELIST_BASEqhUMALGRAPH_GLOBALqiUANIME_TITLE_ELEMqjeUspice.objects]qk(U	AnimeDataqlU
+MediumListqmUAnimeqnU	MangaDataqoUMangaqpeUspice.tokens]qq(U
+OperationsqrUStatusNumberqsUMediumqtUStatusqueUspice.stats]qv(Ukarl_pearson2qwUsum_xyqxUextremesqyUmedianqzUp_varq{U
+square_sumq|Umodeq}Up_stddevq~UsumqUkarl_pearsonqÄUmeanqÅeUspice.helpers]qÇ(Uget_query_urlqÉUfind_key_numqÑU
+verif_authqÖUfind_keyqÜU
+rescheduleqáUget_list_urlqàUget_post_urlqâUdet_keyqäUget_scrape_urlqãeUspice]u.

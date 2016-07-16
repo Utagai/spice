@@ -7,5 +7,6 @@ gitp.sh
 auth
 1
 spice.egg-info
+spice_mal.egg-info
 dist/
 build/

@@ -20,47 +20,45 @@ Name inspired by [Horo/Holo](http://myanimelist.net/character/7373/Holo) from [S
 
 API inspired by other attempts (which made their own REST API wrapper, while this one uses a pure Python implementation), such as [crobert22](https://github.com/croberts22)'s [Railgun](https://github.com/croberts22/railgun) and [chuyeow](https://github.com/chuyeow)'s [myanimelist-api](https://github.com/chuyeow/myanimelist-api).
 
-## Install (WIP)
+## Install
 
 ```bash
-$ pip install spice
+$ pip install spice_mal
 ```
 
 ## Here's how to use it (WIP)
 
 ```python
-import spice
+import spice_mal as spice
 
 def main():
-    spice.init_auth('username', 'password')
-    saw_results_anime = spice.search('spice and wolf', spice.ANIME)
-    for result in saw_results_anime:
-    	print("{} : {} ({}) | {} episodes. Score: {}.".format(result.id,
-															result.title,
-															result.english,
-															result.episodes,
-															result.score))
-    saw_season_one = spice.search_id(2966, spice.ANIME) #Spice and Wolf, Season 1
+	creds = spice.load_auth_from_file('auth') #or spice.init_auth(username, pw)
+	search_results = spice.search('Spice and Wolf', spice.get_medium('anime'))
+	print(results[0].title) # > Ookami to Koushinryou
+	saw_id = results[0].id # > 2966
+	
+	#mal sees everything as anime or manga, so novels are considered manga.
+	saw_novel = spice.search_id(saw_id, spice.get_medium('manga'))
+	print(saw_novel.title) # > Ookami to Koushinryou
+	print(saw_novel.chapters) # > 0
+	print(saw_novel.volumes) # > 18
+	
+	#get a fresh anime data object to fill in, and then push to your list
+	saw_data = spice.get_blank(spice.get_medium('anime'))
+	saw_data.episodes = 10 #you've watched 10 eps
+	saw_data.status = spice.get_status('watching') #you're still watching
+	saw_data.score = 9 #your rating
+	saw_data.tags = ['Holo is the best.'] #tags
+	#there are many other fields you can fill in, but this is enough.
+	spice.update(saw_data, saw_id, spice.get_medium('anime')) #update your list.
 
-    saw_results_manga = spice.search('Ookami to Koushinryou', spice.MANGA)
-    for result in saw_results_manga:
-    	print("{} : {} ({}) | {} chapters, {} volumes. Score: {}.".format(result.id,
-																		result.title,
-																		result.english,
-																		result.chapters,
-																		result.volumes,
-																		result.score))
-    
-    saw_data = spice.get_blank(spice.MANGA)
-    saw_data.chapters = 4
-    saw_data.volume = 2
-    saw_data.status = 1 #reading
-    saw_data.score = 9 #9/10
-    
-    spice.add(saw_data, 9115, spice.MANGA) #add manga to manga list.
-    saw_data.chapters = 5 #read a chapter
-    spice.update(saw_data, 9115, spice.MANGA) #update mangalist
-    spice.delete(saw_data, 9115, spice.MANGA)
+	your_list = spice.get_list(spice.get_medium('anime'))
+	other_anime_list = spice.get_list(spice.get_medium('anime'), 'Pickleplatter')
+	
+	print(your_list.avg_score()) # > mean 
+	print(your_list.p_var()) # > variance
+	print(your_list.get_num_status(spice.get_status_num('watching')))
+	print(your_list.compatibility(other_anime_list)) # > compatibility score
 
 ```
 

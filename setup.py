@@ -2,10 +2,10 @@ from distutils.core import setup
 from setuptools import setup
 
 setup(
-    name = 'spice',
-    packages = ['spice'], # this must be the same as the name above
-    version = '1.0.2',
-    description = 'spice - testing',
+    name = 'spice_mal',
+    packages = ['spice_mal'], # this must be the same as the name above
+    version = '1.0.0',
+    description = 'spice is a pure Python API that wraps around MALs Official API and makes it much better.',
     long_description = open('README.md').read(),
     license = 'MIT',
     author = 'Mehrab Hoque',
