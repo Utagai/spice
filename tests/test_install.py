@@ -4,7 +4,7 @@ import spice
 
 import sys, os
 
-#sys.path.insert(0, '/home/may/Dropbox/Programming/spice/spice')
+sys.path.insert(0, '/home/may/Dropbox/Programming/spice/spice')
 
 def main():
     creds = spice.load_auth_from_file('auth')

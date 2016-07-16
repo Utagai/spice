@@ -1,12 +1,16 @@
 from bs4 import BeautifulSoup
 import requests
-import spice
 
 import sys, os
 
-sys.path.insert(0, '/home/may/Dropbox/Programming/spice/spice')
+sys.path.insert(0, '/home/may/Dropbox/Programming/spice/')
+
+import spice
 
 def main():
+    print(spice.get_status(1))
+    print(spice.get_status('COMPLETED'))
+    return
     creds = spice.load_auth_from_file('auth')
     print(creds)
     results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', spice.get_medium('anime'))
@@ -18,7 +22,7 @@ def main():
     print(souma.volumes)
     re_zero_data = spice.get_blank(spice.get_medium('anime'))
     re_zero_data.episodes = 15
-    re_zero_data.status = 1
+    re_zero_data.status = spice.get_status('reading')
     re_zero_data.score = 8
     re_zero_data.tags = ['this the first time a show that made me cringe']
 

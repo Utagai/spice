@@ -1,4 +1,4 @@
-gitp.sh
+.gitp.sh
 *.py~
 *.py.swp
 .*.py.swp
