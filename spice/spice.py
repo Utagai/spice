@@ -149,7 +149,7 @@ def load_auth_from_file(filename):
 def search(query, medium):
     '''Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
     :param query  The keyword(s) to search with.
-    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :return A list of all items that are of type [medium] and match the
              given keywords, or, an empty list if none matched.
     :raise ValueError For bad arguments.
@@ -163,13 +163,13 @@ def search(query, medium):
     if search_resp is None: #is there a better way to do this...
         return []
     query_soup = BeautifulSoup(search_resp.text, 'lxml')
-    if medium == Medium.ANIME:
+    if medium == tokens.Medium.ANIME:
         entries = query_soup.anime
         if entries is None:
             return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
 
         return [objects.Anime(entry) for entry in entries.findAll('entry')]
-    elif medium == Medium.MANGA:
+    elif medium == tokens.Medium.MANGA:
         entries = query_soup.manga
         if entries is None:
             return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
@@ -179,7 +179,7 @@ def search_id(id, medium):
     '''Grabs the [medium] with the given id from MyAnimeList as a [medium]
     object.
     :param id     The id of the [medium].
-    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :return The [medium] object with id requested, or None if no such [medium]
             exists.
     :raise ValueError For bad arguments.
@@ -208,28 +208,28 @@ def add(data, id, medium):
     '''Adds the [medium] with the given id and data to the user's [medium]List.
     :param data   The data for the [medium] to add.
     :param id     The id of the data to add.
-    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
     '''
-    _op(data, id, medium, Operations.ADD)
+    _op(data, id, medium, tokens.Operations.ADD)
 
 def update(data, id, medium):
     '''Updates the [medium] with the given id and data on the user's [medium]List.
     :param data   The data for the [medium] to update.
     :param id     The id of the data to update.
-    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
     '''
-    _op(data, id, medium, Operations.UPDATE)
+    _op(data, id, medium, tokens.Operations.UPDATE)
 
 def delete(data, id, medium):
     '''Deletes the [medium] with the given id and data from the user's [medium]List.
     :param data   The data for the [medium] to delete.
     :param id     The id of the data to delete.
-    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
     '''
-    _op(data, id, medium, Operations.DElETE)
+    _op(data, id, medium, tokens.Operations.DElETE)
 
 def _op(data, id, medium, op):
     post = helpers.get_post_url(id, medium, op)
@@ -248,12 +248,12 @@ def _op(data, id, medium, op):
 def get_blank(medium):
     '''Returns a [medium]Data object for filling before calling spice.add(),
     spice.update() or spice.delete().
-    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga).
+    :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :returns A [medium]Data object.
     '''
-    if medium == Medium.ANIME:
+    if medium == tokens.Medium.ANIME:
         return objects.AnimeData()
-    elif medium == Medium.MANGA:
+    elif medium == tokens.Medium.MANGA:
         return objects.MangaData()
     else:
         return None
@@ -262,7 +262,7 @@ def get_list(medium, user=None):
     '''Returns a MediumList (Anime or Manga depends on [medium]) of user.
     If user is not given, the username is taken from the initialized auth
     credentials.
-    :param medium Anime or manga (spice.Medium.Anime or spice.Medium.Manga)
+    :param medium Anime or manga (tokens.Medium.Anime or tokens.Medium.Manga)
     :param user   The user whose list should be grabbed. Defaults to credentials.
     '''
     if user is None:

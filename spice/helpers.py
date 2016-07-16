@@ -79,7 +79,7 @@ def get_post_url(id, medium, op):
 def verif_auth(credentials):
     verif_resp = requests.get(constants.CREDENTIALS_VERIFY, auth=credentials)
     if constants.TOO_MANY_REQUESTS in verif_resp.text:
-        return reschedule(verif_auth, DEFAULT_WAIT)
+        return reschedule(verif_auth, constants.DEFAULT_WAIT, credentials)
     if verif_resp.status_code == 200:
         return True
     else:
