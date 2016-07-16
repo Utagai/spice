@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name = 'spice_api',
     packages = ['spice_api'], # this must be the same as the name above
-    version = '1.0.0',
+    version = '1.0.1',
     description = 'spice is a pure Python API that wraps around MALs Official API and makes it much better.',
     long_description = open('README.md').read(),
     license = 'MIT',
