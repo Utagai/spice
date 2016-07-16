@@ -284,26 +284,19 @@ def get_medium(medium):
         raise ValueError(constants.INVALID_MEDIUM)
 
 def get_status(status, s=True):
-    if (status == 'watching' or status == 'WATCHING'
-        or status == 'w' or status == 1):
+    if status in ['watching', 'WATCHING', 'w', 1, '1', 'watch']:
         return (tokens.Status.WATCHING if s else tokens.StatusNumber.WATCHING)
-    elif (status == 'reading' or status == 'READING'
-        or status == 'r' or status == 1):
+    elif status in ['reading', 'READING', 'r', 1, '1', 'read']:
         return tokens.Status.READING if s else tokens.StatusNumber.READING
-    elif (status == 'completed' or status == 'COMPLETED'
-        or status == 'c' or status == 2):
+    elif status in ['completed', 'COMPLETED', 'c', 2, '2', 'complete']:
         return tokens.Status.COMPLETED if s else tokens.StatusNumber.COMPLETED
-    elif (status == 'dropped' or status == 'DROPPED'
-        or status == 'd' or status == '3'):
+    elif status in ['dropped', 'DROPPED', 'd', 3, '3', 'drop']:
         return tokens.Status.DROPPED if s else tokens.StatusNumber.DROPPED
-    elif (status == 'onhold' or status == 'ONHOLD'
-        or status == 'o' or status == 4):
+    elif status in ['onhold', 'on-hold', 'ONHOLD', 'ON-HOLD', 'o', 4, '4']:
         return tokens.Status.ONHOLD if s else tokens.StatusNumber.ONHOLD
-    elif (status == 'plantowatch' or status == 'PLANTOWATCH'
-        or status == 'p' or status == 'pw' or status == 6):
+    elif status in ['plantowatch', 'PLANTOWATCH', 'plan-to-watch', 'p', 6, '6', 'pw']:
         return tokens.Status.PLANTOWATCH if s else tokens.StatusNumber.PLANTOWATCH
-    elif (status == 'plantoread' or status == 'PLANTOREAD'
-        or status == 'p' or status == 'pr' or status == 6):
+    elif status in ['plantoread', 'PLANTOREAD', 'plan-to-read', 'p', 6, '6', 'pr']:
         return tokens.Status.PLANTOREAD if s else tokens.StatusNumber.PLANTOREAD
     else:
         raise ValueError(constants.INVALID_STATUS)
