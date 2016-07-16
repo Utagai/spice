@@ -26,7 +26,7 @@ API inspired by other attempts (which made their own REST API wrapper, while thi
 $ pip install spice_api
 ```
 
-## Here's how to use it (WIP)
+## Here's how to use it 
 
 ```python
 import spice_api as spice
