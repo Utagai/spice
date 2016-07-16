@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name = 'spice',
     packages = ['spice'], # this must be the same as the name above
-    version = '1.0.0',
+    version = '1.0.2',
     description = 'spice - testing',
     long_description = open('README.md').read(),
     license = 'MIT',
@@ -34,7 +34,6 @@ setup(
     keywords = ['spice', 'MyAnimeList', 'API'], # arbitrary keywords
     install_requires = [
         'requests',
-        'lxml',
         'beautifulsoup4'
     ],
 )
