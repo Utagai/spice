@@ -68,7 +68,7 @@ MALGRAPH_GLOBAL = 'http://graph.anime.plus/s/globals'
 
 '''The default wait time before rescheduling an event.
 '''
-DEFAULT_WAIT = 5
+DEFAULT_WAIT = 3
 
 '''Keyword substring for multiple requests --
 The only way to consistently work around the inconsistency of the Official MAL

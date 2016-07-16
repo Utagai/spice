@@ -5,12 +5,9 @@ import sys, os
 
 sys.path.insert(0, '/home/may/Dropbox/Programming/spice/')
 
-import spice
+import spice_api as spice
 
 def main():
-    print(spice.get_status(1))
-    print(spice.get_status('COMPLETED'))
-    return
     creds = spice.load_auth_from_file('auth')
     print(creds)
     results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', spice.get_medium('anime'))

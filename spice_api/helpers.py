@@ -95,7 +95,6 @@ def get_list_url(medium, user):
         return None
 
 def reschedule(func, wait, *args):
-    stderr.write('Too many requests. Waiting 5 seconds.\n')
     sleep(wait)
     return func(*args)
 
