@@ -92,5 +92,12 @@ INVALID_AUTH_FILE   = 'Invalid auth file.'
 INVALID_EMPTY_QUERY = 'Must provide a non-empty query.'
 INVALID_MEDIUM      = 'Invalid medium. Use spice.Medium.Anime or spice.Medium.MANGA.'
 INVALID_ID          = 'Id must be a non-zero, positive integer.'
-INVALID_STATUS_NUM  = 'Status num must be an integer (1, 2, 3, 4 or 6).'
+INVALID_STATUS      = '''Status must be one of the following:
+\'reading(1)\'\n\'watching(1)\'\n\'completed(2)\'
+\'onhold(3)\'\n\'dropped(4)\'\n\'plantoread(6)\'
+\'plantowatch(6)\''''
+INVALID_STATUS_NUM  = '''Status must be one of the following:
+\'reading(1)\'\n\'watching(1)\'\n\'completed(2)\'
+\'onhold(3)\'\n\'dropped(4)\'\n\'plantoread(6)\'
+\'plantowatch(6)\''''
 INVALID_LIST_MATCH  = 'Invalid list match.'

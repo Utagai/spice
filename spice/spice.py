@@ -283,5 +283,33 @@ def get_medium(medium):
     else:
         raise ValueError(constants.INVALID_MEDIUM)
 
+def get_status(status, s=True):
+    if (status == 'watching' or status == 'WATCHING'
+        or status == 'w' or status == 1):
+        return (tokens.Status.WATCHING if s else tokens.StatusNumber.WATCHING)
+    elif (status == 'reading' or status == 'READING'
+        or status == 'r' or status == 1):
+        return tokens.Status.READING if s else tokens.StatusNumber.READING
+    elif (status == 'completed' or status == 'COMPLETED'
+        or status == 'c' or status == 2):
+        return tokens.Status.COMPLETED if s else tokens.StatusNumber.COMPLETED
+    elif (status == 'dropped' or status == 'DROPPED'
+        or status == 'd' or status == '3'):
+        return tokens.Status.DROPPED if s else tokens.StatusNumber.DROPPED
+    elif (status == 'onhold' or status == 'ONHOLD'
+        or status == 'o' or status == 4):
+        return tokens.Status.ONHOLD if s else tokens.StatusNumber.ONHOLD
+    elif (status == 'plantowatch' or status == 'PLANTOWATCH'
+        or status == 'p' or status == 'pw' or status == 6):
+        return tokens.Status.PLANTOWATCH if s else tokens.StatusNumber.PLANTOWATCH
+    elif (status == 'plantoread' or status == 'PLANTOREAD'
+        or status == 'p' or status == 'pr' or status == 6):
+        return tokens.Status.PLANTOREAD if s else tokens.StatusNumber.PLANTOREAD
+    else:
+        raise ValueError(constants.INVALID_STATUS)
+
+def get_status_num(status):
+    return get_status(status, False)
+
 if __name__ == '__main__':
     print('Spice is meant to be imported into a project.')

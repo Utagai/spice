@@ -125,15 +125,15 @@ def find_key(status_num, medium):
 
 def find_key_num(status):
     if status == tokens.Status.WATCHING or status == tokens.Status.READING:
-        return 1
+        return tokens.StatusNumber.WATCHING
     elif status == tokens.Status.COMPLETED:
-        return 2
+        return tokens.StatusNumber.COMPLETED
     elif status == tokens.Status.DROPPED:
-        return 3
+        return tokens.StatusNumber.DROPPED
     elif status == tokens.Status.ONHOLD:
-        return 4
+        return tokens.StatusNumber.ONHOLD
     elif status == tokens.Status.PLANTOWATCH or status == tokens.Status.PLANTOREAD:
-        return 6
+        return tokens.StatusNumber.PLANTOREAD
     else:
         return None
 
