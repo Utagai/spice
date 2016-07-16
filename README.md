@@ -23,13 +23,13 @@ API inspired by other attempts (which made their own REST API wrapper, while thi
 ## Install
 
 ```bash
-$ pip install spice_mal
+$ pip install spice_api
 ```
 
 ## Here's how to use it (WIP)
 
 ```python
-import spice_mal as spice
+import spice_api as spice
 
 def main():
 	creds = spice.load_auth_from_file('auth') #or spice.init_auth(username, pw)
