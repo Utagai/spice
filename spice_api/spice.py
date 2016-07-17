@@ -42,7 +42,9 @@ The spice API exposes several functions for access to MAL:
 5) delete()                          - Delete an anime/manga from a list.
 6) get_list()                        - Gets a user's Anime/MangaList.
 7) get_blank()			             - Returns a blank Anime or MangaData object.
-8) get_user_id()                     - Returns the authenticated user's id.
+8) get_status()                      - Returns the status token for the given status string.
+9) get_status_num()		     - Returns the status number for the given token or string.
+10) get_medium() 		     - Returns the medium token for the given string.
 
 The MediumList object returned by get_list() also exposes some useful functionality:
 1) avg_score()         - Returns the user's average score across anime/manga watched.
