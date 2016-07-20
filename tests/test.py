@@ -3,6 +3,7 @@ import requests
 
 import sys, os
 
+from time import sleep
 sys.path.insert(0, '/home/may/Dropbox/Programming/spice/')
 
 import spice_api as spice
@@ -18,10 +19,22 @@ def main():
     print(souma.chapters)
     print(souma.volumes)
     re_zero_data = spice.get_blank(spice.get_medium('anime'))
-    re_zero_data.episodes = 15
+    re_zero_data.episodes = 0
     re_zero_data.status = spice.get_status('reading')
     re_zero_data.score = 8
     re_zero_data.tags = ['this the first time a show that made me cringe']
+    for x in range(10):
+        spice.update(re_zero_data, 31240, spice.get_medium('anime'))
+        re_zero_data.episodes += 1
+        print("Sleeping for 5 seconds...")
+        sleep(1)
+        print("1")
+        sleep(3)
+        print("4")
+        sleep(1)
+        print("5")
+
+    return
 
     shokugeki_data = spice.get_blank(spice.get_medium('manga'))
     shokugeki_data.chapters = 13

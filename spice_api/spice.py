@@ -103,6 +103,9 @@ this = sys.modules[__name__]
 '''
 this.credentials = None
 
+this.user_agent = ('spice API (https://github.com/Utagai/spice)')
+header = {'User-Agent': user_agent}
+
 def init_auth(username, password):
     '''Initializes the auth settings for accessing MyAnimeList
     through its official API from a given username and password.
@@ -113,7 +116,7 @@ def init_auth(username, password):
     username = username.strip()
     password = password.strip()
     this.credentials = (username, password)
-    if helpers.verif_auth(credentials):
+    if helpers.verif_auth(credentials, header):
         return (username, password)
     else:
         raise ValueError(constants.INVALID_CREDENTIALS)
@@ -141,7 +144,7 @@ def load_auth_from_file(filename):
         elif len(lines) == 0 or len(lines) > 2:
             raise ValueError(constants.INVALID_AUTH_FILE)
 
-        if helpers.verif_auth(credentials):
+        if helpers.verif_auth(credentials, header):
             return (lines[0], lines[1])
         else:
             raise ValueError(constants.INVALID_CREDENTIALS)
@@ -159,7 +162,7 @@ def search(query, medium):
     api_query = helpers.get_query_url(medium, query)
     if api_query is None:
         raise ValueError(constants.INVALID_MEDIUM)
-    search_resp = requests.get(api_query, auth=credentials)
+    search_resp = requests.get(api_query, auth=credentials, headers=header)
     if search_resp is None: #is there a better way to do this...
         return []
     query_soup = BeautifulSoup(search_resp.text, 'lxml')
@@ -189,7 +192,7 @@ def search_id(id, medium):
     scrape_query = helpers.get_scrape_url(id, medium)
     if scrape_query is None:
         raise ValueError(constants.INVALID_MEDIUM)
-    search_resp = requests.get(scrape_query)
+    search_resp = requests.get(scrape_query, headers=header)
     scrape_soup = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
     #coming from.
@@ -236,7 +239,8 @@ def _op(data, id, medium, op):
     if post is None:
         raise ValueError(constants.INVALID_MEDIUM)
     post = post  + data.to_xml()
-    headers = {'Content-type': 'application/xml', 'Accept': 'text/plain'}
+    headers = {'Content-type': 'application/xml', 'Accept': 'text/plain',
+                'User-Agent': user_agent}
     #MAL API is broken to hell -- you have to actually use GET
     #and chuck the data into the URL as seen above and below...
     op_resp = requests.get(post, headers=headers, auth=credentials)
@@ -268,7 +272,8 @@ def get_list(medium, user=None):
     if user is None:
         user = credentials[0]
     list_url = helpers.get_list_url(medium, user)
-    list_resp = requests.get(list_url) #for some reason, we don't need auth.
+    #for some reason, we don't need auth.
+    list_resp = requests.get(list_url, headers=header)
     if constants.TOO_MANY_REQUESTS in list_resp.text:
         return helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium, user)
 

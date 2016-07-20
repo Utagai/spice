@@ -76,8 +76,9 @@ def get_post_url(id, medium, op):
 
     return None
 
-def verif_auth(credentials):
-    verif_resp = requests.get(constants.CREDENTIALS_VERIFY, auth=credentials)
+def verif_auth(credentials, header):
+    verif_resp = requests.get(constants.CREDENTIALS_VERIFY, auth=credentials,
+                                headers=header)
     if constants.TOO_MANY_REQUESTS in verif_resp.text:
         return reschedule(verif_auth, constants.DEFAULT_WAIT, credentials)
     if verif_resp.status_code == 200:
@@ -95,6 +96,7 @@ def get_list_url(medium, user):
         return None
 
 def reschedule(func, wait, *args):
+    print("Fuck")
     sleep(wait)
     return func(*args)
 
