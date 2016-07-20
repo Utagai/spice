@@ -11,9 +11,9 @@ import spice_api as spice
 def main():
     creds = spice.load_auth_from_file('auth')
     print(creds)
-    results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', spice.get_medium('anime'))
+    results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', spice.get_medium('anime'), creds)
     print(results[0].title)
-    souma = spice.search_id(1, spice.get_medium('manga'))
+    souma = spice.search_id(1, spice.get_medium('manga'), creds)
     print(souma.raw_data)
     print(souma.title)
     print(souma.chapters)
@@ -23,27 +23,15 @@ def main():
     re_zero_data.status = spice.get_status('reading')
     re_zero_data.score = 8
     re_zero_data.tags = ['this the first time a show that made me cringe']
-    for x in range(10):
-        spice.update(re_zero_data, 31240, spice.get_medium('anime'))
-        re_zero_data.episodes += 1
-        print("Sleeping for 5 seconds...")
-        sleep(1)
-        print("1")
-        sleep(3)
-        print("4")
-        sleep(1)
-        print("5")
-
-    return
 
     shokugeki_data = spice.get_blank(spice.get_medium('manga'))
     shokugeki_data.chapters = 13
     shokugeki_data.volumes = 1
     shokugeki_data.status = 1
     shokugeki_data.score = 8
-    spice.update(shokugeki_data, 45757, spice.get_medium('manga'))
+    spice.update(shokugeki_data, 45757, spice.get_medium('manga'), creds)
 
-    anime_list = spice.get_list(spice.get_medium('ANIME'))
+    anime_list = spice.get_list(spice.get_medium('ANIME'), 'Utagai-')
     print(anime_list.avg_score())
     print(anime_list.median_score())
     print(anime_list.mode_score())

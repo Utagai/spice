@@ -99,13 +99,7 @@ from . import helpers
 from . import tokens
 import sys
 
-this = sys.modules[__name__]
-
-'''The credentials set for the user.
-'''
-this.credentials = None
-
-this.user_agent = ('spice API (https://github.com/Utagai/spice)')
+user_agent = ('spice API (https://github.com/Utagai/spice)')
 header = {'User-Agent': user_agent}
 
 def init_auth(username, password):
@@ -117,9 +111,9 @@ def init_auth(username, password):
     '''
     username = username.strip()
     password = password.strip()
-    this.credentials = (username, password)
+    credentials = (username, password)
     if helpers.verif_auth(credentials, header):
-        return (username, password)
+        return credentials
     else:
         raise ValueError(constants.INVALID_CREDENTIALS)
 
@@ -139,19 +133,19 @@ def load_auth_from_file(filename):
         lines = auth_file.read().splitlines()
         lines = [line.strip() for line in lines if len(line) != 0]
         if len(lines) == 2:
-            this.credentials = (lines[0], lines[1])
+            credentials = (lines[0], lines[1])
         elif len(lines) == 1:
             user_pass = lines[0].split()
-            this.credentials = (user_pass[0], user_pass[1])
+            credentials = (user_pass[0], user_pass[1])
         elif len(lines) == 0 or len(lines) > 2:
             raise ValueError(constants.INVALID_AUTH_FILE)
 
         if helpers.verif_auth(credentials, header):
-            return (lines[0], lines[1])
+            return credentials
         else:
             raise ValueError(constants.INVALID_CREDENTIALS)
 
-def search(query, medium):
+def search(query, medium, credentials):
     '''Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
     :param query  The keyword(s) to search with.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
@@ -180,7 +174,7 @@ def search(query, medium):
             return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
         return [objects.Manga(entry) for entry in entries.findAll('entry')]
 
-def search_id(id, medium):
+def search_id(id, medium, credentials):
     '''Grabs the [medium] with the given id from MyAnimeList as a [medium]
     object.
     :param id     The id of the [medium].
@@ -202,41 +196,41 @@ def search_id(id, medium):
                     {constants.ANIME_TITLE_ATTR:constants.ANIME_TITLE_ATTR_VAL})
     if query is None:
         return helpers.reschedule(search_id, constants.DEFAULT_WAIT, id, medium)
-    matches = search(query.text, medium)
+    matches = search(query.text, medium, credentials)
     index = [match.id for match in matches].index(str(id))
     if index != -1:
         return matches[index]
     else:
         return None
 
-def add(data, id, medium):
+def add(data, id, medium, credentials):
     '''Adds the [medium] with the given id and data to the user's [medium]List.
     :param data   The data for the [medium] to add.
     :param id     The id of the data to add.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
     '''
-    _op(data, id, medium, tokens.Operations.ADD)
+    _op(data, id, medium, tokens.Operations.ADD, credentials)
 
-def update(data, id, medium):
+def update(data, id, medium, credentials):
     '''Updates the [medium] with the given id and data on the user's [medium]List.
     :param data   The data for the [medium] to update.
     :param id     The id of the data to update.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
     '''
-    _op(data, id, medium, tokens.Operations.UPDATE)
+    _op(data, id, medium, tokens.Operations.UPDATE, credentials)
 
-def delete(data, id, medium):
+def delete(data, id, medium, credentials):
     '''Deletes the [medium] with the given id and data from the user's [medium]List.
     :param data   The data for the [medium] to delete.
     :param id     The id of the data to delete.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
     '''
-    _op(data, id, medium, tokens.Operations.DElETE)
+    _op(data, id, medium, tokens.Operations.DElETE, credentials)
 
-def _op(data, id, medium, op):
+def _op(data, id, medium, op, credentials):
     post = helpers.get_post_url(id, medium, op)
     if post is None:
         raise ValueError(constants.INVALID_MEDIUM)
@@ -264,15 +258,13 @@ def get_blank(medium):
     else:
         return None
 
-def get_list(medium, user=None):
+def get_list(medium, user):
     '''Returns a MediumList (Anime or Manga depends on [medium]) of user.
     If user is not given, the username is taken from the initialized auth
     credentials.
     :param medium Anime or manga (tokens.Medium.Anime or tokens.Medium.Manga)
-    :param user   The user whose list should be grabbed. Defaults to credentials.
+    :param user   The user whose list should be grabbed. May use credentials[0].
     '''
-    if user is None:
-        user = credentials[0]
     list_url = helpers.get_list_url(medium, user)
     #for some reason, we don't need auth.
     list_resp = requests.get(list_url, headers=header)
