@@ -86,6 +86,12 @@ def verif_auth(credentials, header):
     else:
         return False
 
+def check_creds(credentials, header):
+    if verif_auth(credentials, header):
+        return True
+    else:
+        raise ValueError(constants.INVALID_CREDENTIALS)
+        return False
 
 def get_list_url(medium, user):
     if medium == tokens.Medium.ANIME:

@@ -10,3 +10,4 @@ spice.egg-info
 spice_api.egg-info
 dist/
 build/
+.ropeproject/

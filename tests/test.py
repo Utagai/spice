@@ -31,7 +31,7 @@ def main():
     shokugeki_data.score = 8
     spice.update(shokugeki_data, 45757, spice.get_medium('manga'), creds)
 
-    anime_list = spice.get_list(spice.get_medium('ANIME'), 'Utagai-')
+    anime_list = spice.get_list(spice.get_medium('ANIME'), 'Utagai-', creds)
     print(anime_list.avg_score())
     print(anime_list.median_score())
     print(anime_list.mode_score())
@@ -48,7 +48,7 @@ def main():
     print(anime_list.get_score(10))
     print(anime_list.exists_as_status(11734, 1))
     print(anime_list.score_diff())
-    anime_list2 = spice.get_list(spice.get_medium('ANIME'), 'Pickleplatter')
+    anime_list2 = spice.get_list(spice.get_medium('ANIME'), 'Pickleplatter', creds)
     print("Similarity coefficient: {}".format(anime_list.compatibility(anime_list2)))
 
 if __name__ == '__main__':

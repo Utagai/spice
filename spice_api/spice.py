@@ -153,6 +153,7 @@ def search(query, medium, credentials):
              given keywords, or, an empty list if none matched.
     :raise ValueError For bad arguments.
     '''
+    helpers.check_creds(credentials, header)
     if len(query) == 0:
         raise ValueError(constants.INVALID_EMPTY_QUERY)
     api_query = helpers.get_query_url(medium, query)
@@ -183,6 +184,7 @@ def search_id(id, medium, credentials):
             exists.
     :raise ValueError For bad arguments.
     '''
+    helpers.check_creds(credentials, header)
     if id <= 0 or not float(id).is_integer():
         raise ValueError(constants.INVALID_ID)
     scrape_query = helpers.get_scrape_url(id, medium)
@@ -231,6 +233,7 @@ def delete(data, id, medium, credentials):
     _op(data, id, medium, tokens.Operations.DElETE, credentials)
 
 def _op(data, id, medium, op, credentials):
+    helpers.check_creds(credentials, header)
     post = helpers.get_post_url(id, medium, op)
     if post is None:
         raise ValueError(constants.INVALID_MEDIUM)
@@ -258,13 +261,14 @@ def get_blank(medium):
     else:
         return None
 
-def get_list(medium, user):
+def get_list(medium, user, credentials):
     '''Returns a MediumList (Anime or Manga depends on [medium]) of user.
     If user is not given, the username is taken from the initialized auth
     credentials.
     :param medium Anime or manga (tokens.Medium.Anime or tokens.Medium.Manga)
     :param user   The user whose list should be grabbed. May use credentials[0].
     '''
+    helpers.check_creds(credentials, header)
     list_url = helpers.get_list_url(medium, user)
     #for some reason, we don't need auth.
     list_resp = requests.get(list_url, headers=header)
