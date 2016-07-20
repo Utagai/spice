@@ -102,7 +102,6 @@ def get_list_url(medium, user):
         return None
 
 def reschedule(func, wait, *args):
-    print("Fuck")
     sleep(wait)
     return func(*args)
 
