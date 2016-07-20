@@ -52,13 +52,13 @@ def main():
 	#there are many other fields you can fill in, but this is enough.
 	spice.update(saw_data, saw_id, spice.get_medium('anime')) #update your list.
 
-	your_list = spice.get_list(spice.get_medium('anime'))
-	other_anime_list = spice.get_list(spice.get_medium('anime'), 'Pickleplatter')
+	your_list = spice.get_list(spice.get_medium('anime')) #get your list (no args)
+	other_anime_list = spice.get_list(spice.get_medium('anime'), 'Pickleplatter') #someone else's list
 	
 	print(your_list.avg_score()) # > mean 
 	print(your_list.p_var()) # > variance
-	print(your_list.get_num_status(spice.get_status_num('watching')))
-	print(your_list.compatibility(other_anime_list)) # > compatibility score
+	print(your_list.get_num_status(spice.get_status_num('watching'))) #number of shows you're watching
+	print(your_list.compatibility(other_anime_list)) # > you and your friend's compatibility score
 
 ```
 
