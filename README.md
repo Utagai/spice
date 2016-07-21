@@ -33,12 +33,12 @@ import spice_api as spice
 
 def main():
 	creds = spice.load_auth_from_file('auth') #or spice.init_auth(username, pw)
-	search_results = spice.search('Spice and Wolf', spice.get_medium('anime'))
+	search_results = spice.search('Spice and Wolf', spice.get_medium('anime'), creds)
 	print(results[0].title) # > Ookami to Koushinryou
 	saw_id = results[0].id # > 2966
 	
 	#mal sees everything as anime or manga, so novels are considered manga.
-	saw_novel = spice.search_id(saw_id, spice.get_medium('manga'))
+	saw_novel = spice.search_id(saw_id, spice.get_medium('manga'), creds)
 	print(saw_novel.title) # > Ookami to Koushinryou
 	print(saw_novel.chapters) # > 0
 	print(saw_novel.volumes) # > 18
@@ -50,10 +50,10 @@ def main():
 	saw_data.score = 9 #your rating
 	saw_data.tags = ['Holo is the best.'] #tags
 	#there are many other fields you can fill in, but this is enough.
-	spice.update(saw_data, saw_id, spice.get_medium('anime')) #update your list.
+	spice.update(saw_data, saw_id, spice.get_medium('anime'), creds) #update your list.
 
-	your_list = spice.get_list(spice.get_medium('anime')) #get your list (no args)
-	other_anime_list = spice.get_list(spice.get_medium('anime'), 'Pickleplatter') #someone else's list
+	your_list = spice.get_list(spice.get_medium('anime'), creds) #get your list (no args)
+	other_anime_list = spice.get_list(spice.get_medium('anime'), 'Pickleplatter', creds) #someone else's list
 	
 	print(your_list.avg_score()) # > mean 
 	print(your_list.p_var()) # > variance
