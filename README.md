@@ -26,7 +26,7 @@ API inspired by other attempts (which made their own REST API wrapper, while thi
 $ pip install spice_api
 ```
 
-## Here's how to use it 
+## Here's How to Use It 
 
 ```python
 import spice_api as spice
@@ -57,12 +57,14 @@ def main():
 	
 	print(your_list.avg_score()) # > mean 
 	print(your_list.p_var()) # > variance
+	# there are A LOT more methods for analyzing lists. Check them out in the source code in objects.py!
 	print(your_list.get_num_status(spice.get_status_num('watching'))) #number of shows you're watching
 	print(your_list.compatibility(other_anime_list)) # > you and your friend's compatibility score
 
 ```
 
-## What's left
+## What's Left
 * Add more information to Anime() and Manga() objects through webscraping.
 * Add more list comparison methods.
+* Make some documentation for christ's sake.
 * Make README even more pretty.
