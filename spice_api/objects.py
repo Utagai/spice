@@ -78,6 +78,7 @@ class Anime:
         self._english    = None
         self._episodes   = None
         self._score      = None
+        self._type       = None
         self._anime_type = None
         self._status     = None
         self._dates      = None
