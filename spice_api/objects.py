@@ -69,6 +69,11 @@ class Anime:
         synopsis   - The synopsis text of the anime.
         image_url  - A url to the anime's cover image.
     '''
+    fields = [
+        'id', 'title', 'english', 'episodes', 'score', 'anime_type', 'status',
+        'dates', 'synopsis', 'image_url', 'rewatches', 'rewatch_ep'
+    ]
+    
     def __init__(self, anime_data):
         self.raw_data = anime_data
         #these are generated when they are called, so we save
@@ -195,6 +200,11 @@ class Anime:
                 return None
             self._rewatch_ep = rewatch_ep_val.text
             return self._rewatch_ep
+        
+    def to_json(self):
+        return {field: getattr(self, field) for field in self.fields}
+        
+
 
 class AnimeData:
     '''An object for packaging data required for operations on AnimeLists
