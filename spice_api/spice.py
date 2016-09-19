@@ -160,7 +160,7 @@ def search(query, medium, credentials):
     if api_query is None:
         raise ValueError(constants.INVALID_MEDIUM)
     search_resp = requests.get(api_query, auth=credentials, headers=header)
-    if search_resp is None: #is there a better way to do this...
+    if search_resp is None or search_resp.status_code == 204: #is there a better way to do this...
         return []
     query_soup = BeautifulSoup(search_resp.text, 'lxml')
     if medium == tokens.Medium.ANIME:
