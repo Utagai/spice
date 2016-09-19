@@ -166,7 +166,7 @@ def search(query, medium, credentials):
     if medium == tokens.Medium.ANIME:
         entries = query_soup.anime
         if entries is None:
-            return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
+            return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium, credentials)
 
         return [objects.Anime(entry) for entry in entries.findAll('entry')]
     elif medium == tokens.Medium.MANGA:
