@@ -1,29 +1,29 @@
-## A py module for objects.
-##
-## Oh, and a license thingy because otherwise it won't look cool and
-## professional.
-##
-## MIT License
-##
-## Copyright (c) [2016] [Mehrab Hoque]
-##
-## Permission is hereby granted, free of charge, to any person obtaining a copy
-## of this software and associated documentation files (the 'Software'), to deal
-## in the Software without restriction, including without limitation the rights
-## to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-## copies of the Software, and to permit persons to whom the Software is
-## furnished to do so, subject to the following conditions:
-##
-## The above copyright notice and this permission notice shall be included in all
-## copies or substantial portions of the Software.
-##
-## THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-## IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-## FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-## AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-## LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-## SOFTWARE.
+# A py module for objects.
+#
+# Oh, and a license thingy because otherwise it won't look cool and
+# professional.
+#
+# MIT License
+#
+# Copyright (c) [2016] [Mehrab Hoque]
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the 'Software'), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in 
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
 
 ''' A py module for objects.
 
@@ -76,8 +76,8 @@ class Anime:
     
     def __init__(self, anime_data):
         self.raw_data = anime_data
-        #these are generated when they are called, so we save
-        #computation when it is not needed.
+        # these are generated when they are called, so we save
+        # computation when it is not needed.
         self._id         = None
         self._title      = None
         self._english    = None
@@ -96,7 +96,7 @@ class Anime:
     def id(self):
         if self._id is None:
             id_val = self.raw_data.id
-            if id_val is None: #AnimeList Anime data.
+            if id_val is None: # AnimeList Anime data.
                 id_val = self.raw_data.series_animedb_id
             self._id = id_val.text
         return self._id
@@ -205,7 +205,6 @@ class Anime:
     def to_json(self):
         return {field: getattr(self, field) for field in self.fields}
         
-
 
 class AnimeData:
     '''An object for packaging data required for operations on AnimeLists
@@ -484,7 +483,7 @@ class MediumList:
                                 tokens.Status.ONHOLD:[], tokens.Status.DROPPED:[],
                                 tokens.Status.PLANTOREAD:[]}
         else:
-            #not sure what the best thing to do is... default to anime?
+            # not sure what the best thing to do is... default to anime?
             raise ValueError(constants.INVALID_MEDIUM)
 
         self.load()
@@ -497,7 +496,7 @@ class MediumList:
                 status = helpers.find_key(item.my_status.text, self.medium)
                 status_list = self.medium_list[status]
                 status_list.append(Anime(item))
-        else: #we are guaranteed to, at this point, have a valid medium
+        else: # we are guaranteed to, at this point, have a valid medium
             list_items = list_soup.findAll('manga')
             for item in list_items:
                 status = helpers.find_key(item.my_status.text, self.medium)
@@ -606,7 +605,8 @@ class MediumList:
     def compatibility(self, other_list):
         if self.medium != other_list.medium:
             raise ValueError(INVALID_LIST_MATCH)
-        #linear time set intersection karl pearson coefficient correlation
+        # linear time set intersection karl pearson coefficient correlation
+        # (expected linear time)
         plan_to_watch = str(tokens.StatusNumber.PLANTOWATCH)
         all_x = self.get_mediums()
         x_ids = [entry.id for entry in all_x if entry.status != plan_to_watch]
