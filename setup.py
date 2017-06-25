@@ -11,7 +11,7 @@ setup(
     author = 'Mehrab Hoque',
     author_email = 'mehrabhoque@gmail.com',
     url = 'https://github.com/Utagai/spice', # use the URL to the github repo
-    classifiers=[
+    classifiers = [
         'Development Status :: 4 - Beta',
 
         # Indicate who your project is intended for
