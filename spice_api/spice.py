@@ -25,7 +25,7 @@
 ## OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 ## SOFTWARE.
 
-''' A py module for the spice API.
+""" A py module for the spice API.
 
 This module is meant to be imported into the project.
 
@@ -89,7 +89,7 @@ The spice API also exposes useful enums and values:
 		             PLANTOREAD  = 'plantoread'
 
 
-'''
+"""
 
 from bs4 import BeautifulSoup
 import requests
@@ -103,12 +103,12 @@ user_agent = ('spice API (https://github.com/Utagai/spice)')
 header = {'User-Agent': user_agent}
 
 def init_auth(username, password):
-    '''Initializes the auth settings for accessing MyAnimeList
+    """Initializes the auth settings for accessing MyAnimeList
     through its official API from a given username and password.
     :param username Your MyAnimeList account username.
     :param password Your MyAnimeList account password.
     :return A tuple containing your credentials.
-    '''
+    """
     username = username.strip()
     password = password.strip()
     credentials = (username, password)
@@ -118,7 +118,7 @@ def init_auth(username, password):
         raise ValueError(constants.INVALID_CREDENTIALS)
 
 def load_auth_from_file(filename):
-    '''Initializes the auth settings for accessing MyAnimelist through its
+    """Initializes the auth settings for accessing MyAnimelist through its
     official API from a given filename.
     :param filename The name of the file containing your MyAnimeList
                     credentials
@@ -128,7 +128,7 @@ def load_auth_from_file(filename):
                         ...Have both your username  and password
                         ...separated by newline(s) or space(s).
     :return A tuple containing your credentials.
-    '''
+    """
     with open(filename) as auth_file:
         lines = auth_file.read().splitlines()
         lines = [line.strip() for line in lines if len(line) != 0]
@@ -146,13 +146,13 @@ def load_auth_from_file(filename):
             raise ValueError(constants.INVALID_CREDENTIALS)
 
 def search(query, medium, credentials):
-    '''Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
+    """Searches MyAnimeList for a [medium] matching the keyword(s) given by query.
     :param query  The keyword(s) to search with.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :return A list of all items that are of type [medium] and match the
              given keywords, or, an empty list if none matched.
     :raise ValueError For bad arguments.
-    '''
+    """
     helpers.check_creds(credentials, header)
     if len(query) == 0:
         raise ValueError(constants.INVALID_EMPTY_QUERY)
@@ -176,14 +176,14 @@ def search(query, medium, credentials):
         return [objects.Manga(entry) for entry in entries.findAll('entry')]
 
 def search_id(id, medium, credentials):
-    '''Grabs the [medium] with the given id from MyAnimeList as a [medium]
+    """Grabs the [medium] with the given id from MyAnimeList as a [medium]
     object.
     :param id     The id of the [medium].
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :return The [medium] object with id requested, or None if no such [medium]
             exists.
     :raise ValueError For bad arguments.
-    '''
+    """
     helpers.check_creds(credentials, header)
     if id <= 0 or not float(id).is_integer():
         raise ValueError(constants.INVALID_ID)
@@ -206,30 +206,30 @@ def search_id(id, medium, credentials):
         return None
 
 def add(data, id, medium, credentials):
-    '''Adds the [medium] with the given id and data to the user's [medium]List.
+    """Adds the [medium] with the given id and data to the user's [medium]List.
     :param data   The data for the [medium] to add.
     :param id     The id of the data to add.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
-    '''
+    """
     _op(data, id, medium, tokens.Operations.ADD, credentials)
 
 def update(data, id, medium, credentials):
-    '''Updates the [medium] with the given id and data on the user's [medium]List.
+    """Updates the [medium] with the given id and data on the user's [medium]List.
     :param data   The data for the [medium] to update.
     :param id     The id of the data to update.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
-    '''
+    """
     _op(data, id, medium, tokens.Operations.UPDATE, credentials)
 
 def delete(data, id, medium, credentials):
-    '''Deletes the [medium] with the given id and data from the user's [medium]List.
+    """Deletes the [medium] with the given id and data from the user's [medium]List.
     :param data   The data for the [medium] to delete.
     :param id     The id of the data to delete.
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :raise ValueError For bad arguments.
-    '''
+    """
     _op(data, id, medium, tokens.Operations.DElETE, credentials)
 
 def _op(data, id, medium, op, credentials):
@@ -249,11 +249,11 @@ def _op(data, id, medium, op, credentials):
         helpers.reschedule(_op, constants.DEFAULT_WAIT, data, id, medium, op)
 
 def get_blank(medium):
-    '''Returns a [medium]Data object for filling before calling spice.add(),
+    """Returns a [medium]Data object for filling before calling spice.add(),
     spice.update() or spice.delete().
     :param medium Anime or manga (tokens.Medium.ANIME or tokens.Medium.MANGA).
     :returns A [medium]Data object.
-    '''
+    """
     if medium == tokens.Medium.ANIME:
         return objects.AnimeData()
     elif medium == tokens.Medium.MANGA:
@@ -262,12 +262,12 @@ def get_blank(medium):
         return None
 
 def get_list(medium, user, credentials):
-    '''Returns a MediumList (Anime or Manga depends on [medium]) of user.
+    """Returns a MediumList (Anime or Manga depends on [medium]) of user.
     If user is not given, the username is taken from the initialized auth
     credentials.
     :param medium Anime or manga (tokens.Medium.Anime or tokens.Medium.Manga)
     :param user   The user whose list should be grabbed. May use credentials[0].
-    '''
+    """
     helpers.check_creds(credentials, header)
     list_url = helpers.get_list_url(medium, user)
     #for some reason, we don't need auth.

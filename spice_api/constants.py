@@ -25,82 +25,82 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-''' A py module for constants.
+""" A py module for constants.
 
 WARN: This module is not meant to be used in any way besides in the internals 
 of the spice API source code.
-'''
+"""
 
 CREDENTIALS_VERIFY = ('https://myanimelist.net/api/account/' + 
                       'verify_credentials.xml')
-''' The URL for verifying credentials.
-'''
+""" The URL for verifying credentials.
+"""
 
 ANIME_QUERY_BASE = 'https://myanimelist.net/api/anime/search.xml?q='
-'''The base URLs for querying anime searches based on keywords.
-'''
+"""The base URLs for querying anime searches based on keywords.
+"""
 MANGA_QUERY_BASE = 'https://myanimelist.net/api/manga/search.xml?q='
-'''The base URLs for querying manga searches based on keywords.
-'''
+"""The base URLs for querying manga searches based on keywords.
+"""
 
 ANIME_SCRAPE_BASE = 'https://myanimelist.net/anime/'
-'''The base URLs for scraping anime based on id numbers.
-'''
+"""The base URLs for scraping anime based on id numbers.
+"""
 MANGA_SCRAPE_BASE = 'https://myanimelist.net/manga/'
-'''The base URLs for scraping manga based on id numbers.
-'''
+"""The base URLs for scraping manga based on id numbers.
+"""
 
 ANIME_ADD_BASE = 'https://myanimelist.net/api/animelist/add/{}.xml'
-'''The base URL for an add operation on a user's AnimeList.
-'''
+"""The base URL for an add operation on a user's AnimeList.
+"""
 ANIME_UPDATE_BASE = 'https://myanimelist.net/api/animelist/update/{}.xml'
-'''The base URL for an update operation on a user's AnimeList.
-'''
+"""The base URL for an update operation on a user's AnimeList.
+"""
 ANIME_DELETE_BASE = 'https://myanimelist.net/api/animelist/delete/{}.xml'
-'''The base URL for a delete operation on a user's AnimeList.
-'''
+"""The base URL for a delete operation on a user's AnimeList.
+"""
 
 MANGA_UPDATE_BASE = 'https://myanimelist.net/api/mangalist/update/{}.xml'
-'''The base URL for an add operation on a user's MangaList.
-'''
+"""The base URL for an add operation on a user's MangaList.
+"""
 MANGA_ADD_BASE = 'https://myanimelist.net/api/mangalist/add/{}.xml'
-'''The base URL for an update operation on a user's MangaList.
-'''
+"""The base URL for an update operation on a user's MangaList.
+"""
 MANGA_DELETE_BASE = 'https://myanimelist.net/api/mangalist/delete/{}.xml'
-'''The base URL for a delete operation on a user's MangaList.
-'''
+"""The base URL for a delete operation on a user's MangaList.
+"""
 
 ANIMELIST_BASE = ('https://myanimelist.net/malappinfo.php?u={}&' + 
                   'status=all&type=anime')
-'''The base URLs for accessing a user's AnimeList.
-'''
+"""The base URLs for accessing a user's AnimeList.
+"""
 MANGALIST_BASE = ('https://myanimelist.net/malappinfo.php?u={}&' +
                   'status=all&type=manga')
-'''The base URLs for accessing a user's MangaList.
-'''
+"""The base URLs for accessing a user's MangaList.
+"""
 
 MALGRAPH_GLOBAL = 'http://graph.anime.plus/s/globals'
-'''Global stats base URL, taken from MALGraph
-'''
+"""Global stats base URL, taken from MALGraph
+"""
 
 DEFAULT_WAIT = 3
-'''The default wait time before rescheduling an event.
-'''
+"""The default wait time before rescheduling an event.
+"""
 
 TOO_MANY_REQUESTS = 'Too Many Requests'
-'''Keyword substring for multiple requests --
+"""Keyword substring for multiple requests --
 The only way to consistently work around the inconsistency of the Official MAL
 API.
-'''
+"""
 
 UNAPPROVED = 'has not been approved'
 OP_SUFFIX = '.xml?data='
 ANIME_TITLE_ELEM = 'span'
 ANIME_TITLE_ATTR = 'itemprop'
 ANIME_TITLE_ATTR_VAL = 'name'
-'''Arbitrary values that are unexplainable or confusing, that pop up in the 
+"""Arbitrary values that are unexplainable or confusing, that pop up in the 
 code. Hopefully, these constant names are more clear to the reader.
-'''
+"""
 
 INVALID_CREDENTIALS = 'Invalid credentials; rejected by MAL.'
 INVALID_AUTH_FILE = 'Invalid auth file.'

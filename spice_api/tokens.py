@@ -25,7 +25,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-''' A py module for token values.
+""" A py module for token values.
 
 [medium]
 [keys]
@@ -35,36 +35,36 @@
 
 WARN: This module is not meant to be used in any way besides in the internals of
 the spice API source code.
-'''
+"""
 
-'''The class that defines 'mediums'. Commonly seen as [medium] through the
+"""The class that defines 'mediums'. Commonly seen as [medium] through the
 docs. A medium is the form in which the content comes in, and can either be
 ANIME or MANGA.
 
 These are to be treated like enum tokens and are used frequently in this API's
 function calls to specify the medium for which to do work, since MyAnimeList
 is very distinctly cut up into two pieces, one for anime and one for manga.
-'''
+"""
 class Medium:
     ANIME, MANGA = list(range(2))
 
-'''The operations available on user Lists. These are to be treated like enums
-.'''
+"""The operations available on user Lists. These are to be treated like enums
+."""
 class Operations:
     ADD, UPDATE, DELETE = list(range(3))
 
-'''The numerical translations for anime/manga statuses. These are to be treated
+"""The numerical translations for anime/manga statuses. These are to be treated
 like enums.
-'''
+"""
 class StatusNumber:
     READING     = 1
     WATCHING, COMPLETED, ONHOLD, DROPPED = list(range(1,5))
     PLANTOWATCH = 6
     PLANTOREAD  = 6
 
-'''A namespace for exposing key names in AnimeList and MangaList object
+"""A namespace for exposing key names in AnimeList and MangaList object
 dictionaries.
-'''
+"""
 class Status:
     READING     = 'reading'
     WATCHING    = 'watching'

@@ -26,12 +26,12 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-''' A py module for basic stats.
+""" A py module for basic stats.
 
 WARN: This module is not meant to be used in any way besides in the internals of
 the spice API source code, but because it is for general statistics, one can
 extract this from the API and use it in their own projects.
-'''
+"""
 
 from __future__ import division
 from decimal import Decimal

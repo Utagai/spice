@@ -25,11 +25,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-''' A py module for helper functions.
+""" A py module for helper functions.
 
 WARN: This module is not meant to be used in any way besides in the internals 
 of the tokens.API source code.
-'''
+"""
 
 from sys import exit
 from time import sleep
