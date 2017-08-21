@@ -9,7 +9,7 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in 
+The above copyright notice and this permission notice shall be included in
 all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -76,7 +76,7 @@ def verif_auth(credentials, header):
     verif_resp = requests.get(constants.CREDENTIALS_VERIFY, auth=credentials,
                                 headers=header)
     if constants.TOO_MANY_REQUESTS in verif_resp.text:
-        return reschedule(verif_auth, constants.DEFAULT_WAIT, credentials)
+        return reschedule(verif_auth, constants.DEFAULT_WAIT_SECS, credentials)
     if verif_resp.status_code == 200:
         return True
     else:

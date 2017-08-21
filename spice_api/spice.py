@@ -155,19 +155,21 @@ def search(query, medium, credentials):
     if api_query is None:
         raise ValueError(constants.INVALID_MEDIUM)
     search_resp = requests.get(api_query, auth=credentials, headers=header)
-    if search_resp is None or search_resp.status_code == 204: #is there a better way to do this...
+    if search_resp is None or search_resp.status_code == 204: # is there a better way to do this...
         return []
     query_soup = BeautifulSoup(search_resp.text, 'lxml')
     if medium == tokens.Medium.ANIME:
         entries = query_soup.anime
         if entries is None:
-            return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium, credentials)
+            return helpers.reschedule(search, constants.DEFAULT_WAIT_SECS, query,
+                                      medium, credentials)
 
         return [objects.Anime(entry) for entry in entries.findAll('entry')]
     elif medium == tokens.Medium.MANGA:
         entries = query_soup.manga
         if entries is None:
-            return helpers.reschedule(search, constants.DEFAULT_WAIT, query, medium)
+            return helpers.reschedule(search, constants.DEFAULT_WAIT_SECS, query,
+                                      medium)
         return [objects.Manga(entry) for entry in entries.findAll('entry')]
 
 def search_id(id, medium, credentials):
@@ -189,10 +191,10 @@ def search_id(id, medium, credentials):
     scrape_soup = BeautifulSoup(search_resp.text, 'html.parser')
     #inspect element on an anime page, you'll see where this scrape is
     #coming from.
-    query = scrape_soup.find(constants.ANIME_TITLE_ELEM,
-                    {constants.ANIME_TITLE_ATTR:constants.ANIME_TITLE_ATTR_VAL})
+    query = scrape_soup.find('span', {'itemprop':'name'})
     if query is None:
-        return helpers.reschedule(search_id, constants.DEFAULT_WAIT, id, medium)
+        return helpers.reschedule(search_id, constants.DEFAULT_WAIT_SECS, id,
+                                  medium)
     matches = search(query.text, medium, credentials)
     index = [match.id for match in matches].index(str(id))
     if index != -1:
@@ -241,7 +243,8 @@ def _op(data, id, medium, op, credentials):
     if op_resp.status_code == 400 and constants.UNAPPROVED in op_resp.text:
         sys.stderr.write('This medium has not been approved by MAL yet.\n')
     elif constants.TOO_MANY_REQUESTS in op_resp.text: #Oh Holo save me from this API.
-        helpers.reschedule(_op, constants.DEFAULT_WAIT, data, id, medium, op)
+        helpers.reschedule(_op, constants.DEFAULT_WAIT_SECS, data, id, medium,
+                           op)
 
 def get_blank(medium):
     """Returns a [medium]Data object for filling before calling spice.add(),
@@ -268,7 +271,8 @@ def get_list(medium, user, credentials):
     #for some reason, we don't need auth.
     list_resp = requests.get(list_url, headers=header)
     if constants.TOO_MANY_REQUESTS in list_resp.text:
-        return helpers.reschedule(get_list, constants.DEFAULT_WAIT, medium, user)
+        return helpers.reschedule(get_list, constants.DEFAULT_WAIT_SECS, medium,
+                                  user)
 
     list_soup = BeautifulSoup(list_resp.text, 'lxml')
     return objects.MediumList(medium, list_soup)

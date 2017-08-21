@@ -24,7 +24,7 @@ SOFTWARE.
 A py module for basic stats (because no way in hell am I going to use NumPy
 to just compute averages and standard deviations).
 
-WARN: This module is not meant to be used in any way besides in the internals 
+WARN: This module is not meant to be used in any way besides in the internals
 of the spice API source code, but because it is for general statistics, one can
 extract this from the API and use it in their own projects.
 """
@@ -148,7 +148,6 @@ def karl_pearson2(datax, datay):
         return -999
     return similarity
 
-
-def data_check(data):
+def _data_check(data):
     if len(data) == 0:
         raise ValueError('Data must be non-empty.')

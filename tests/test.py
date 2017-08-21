@@ -1,10 +1,15 @@
+"""
+This is not a good way to test this API. This was really for the original
+maintainer (utagai)'s use. Seriously, this is bad, but if you want to use it,
+just make sure to change the sys.path.insert() hack below.
+"""
 from bs4 import BeautifulSoup
 import requests
 
 import sys, os
 
 from time import sleep
-sys.path.insert(0, '/home/may/Dropbox/Programming/spice/')
+sys.path.insert(0, '/home/may/Programming/spice/')
 
 import spice_api as spice
 
