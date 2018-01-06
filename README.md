@@ -106,7 +106,7 @@ This object encapsulates an anime *or* manga list. It has attributes :
 	
 This object also includes some probably useless but potentially useful methods to analyze lists:
 - `mlist.avg_score()` - average score
-- `mlist.median_score()` - median score (score at approximately/exactly the 50th percentile
+- `mlist.median_score()` - median score (score at approximately/exactly the 50th percentile)
 - `mlist.mode_score()` - mode score (most often-appearing score)
 - `mlist.extremes()` - extreme scores (high, low)
 - `mlist.p_stddev()` - standard deviation
