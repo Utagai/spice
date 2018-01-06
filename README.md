@@ -117,5 +117,4 @@ This object also includes some probably useless but potentially useful methods t
 # What's Left
 * Add more information to Anime() and Manga() objects through webscraping.
 * Add more list comparison methods.
-* Make some documentation for christ's sake.
 * Make README even more pretty.
