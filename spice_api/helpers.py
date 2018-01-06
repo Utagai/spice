@@ -33,7 +33,7 @@ import requests
 
 def get_query_url(medium, query):
     query = query.strip()
-    terms = query.replace(' ', '+')
+    terms = query.replace("+", "_").replace(' ', '+')
     if medium == tokens.Medium.ANIME:
         return constants.ANIME_QUERY_BASE + terms
     elif medium == tokens.Medium.MANGA:
