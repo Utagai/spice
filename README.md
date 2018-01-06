@@ -39,7 +39,7 @@ $ pip3 install spice_api
 
 **Searching**:
 + search by name: You can use `spice_api.search(title,spice_api.getmedium("anime/manga"),credentials)` to search for an anime or manga. This returns a list of [Anime](#anime) or [Manga](#manga) objects by relevance to the search query.
-+ search by id: If you already know the MAL id of an anime or manga, you can use use `spice_api.search_id(id,spice_api.getmedium("anime/manga"),credentials)`, to return the Anime or Manga object relevant.
++ search by id: If you already know the MAL id of an anime or manga, you can use use `spice_api.search_id(id,spice_api.getmedium("anime/manga"),credentials)`, to return the [Anime](#anime) or [Manga](#manga) object relevant.
 
 
 **Updating your list**:
