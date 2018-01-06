@@ -61,8 +61,8 @@ Referencing a [List](#list) object is as easy as `spice_api.get_list(spice.get_m
 
 **Anime Object** <a name="anime"></a>
 The Anime object has a number of attributes:
-- `anime.id`, the mal id of the anime, used with `search_id` and `update` methods.
-- `anime.title`
+- `anime.id`, the MAL ID of the anime, used with `search_id` and `update` methods.
+- `anime.title`, the title of the anime
 - `anime.english`, english name of the anime, if applicable
 - `anime.episodes`, number of episodes *NOTE: 0 if and only if number is unknown*
 - `anime.score`, The rating of the anime.
@@ -75,16 +75,18 @@ The Anime object has a number of attributes:
 
 
 **Manga Object**  <a name="manga"></a>
-*IMPORTANT NOTE*: Novels are also treated as manga.
+
+***NOTE**: Novels are also treated as manga.*
+
 The manga object has similar attributes:
-- `manga.id` 
-- `manga.title`, 
+- `manga.id`, see `anime.id`
+- `manga.title`, see `anime.title`
 - `manga.english`, english name of the manga, if applicable
 - `manga.chapters`, number of chapters in the manga  *NOTE: 0 if and only if number is unknown*
-- `manga.volume`, The number of volumes in this manga. *NOTE: 0 if and only if number is unknown*
+- `manga.volume`, the number of volumes in this manga. *NOTE: 0 if and only if number is unknown*
 - `manga.score`, manga's rating
 - `manga.manga_type`, format of manga (Manga, one-shot, manhwa, manhua, doujinshi, novel)
-- `manga.status`, In what state the manga is in (e.g. Publishing, Finished)
+- `manga.status`, in what state the manga is in (e.g. Publishing, Finished)
 - `manga.dates`, tuple of start and end date of publishing *NOTE 0000-00-00 if and only if date is unknown*
 - `manga.synopsis`, synopsis of manga
 - `manga.image_url`, cover image url
@@ -92,26 +94,28 @@ The manga object has similar attributes:
 **List object** <a name= "list"></a>
 This object encapsulates an anime *or* manga list. It has attributes :
 - `mlist.medium`, whether it's an anime or manga list
-- `mlist.raw_data`, raw xml data of the list.
+- `mlist.raw_data`, raw xml data of the list
 - `mlist.anime/manga_list`, dictionary containing 5 keys whose values contain 5 lists according to the key:
 	+ "watching"/"reading" - all manga/anime that are being read or watched
 	+ "completed"
 	+ "onhold"
 	+ "dropped"
 	+ "plantowatch"
-	E.g - `mlist.anime/manga_list[completed]` - returns all completed anime/manga in the list.
+	e.g - `mlist.anime/manga_list[completed]` - returns all completed anime/manga in the list.
 	
 	
 This object also includes some probably useless but potentially useful methods to analyze lists:
 - `mlist.avg_score()` - average score
-- `mlist.median_score()`
+- `mlist.median_score()` - median score (score at approximately/exactly the 50th percentile
 - `mlist.mode_score()` - mode score (most often-appearing score)
-- `mlist.extremes()` - extreme scores (high,low)
+- `mlist.extremes()` - extreme scores (high, low)
 - `mlist.p_stddev()` - standard deviation
 - `mlist.p_var()` - variance (square of standard deviation)
 - `mlist.get_total()` - sum of scores
 - `mlist.get_days()` - days spent watching
-- `mlist.compatibility(otherlist)` - Pearson correlation in percent of how high both of you rated the same anime/manga *NOTE: Raises ValueError if lists are of different medium type.*
+- `mlist.compatibility(otherlist)` - [pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) in percent of how high both of you rated the same anime/manga
+
+***NOTE**: Raises ValueError if lists are of different medium type.*
 
 
 # What's Left
