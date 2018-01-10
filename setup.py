@@ -34,6 +34,7 @@ setup(
     keywords = ['spice', 'MyAnimeList', 'API'], # arbitrary keywords
     install_requires = [
         'requests',
-        'beautifulsoup4'
+        'beautifulsoup4',
+        'lxml'
     ],
 )
