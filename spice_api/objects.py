@@ -172,7 +172,7 @@ class Anime:
         if "(Source:" in self._synopsis: 
             self._synopsis = self._synopsis.replace(self._synopsis[self._synopsis.index("(Source:"):],"") #delete everything from the source to the end
         while "[" in self._synopsis: # code to remove bbcodes also remove MAL Rewrite signatures due to "[]" pattern. 
-            self._synopsis = self._synopsis.replace(self._synopsis[self._synopsis.index("["):self._synopsis.index("]")],"")
+            self._synopsis = self._synopsis.replace(self._synopsis[self._synopsis.index("["):self._synopsis.index("]")+1],"")
         self._synopsis = html.unescape(self._synopsis) #replace html codes
         
         return self._synopsis
@@ -395,7 +395,7 @@ class Manga:
         if "(Source:" in self._synopsis: # if the source in synopsis
             self._synopsis = self._synopsis.replace(self._synopsis[self._synopsis.index("(Source:"):],"") #delete everything from the source to the end
         while "[" in self._synopsis: # code to remove bbcodes also remove MAL Rewrite signatures due to "[]" pattern. 
-            self._synopsis = self._synopsis.replace(self._synopsis[self._synopsis.index("["):self._synopsis.index("]")],"")
+            self._synopsis = self._synopsis.replace(self._synopsis[self._synopsis.index("["):self._synopsis.index("]")+1],"")
         self._synopsis = html.unescape(self._synopsis) #replace html codes
         
         return self._synopsis
