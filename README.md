@@ -101,7 +101,7 @@ This object encapsulates an anime *or* manga list. It has attributes :
 	+ "onhold"
 	+ "dropped"
 	+ "plantowatch"
-	e.g - `mlist.anime/manga_list[completed]` - returns all completed anime/manga in the list.
+	e.g - `mlist.anime/manga_list["completed"]` - returns all completed anime/manga in the list.
 	
 	
 This object also includes some probably useless but potentially useful methods to analyze lists:
