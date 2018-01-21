@@ -1,7 +1,4 @@
 import spice_api as spice
 
-def main():
-    print(spice.user_agent)
-
-if __name__ == '__main__':
-    main()
+def test_install():
+    assert spice.user_agent = 'spice API (https://github.com/Utagai/spice)'
