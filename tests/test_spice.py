@@ -1,22 +1,13 @@
-"""
-This is not a good way to test this API. This was really for the original
-maintainer (utagai)'s use. Seriously, this is bad, but if you want to use it,
-just make sure to change the sys.path.insert() hack below.
-"""
 from bs4 import BeautifulSoup
 import requests
-
 import sys, os
-
 from time import sleep
-sys.path.insert(0, '/home/may/Programming/spice/')
-
 import spice_api as spice
 
-def main():
-    creds = spice.load_auth_from_file('auth')
-    print(creds)
-    results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', spice.get_medium('anime'), creds)
+def test_spice():
+    creds = spice.init_auth(os.environ['USERNAME'], os.environ['PASSWORD'])
+    results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', 
+            spice.get_medium('anime'), creds)
     print(results[0].title)
     souma = spice.search_id(1, spice.get_medium('manga'), creds)
     print(souma.raw_data)
@@ -55,6 +46,3 @@ def main():
     print(anime_list.score_diff())
     anime_list2 = spice.get_list(spice.get_medium('ANIME'), 'Pickleplatter', creds)
     print("Similarity coefficient: {}".format(anime_list.compatibility(anime_list2)))
-
-if __name__ == '__main__':
-    main()
