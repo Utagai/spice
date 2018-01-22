@@ -1,26 +1,17 @@
-"""
-This is not a good way to test this API. This was really for the original
-maintainer (utagai)'s use. Seriously, this is bad, but if you want to use it,
-just make sure to change the sys.path.insert() hack below.
-"""
 from bs4 import BeautifulSoup
 import requests
-
 import sys, os
-
 from time import sleep
-sys.path.insert(0, '/home/may/Programming/spice/')
-
 import spice_api as spice
 
-def main():
+def test_spice():
     creds = spice.load_auth_from_file('auth')
     print(creds)
-    results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', spice.get_medium('anime'), creds)
+    results = spice.search('Re:Zero Kara Hajimeru Isekai Seikatsu', 
+            spice.get_medium('anime'), creds)
     print(results[0].title)
     souma = spice.search_id(1, spice.get_medium('manga'), creds)
-    print(souma.raw_data)
-    print(souma.title)
+    print(souma.raw_data) print(souma.title)
     print(souma.chapters)
     print(souma.volumes)
     re_zero_data = spice.get_blank(spice.get_medium('anime'))
