@@ -1,5 +1,7 @@
 <p align="center"><img src="rsrc/horo_banner.png"></img></p>
 
+[![Build Status](https://travis-ci.org/Utagai/spice.svg?branch=master)](https://travis-ci.org/Utagai/spice)
+
 # An Introduction
 
 The [Official MyAnimeList API](http://myanimelist.net/modules.php?go=api) needs lots of work and is pretty annoying to use. Here are some of the many issues:
