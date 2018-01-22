@@ -1,16 +1,16 @@
 language: python
 python:
-  - "2.7"
-  - "3.4"
-  - "3.5"
-  - "3.6"
-  - "3.7-dev"
-
-# command to install dependencies
+- '2.7'
+- '3.4'
+- '3.5'
+- '3.6'
+- 3.7-dev
 install:
-  - pip install -r requirements.txt
-  - pip install spice-api
-
-# command to run tests
+- pip install -r requirements.txt
+- pip install spice-api
 script:
-  - pytest # or py.test for Python versions 3.5 and below
+- pytest
+env:
+  global:
+  - secure: SR3SUihX50jIeAoz9YEyDe/wA9iqtRcLHcCUfVuAXFOVCjtf60dJuu/wC0t+/7GcraeFiO/FWK/i3B4xtloOPTi/qTn6bicmDuB0uTX/bgua/aZ4ZU55fqeJYUysD3Ay5qDjX3ZleOYaE5czF1Vr9z0+fBHrjbISg54JwpU1a7c4b1uIIDcRc0eJX1wzm5EO8noOmzdS2/W4ah+V40k8+F0ho2kp/ziJLY4njE4NdHcLpzfUA4+BDTIdAvpsg5/gKDcIVc4amTwlA5sldEllqEWTeqjEC3JjFMdCf7/VwtS8IoVYVzyhWyyUvUpQjtoiZa4DiOmFFu1mQ79VD6yifhPcOKhktg7mb83P4lnOfl9t+JGIj352ZeskP678h6f+JuWnFrx0Hu/CVmFU6R9oBPV5EcPsk9e05D+gG9TBon6HtcsvuMJsYfE/wIMjmpo3T3sucw07B0QrD7Oy93pxhfILHGWY9XXfc3kvMXzKzEb0fc2o5JLS1xbqc8h8oZFcdFauh89IgBFuuJXclOoIOYjixnZiNDlgGAGBu+pfIQzp1cT0d38qcMQ79UWWQ9wh939+J1EGuep54FVv4y9BDCrZGIhgdafufGz+KSDvX3OM8CkyLWGI68n0W2zOowTtZ7iey5kucc0aWa+2Pukz0BBOo78Zeifg2tia2GTLPrY=
+  - secure: iltqC0yJX2N8aUh10SejIsI9wUSCPNNwEqYc+gxvGkVTap5U75brVRyoFEC95M9fuE0z/4A8Z3MvvsYOaxZOKwd/9KM6BvHgwL9bYvoOjS6bUuPDbjLRmA+3MMtxfRE/h61spW72XbdlYKgA7e/SLj8njAsyw4SM0n+U9wqTJ/IKsc7bdrXTK626Npaet3ldNBeI4sP0HA2kkqG5BTH3c665QPZDIkekxw9SEepsDUYe9tYqOjYSRNGgD1GY4zI8gduFvGoglaYXLxvkQL0N81pjzUXWEYLwO2ory1wv4glGVBdTBYekBZcO3li9UkG7/JnkCqfN7+2rf4uyqsdAQs9EJ+xtW/uz4VAEc5Y05ZHRwOxXJg9sziW5gUir66dU/2sbAxxN8szICD7bq+PkfSdFa1ZLPEizEM/Ujh4SjDIK4Lt+izUu4zDWzBn+/JSgkgW8sgTqVK/FxSdz1BNxbygNRj4wy0yezsKaSKyuOiZFcf5aZHsr0ftgyNAXbx/ILtAaFkcVQod/9Un03qR9vzJ/OkEfnwnheeMqwcYDzGsoUHDEvEl1ndX3R0KerAJdFlnUvolBLDr2DoybWb55s+MMJIsXYTdAbxHb2RB+6xsgB1qc5nb9pTP/3+50+LAMZqLlN6INsT/VP17wy9c8X/jQRmH53vqUO9ce+GDskwg=
