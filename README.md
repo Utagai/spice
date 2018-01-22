@@ -97,13 +97,13 @@ The manga object has similar attributes:
 This object encapsulates an anime *or* manga list. It has attributes :
 - `mlist.medium`, whether it's an anime or manga list
 - `mlist.raw_data`, raw xml data of the list
-- `mlist.anime/manga_list`, dictionary containing 5 keys whose values contain 5 lists according to the key:
+- `mlist.medium_list`, dictionary containing 5 keys whose values contain 5 lists according to the key:
 	+ "watching"/"reading" - all manga/anime that are being read or watched
 	+ "completed"
 	+ "onhold"
 	+ "dropped"
 	+ "plantowatch"
-	e.g - `mlist.anime/manga_list[completed]` - returns all completed anime/manga in the list.
+	e.g - `mlist.anime/manga_list["completed"]` - returns all completed anime/manga in the list.
 	
 	
 This object also includes some probably useless but potentially useful methods to analyze lists:
