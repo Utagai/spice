@@ -4,9 +4,8 @@ python:
 - '3.4'
 - '3.5'
 - '3.6'
-- 3.7-dev
+- '3.7-dev'
 install:
-- pip install -r requirements.txt
 - if [[ $TRAVIS_PYTHON_VERSION == 2* ]]; then pip install html; fi
 - pip install -e .
 script:
