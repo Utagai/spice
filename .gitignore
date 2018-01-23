@@ -3,4 +3,4 @@
 *~
 auth
 .cache
-venv/
+venv*/
