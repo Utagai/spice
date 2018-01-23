@@ -7,6 +7,7 @@ python:
 - 3.7-dev
 install:
 - pip install -r requirements.txt
+- pip install html
 - pip install -e .
 script:
 - pytest
