@@ -35,13 +35,9 @@ from collections import Counter
 from math import sqrt
 
 
-def sum(data):
+def _sum(data):
     _data_check(data)
-    total = 0
-    for elem in data:
-        total += elem
-
-    return total
+    return sum(data)
 
 
 def square_sum(data):
@@ -65,7 +61,7 @@ def sum_xy(datax, datay):
 
 def mean(data):
     _data_check(data)
-    return sum(data)/len(data)
+    return _sum(data)/len(data)
 
 
 def median(data):
@@ -111,8 +107,8 @@ def karl_pearson(datax, datay):
     if len(datax) != len(datay):
         raise ValueError('Invalid sizes for data sets.')
     xy_sum = sum_xy(datax, datay)
-    x_sum = sum(datax)
-    y_sum = sum(datay)
+    x_sum = _sum(datax)
+    y_sum = _sum(datay)
     x_sum_square = x_sum ** 2
     y_sum_square = y_sum ** 2
     x_square_sum = square_sum(datax)
