@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/Utagai/spice.svg?branch=master)](https://travis-ci.org/Utagai/spice)
 
+**Note: MAL API is currently not suitable for use for an indefinite amount of time. Please check [MyAnimeList](https://myanimelist.net/) for more information!**
+
 # An Introduction
 
 The [Official MyAnimeList API](http://myanimelist.net/modules.php?go=api) needs lots of work and is pretty annoying to use. Here are some of the many issues:
