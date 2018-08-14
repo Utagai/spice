@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Utagai/spice.svg?branch=master)](https://travis-ci.org/Utagai/spice)
 
-**Note: The Official MAL API is currently not suitable for use for an indefinite amount of time. This means that this API (which is a wrapper) will not work! Please check [MyAnimeList](https://myanimelist.net/) for more information!**
+**Note: The Official MAL API has been taken down by MAL itself due to security concerns and is therefore unavailable for use. This means that this API (which is a wrapper) will not work! Please check [MyAnimeList](https://myanimelist.net/) for more information!**
 
 # An Introduction
 
